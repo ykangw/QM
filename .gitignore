@@ -1,0 +1,16 @@
+cloud-config.yml
+*.code-workspace
+
+/.quarto/
+/_site/
+/_freeze/
+/docs/
+
+.DS_Store
+.ipynb_checkpoints/
+
+*.csv
+*.gz
+*.parquet
+*.xlsx
+*.shp

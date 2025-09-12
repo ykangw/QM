@@ -1,0 +1,96 @@
+project:
+  type: website
+  output-dir: _site
+  preview:
+    port: 4200
+  render:
+    - "*.qmd"
+  resources:
+    - "img"
+    - "images"
+
+execute:
+  freeze: auto
+
+website:
+  title: "A Website Title"
+  image: "img/logo/full_md.png"
+  repo-url: https://github.com/ucl-casa/
+  #repo-actions: [issue]
+  favicon: "/img/favicon.ico"
+  open-graph:
+    locale: en_GB
+    site-name: "An Open-Graph Name"
+  page-navigation: true
+  reader-mode: true
+  page-footer: 
+    left: "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 2025–, Your Name(s) Here"
+    center: "![](/img/logo/full_sm.png){height=20} Footer Name"
+    right: 
+      - icon: github
+        href: https://github.com/ucl-casa/
+      - icon: twitter 
+        href: https://web-cdn.bsky.app/profile/did:plc:mpmxzig3akrleyfhl5vfnvk4
+  navbar:
+    background: primary
+    number-depth: 2
+    search: true
+    logo: small
+    collapse: true
+    collapse-below: md
+    left:
+      - sidebar:part1
+      - sidebar:part2
+
+  sidebar:
+    - id: part1
+      title: "Part 1"
+      style: "docked"
+      collapse-level: 2
+      background: light
+      contents:
+        - text: "Step 1."
+          href: index.qmd
+        - text: "Step 2."
+          href: index.qmd
+
+    - id: part2
+      title: "Part 2"
+      contents:
+        - index.qmd
+
+highlight-style: pygments
+
+format:
+  html:
+    theme: 
+      - minty
+      - css/casa-report.scss
+      - css/casa-web.scss
+    code-copy: true
+    code-link: true
+    #cover-image: cover.png
+    toc: true
+    toc-title: "On this page"
+    toc-depth: 3
+    toc_float: 
+      collapsed: false
+      smooth_scroll: true
+  revealjs:
+    logo: "/img/logo/full.svg"
+    template-partials:
+      - /inc/title-slide.html
+    transition: none
+    slide-number: false
+    preview-links: auto
+    theme:
+      - css/casa-slides.scss # Must be valid *relative* path
+    footer: "&copy; CASA &nbsp; | &nbsp; [ucl.ac.uk/bartlett/casa](https://www.ucl.ac.uk/bartlett/casa)"
+filters:
+ - code-visibility
+lightbox: auto
+title-slide-attributes:
+    data-background-image: "/img/web/title-slide.png"
+    data-background-size: stretch
+    data-background-opacity: "0.08"
+    data-background-color: "#4e3c56"

@@ -1,0 +1,12 @@
+---
+title: "Welcome"
+author: "Your Name"
+date: last-modified
+---
+
+This template is intended to help you get started with CASA's in-house 'Quarto' style. Note that we can do useful things like inserting a module name {{< var module.name >}} ({{< var module.code >}}) dynamically. This can be especially useful for submission deadlines which are stated on multiple pages of a web site.
+
+We also have a [presentation style](./slides.qmd) that you can use.
+
+Everywhere in-line code execution is supported, as are included QMD files and other tricks to make it easy to re-use content, streamline maintenance of your module's materials, and keep everything nice and clean.
+

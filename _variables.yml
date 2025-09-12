@@ -1,0 +1,6 @@
+version: 2025
+
+module:
+  code: "casaXXXX"
+  name: "Module Name"
+  abbr: "mn"
