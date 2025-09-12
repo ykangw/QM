@@ -1,10 +1,10 @@
 ---
-title: "A Title for my Slides"
-subtitle: "The subtitle for my talk which gives us more information: Discuss"
+title: "Exploratory Data Analysis #1"
+subtitle: "Understanding and describing data"
 author: 
-  - name: "My name"
-email: "myemail@emails.com"
-date-as-string: "1st August 2024"
+  - name: "Huanfa Chen"
+email: "huanfa.chen@ucl.ac.uk"
+date-as-string: "12 September 2025"
 other: "Any other information"
 from: markdown+emoji
 format: revealjs
