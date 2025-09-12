@@ -1,6 +1,6 @@
 version: 2025
 
 module:
-  code: "casaXXXX"
-  name: "Module Name"
-  abbr: "mn"
+  code: "CASA0007"
+  name: "Quantitative Methods"
+  abbr: "QM"

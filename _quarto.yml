@@ -8,56 +8,13 @@ project:
   resources:
     - "img"
     - "images"
+    - "bib/"
 
 execute:
   freeze: auto
 
-website:
-  title: "A Website Title"
-  image: "img/logo/full_md.png"
-  repo-url: https://github.com/ucl-casa/
-  #repo-actions: [issue]
-  favicon: "/img/favicon.ico"
-  open-graph:
-    locale: en_GB
-    site-name: "An Open-Graph Name"
-  page-navigation: true
-  reader-mode: true
-  page-footer: 
-    left: "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 2025–, Your Name(s) Here"
-    center: "![](/img/logo/full_sm.png){height=20} Footer Name"
-    right: 
-      - icon: github
-        href: https://github.com/ucl-casa/
-      - icon: twitter 
-        href: https://web-cdn.bsky.app/profile/did:plc:mpmxzig3akrleyfhl5vfnvk4
-  navbar:
-    background: primary
-    number-depth: 2
-    search: true
-    logo: small
-    collapse: true
-    collapse-below: md
-    left:
-      - sidebar:part1
-      - sidebar:part2
-
-  sidebar:
-    - id: part1
-      title: "Part 1"
-      style: "docked"
-      collapse-level: 2
-      background: light
-      contents:
-        - text: "Step 1."
-          href: index.qmd
-        - text: "Step 2."
-          href: index.qmd
-
-    - id: part2
-      title: "Part 2"
-      contents:
-        - index.qmd
+metadata-files:
+  - _website.yml
 
 highlight-style: pygments
 

@@ -1,0 +1,76 @@
+website:
+  title: "Quantitative Methods"
+  image: "img/logo/full_sm.png"
+  repo-url: https://github.com/huanfachen/CASA0007/
+  repo-actions: [issue]
+  favicon: "/img/favicon.ico"
+  open-graph: 
+    locale: en_GB
+    site-name: Foundations
+  page-navigation: true
+  reader-mode: true
+  bread-crumbs: false
+  page-footer: 
+    left: "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 2025–, Huanfa Chen, Adam Dennett, Bea Taylor"
+    center: "![](/img/logo/logo_only_sm.png){height=25} Quantitative Methods"
+    right: 
+      - icon: github
+        href: https://github.com/huanfachen/CASA0007
+      - icon: LinkedIn 
+        href: https://www.linkedin.com/in/huanfa-chen/
+  navbar:
+    background: primary
+    search: true
+    logo: "/img/logo/logo_only_sm.png"
+    collapse: true
+    collapse-below: md
+    left:
+      - text: "Setup"
+        href: setup/index.qmd
+      - sidebar:schedule
+      - sidebar:assessments
+      - text: "Getting Help"
+        href: help.qmd
+
+  sidebar:
+    - id: assessments
+      style: "docked"
+      title: "Assessments"
+      contents:
+        - text: "Overview"
+          href: assessments/index.qmd
+      
+    - id: schedule
+      style: "docked"
+      title: "Week-by-Week"
+      contents:
+        - text: "Overview"
+          href: sessions/index.qmd
+        - section: "Part 1: Basics"
+          contents:
+            - text: "1. Explanatory Data Analysis #1"
+              href: sessions/week1.qmd
+            - text: "2. Explanatory Data Analysis #2"
+              href: sessions/week2.qmd
+            - text: "3. Hypothesis Testing"
+              href: sessions/week3.qmd
+            - text: "4. Introduction to Linear Algebra"
+              href: sessions/week4.qmd
+        - section: "Part 2: Correlation and Regression"
+          contents:
+          - text: "5. Measuring Relationship"
+            href: sessions/week5.qmd
+          - text: "6. Introduction to Regression"
+            href: sessions/week6.qmd
+          - text: "7. Generalised Linear Regression" 
+            href: sessions/week7.qmd
+          - text: "8. Multilevel Regression" 
+            href: sessions/week8.qmd 
+        - section: "Part 3: Dimension Reduction & Clustering"
+          contents:
+          - text: "9. Dimension Reduction"
+            href: sessions/week9.qmd
+          - text: "10. Clustering"
+            href: sessions/week10.qmd
+        - text: "Bibliography"
+          href: references.qmd
