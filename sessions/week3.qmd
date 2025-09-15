@@ -4,38 +4,86 @@ subtitle: "Establishing and evaluating research hypotheses"
 author: 
   - name: "Beatrice Taylor"
 email: "beatrice.taylor@ucl.ac.uk"
-date-as-string: "12th December 2024"
+date-as-string: "15th October 2025"
 from: markdown+emoji
-format: revealjs
+format:
+  revealjs: 
+    logo: "images/CASA_logo.svg"
+    template-partials: 
+      - title-slide.html
+    transition: none
+    slide-number: true
+    preview-links: auto
+    theme: casa-slides.scss
+    footer: "&copy; CASA &nbsp; | &nbsp; [ucl.ac.uk/bartlett/casa](https://www.ucl.ac.uk/bartlett/casa)"
+filters:
+ - code-visibility
+lightbox: auto
+title-slide-attributes:
+    data-background-image: "images/title-slide.png"
+    data-background-size: stretch
+    data-background-opacity: "0.08"
+    data-background-color: "#4e3c56"
+jupyter: python3
 ---
-
-# Key Information 
-
-+:------------------------+:------------------------------+
-| **Module Lead**         |  **Contact**                  |
-+=========================+===============================+
-| Prof. Adam Dennett      |  a.dennett[at]ucl.ac.uk       |
-| Dr. Huanfa Chen         |  huanfa.chen[at]ucl.ac.uk.    |
-| Dr. Beatrice Taylor     |  beatrice.taylor[at]ucl.ac.uk |
-+-------------------------+-------------------------------+
-| **PGTAs**               |                               |
-+-------------------------+-------------------------------+
-|  ,                      |  Slack                        |
-|  ,                      |                               |
-|                         |                               |
-+-------------------------+-------------------------------+
 
 # Last week
 
 ## Overview of lecture 2
 
-Looked at data analysis.
+Continued concepts from data analysis, in particular probability distributions. 
+
+- Representative data 
+- Normal distribution
+- Binomial distribution 
+- Poisson distribution 
+- Exponentials 
+- Logarithms 
+
+## What is the likelihood of events occuring? 
+
+**Question**
+
+::: {.fragment .highlight-red}
+What is the probability of someone at UCL being over 190cm?
+:::
+
+**How can we try to answer this?**
+
+Try to understand the distribution of heights. 
+
+::: {.notes}
+Last week we asked this question and we thought about the distribution of the data. 
+
+This week we look at how to pose and address the research question. 
+:::
 
 # This week 
 
 ## Hypothesising 
 
+:::: {.columns}
+
+::: {.column width="60%"}
+
+<div style="text-align:center;">
+  <img src="L3_images/scientific_method.png" alt="The scientific method" style="max-width:100%">
+</div>
+
+
+:::
+
+::: {.column width="40%"}
+
+<br>
+
 Research science is about coming up with hypotheses and evaluating them.
+
+:::
+
+::::
+
+
 
 ::: {.notes}
 This lecture thinking about posing and answering reserach questions. 
@@ -44,33 +92,54 @@ I have this great idea - considering the data is this idea plausibly true?
 :::
 
 ## Learning Objectives
-By the end of this lecture you should:
+By the end of this lecture you should be able to:
 
-1. Establish a hypothesis.
-2. Define the Type I and Type II errors. -	Define the Type I and Type II errors. 
+::: {.incremental}
+1. Establish a hypothesis for a given research project. 
+2. Define the Type I and Type II errors. 
 3. Calculate the p-value.
+:::
 
 # Motivations
 
 ## How do we know what to believe?
 
-:::: {.columns}
+<div style="text-align:center;">
+  <img src="L3_images/lime_bike_leg.png"
+       alt="Screenshot from the Telegraph online of an article about a rise in Lime Bike accidents."
+       style="max-width:70%" class="fragment">
+</div>
 
-::: {.column width="50%"}
+<div style="text-align:center;">
+  <img src="L3_images/lime_bike_clapham.png"
+       alt="Screenshot from the Guardian of an article about dangerous biking in Clapham."
+       style="max-width:70%; margin-top:-70%;" class="fragment">
+</div>
 
-**What we see in the news**
+<div style="text-align:center;">
+  <img src="L3_images/lime_bike_shoreditch.png"
+       alt="Screenshot from the Standard about Lime bike accidents in Shoreditch."
+       style="max-width:70%; margin-top:-70%;" class="fragment">
+</div>
 
-- Is London less safe for cyclists than ten years ago?
-- Are x days above 30 degrees in London indicative of a warming climate? 
-- Is London’s murder rate higher than New York? 
-
-:::
-
-::::
+<div class="fragment"
+     style="text-align:center; margin-top:-60%; background:#4e3c56; color:white; padding:1em; border-radius:10px;">
+  <strong>Is cycling in London less safe since the introduction of Lime bikes?</strong>
+</div>
 
 # How do you come up with a hypothesis? 
 
-## What is a hypothesis?
+## Research question vs. hypothesis 
+
+**Research question** 
+
+A research question focuses on a specific problem.
+
+**Hypothesis**
+
+A statement that you will seek to confirm or disprove the research question.
+
+## Flip a coin
 
 :::: {.columns}
 
@@ -82,6 +151,28 @@ By the end of this lecture you should:
 - You toss it 10 times. 
 - It comes up heads 7 times. 
 :::
+
+:::
+
+::::
+
+## The hypothesis
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+- You have a coin. 
+- [You think it's a fair coin.]{style="color:#49a0c4"} 
+- You toss it 10 times. 
+- It comes up heads 7 times. 
+
+:::
+
+::: {.column width="50%"}
+
+<div style="background-color:#2e6260; color:white; padding:8px; border-radius:5px; margin-top:10px;"> 
+The hypothesis is that it is a fair coin. </div>
 
 :::
 
@@ -103,11 +194,18 @@ By the end of this lecture you should:
 
 ::: {.column width="50%"}
 
-::: {.incremental}
-- Is it a fair coin? **NO!** 
-- What’s the probability that it’s fair? **NO!**
-- If the coin is fair, how likely would it be to see 7 heads out of 10 flips? **ALMOST!**
+::: {.fragment .strike}
+Is it a fair coin? 
 :::
+
+::: {.fragment .strike}
+What’s the probability that it’s fair?
+:::
+
+::: {.fragment .strike}
+If the coin is fair, how likely would it be to see 7 heads out of 10 flips?
+:::
+
 
 :::
 
@@ -138,115 +236,477 @@ If the coin is fair, how likely would it be to see 7 heads out of 10 flips *OR A
 ::::
 
 
-
-# Establishing a Hypothesis 
+# Establishing and evaluating a Hypothesis 
 
 ## Step 1
-**Define the question**
+**Define the null and alternative hypothesis**
 
-Null hypothesis – the status quo. 
-The alternative hypothesis – need some evidence to verify. 
+. . .
+
+[**$H_0$** - the null hypothesis]{style="color:#49a0c4"} 
+
+- this is the "status quo"
+
+. . .
+
+[**$H_1$** - the alternative hypothesis ]{style="color:#49a0c4"} 
+
+- your hypothesis
+- needs some evidence to verify
 
 ## Step 2
-**Set you significance level**
+**Set your significance level $\alpha$**
 
-- Decide what “too unlikely” means BEFORE YOU DO THE TEST.
-- e.g. 𝜶 = 0.05 (5% significance)
-- This means that if we see evidence that would have less than a 5% chance of occurring if the null hypothesis is true, then we reject the null hypothesis. 
+[*The significance level is the threshold below which you reject the null hypothesis.*]{style="color:#49a0c4"} 
+
+::: {.incremental}
+- Decide what “too unlikely” means **before you do the test**.
+- Common choice is 5% significance
+  - $𝜶 = 0.05$ 
+  - This means that if we see evidence that would have less than a 5% chance of occurring under the null hypothesis, then we reject the null hypothesis. 
+:::
 
 ## Step 3
 **Identify the evidence**
 
-- Example: data collection – i.e urine sample for pregnancy test 
+<!-- ```{=tex}
+\begin{align}
+f(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\end{align}
+``` -->
+
+::: {.incremental}
+- This could mean collecting the data
+- Or identifying a suitable dataset
+:::
 
 ## Step 4
 **Calculate the p-value**
 
-- The p-value is the probability of seeing the evidence, or something even more extreme, if the null hypothesis is true.
+[*The p-value is the probability of seeing the evidence, or something even more extreme, if the null hypothesis is true.*]{style="color:#49a0c4"}
+
+::: {.incremental}
+- Calculated according to the appropriate statistical test
+- The choice of test is determined by the research question and the data
+:::
+
+::: {.notes}
+We'll come back to different types of statistical test later in the lecture
+:::
 
 ## Step 5 
-**Compare p-value with hypothesis level**
+**Compare p-value with significance level**
 
-- p-value > 𝜶 - Evidence not that unlikely. Not enough evidence to reject H0.
-- p-value ⩽ 𝜶 - Evidence very unlikely. Reject H0 and accept H1.
+::: {.incremental}
+- p-value > $\alpha$ 
+  - Evidence not that unlikely. 
+  - Not enough evidence to reject $H_0$.
+- p-value $\leq \alpha$ 
+  - Evidence very unlikely. 
+  - Reject $H_0$ and accept $H_1$.
+:::
 
 ## The steps
+
 ::: {.incremental}
-1. Define the question
+1. Define the null and alternative hypothesis
 2. Set you significance level
 3. Identify the evidence
 4. Calculate the p-value
 5. Compare p-value with hypothesis level
 :::
 
-## Example 
-Cyclists in London. 
-
 # Types of error 
 
 ## Type I error
+[*The true null hypothesis is incorrectly rejected.*]{style="color:#49a0c4"} 
+
+This is caused by a **false positive**. The null hypothesis is true, but you get a false positive leading to you rejecting the null hypothesis. 
+
 
 ## Type II error
+[*The false null hypothesis is incorrectly accepted.*]{style="color:#49a0c4"} 
 
-## Example 
+This is caused by a **false negative**. The null hypothesis is false, but you get a false negative result, leading you to accepting the null hypothesis. 
+
+
+## Example: Mammograms
+
+<div style="text-align: center;">
+![](L3_images/mammogram_van_woman.avif){width="700"}
+</div>
+
+NHS offers breast cancer screening for all women between the ages of 50 and 70.
+
+::: {.notes}
+The idea is to screen all women in the popualtion at high risk of brast cancer - in the hope they pick up results better. 
+:::
+
+## Example: Screening outcomes 
+
+[**False positive**]{style="color:#abc766"} 
+
+The null hypothesis is that the patient doesn't have cancer. 
+$\approx$ 10% of tests return a false positive. The test says they do have cancer even when they don't. 
+
+. . .
+
+[**False negative**]{style="color:#abc766"} 
+
+The null hypothesis is that the patient doesn't have cancer. 
+$\approx$ 20% of tests return a false negative. The test says they don't have cancer but they do.
+
+::: {.notes}
+False positive is bad as you might pursue a healthcare treatment which is unecessary.
+
+False negative - in healthcare this is the worst outcome - as goes undiagnosed and hence untreated. 
+:::
 
 ## Matrix of errors 
+
+<div style="text-align:center;">
+  <img src="L3_images/error_matrix.png" alt="Error matrix" style="max-width:80%">
+</div>
+
 
 # A good hypothesis or a bad hypothesis? 
 What makes a hypothesis good? 
 
 ## Understanding the literature and the context 
-Hypothesis doesn’t come out of thin air
+The hypothesis should not come out of thin air. 
+
+. . .
+
+What research have other people done? 
+
+. . .
+
+What is the cultural context? 
 
 ## Asking ethical hypothesis questions 
-- not making unethical assumptions in choosing the hypothesis. 
-- Example: correlation between ethnicity and crime
-- Use contextual knowledge to consider correlation vs causation 
+It's important to not make unethical assumptions in choosing the hypothesis. 
+
+. . .
+
+**Example** 
+
+[Police profiling](https://www.amnesty.org.uk/press-releases/uk-police-forces-supercharging-racism-crime-predicting-tech-new-report) - assumes a correlation between ethnicity and crime
+
+- Use contextual knowledge
+- Is this causation? 
+- Or correlation linked to other factors?
 
 ## Correlation vs. Causation 
-Lots of things can be correlated - but it doesn't mean one event caused another. 
+[**Correlation:** *Two variables are linearly related, as one changes so does the other.*]{style="color:#49a0c4"}
 
-## Aliens and taxes 
-Example from spurious correlations 
+. . .
 
-## Correlation IS NOT causation 
+[**Causation:** *One variable influences the other variable to occur.*]{style="color:#49a0c4"}
+
+. . .
+
+Lots of things can be correlated **BUT** it doesn't mean one event caused another. 
+
+## Aliens and librarians
+
+<div style="text-align:center;">
+  <img 
+    src="L3_images/spurious_hawaii_ufo.png" 
+    alt="Spurious correlation - aliens and librarians" 
+    style="width:800px">
+  <div style="font-size:0.8em; color: #555; margin-top:4px;">
+    Image credit: [Spurious Correlations](https://www.tylervigen.com/spurious/correlation/19598_google-searches-for-report-ufo-sighting_correlates-with_the-number-of-librarians-in-hawaii)
+  </div>
+</div>
+
+
+## Correlation **IS NOT** causation 
 You might not know whether events are correlated, or causing each other. 
 
-The point of the hypothesis test is to test your idea – but use your contextual understanding to come up with plausible (and ethical) initial questions
+. . .
+
+<br>
+**BUT**
+
+. . .
+
+<br>
+
+The point of the hypothesis test is to test your idea – but use your contextual understanding to come up with plausible (and ethical) initial questions.
 
 ## The point of the scientific method
-The process of coming up with a question, testing, iterating.
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+<div style="text-align:center;">
+  <img src="L3_images/scientific_method.png" alt="The scientific method" style="max-width:100%">
+</div>
+
+
+:::
+
+::: {.column width="40%"}
+
+It's a process
+
+::: {.incremental}
+- question 
+- test 
+- evaluate 
+- ***REPEAT!***
+:::
+
+:::
+
+::::
+
+<!-- # Example: Height of students 
+What is the probability of someone at UCL being over 6ft?
+
+## Example - step 1
+**Define the null and alternative hypothesis**
+
+H0: Probability of injury has not changed. 
+
+H1: Probability of injury has changed. 
+
+## Example - step 2
+**Set your significance level**
+
+𝜶 = 0.05 
+
+## Example - step 3
+**Identify the evidence**
+
+Dataset: heights of students 
+
+## Example - step 4
+**Calculate the p-value**
+
+Aha! -->
+
+
+# Example: students height
+[*Research question*]{style="color:#49a0c4"}  
+Are male and female students similar heights?  
+
+[*Research hypothesis*]{style="color:#49a0c4"}  
+Male and female students are different heights on average.
+
+<!-- ## Example - context 
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+<div style="text-align: center;">
+![](L3_images/timmy_bike.jpg){width="700"}
+</div>
+
+:::
+
+::: {.column width="40%"}
+
+::: {.incremental}
+- UK gov reports cycling fatalities per year 
+- Lime bikes introduced to the UK in 2021 
+:::
+
+:::
+
+:::: -->
+
+
+## Example - step 1
+
+**Define the null and alternative hypothesis**
+
+. . .
+
+$H_0$: The mean height of male and female students is the same.
+
+$H_1$: The mean height of male and female students is different.
+
+
+## Example - step 2
+**Set your significance level**
+
+. . .
+
+$\alpha = 0.05$ 
+
+## Example - step 3
+**Identify the evidence**
+
+. . .
+
+<br>
+
+I've collected data from 198 students, as follows: 
+
+| Group | Sample Size | Mean (cm) | std (cm) |
+|-------|------------------|-----------------|-------------------|
+| Female students |  95 | 170 | 5 |
+| Male students   | 103 | 180 | 6 | 
+
+
+<!-- Group 1 – female students  
+$\bar{x}_1 = 170$, $s_1 = 5$, $n_1 = 95$  
+
+Group 2 – male students  
+$\bar{x}_2 = 180$, $s_2 = 6$, $n_2 = 103$ -->
+
+## Example - step 4
+**Calculate the p-value**
+
+Aha!
+
+. . .
+
+We need to know what statistical test to use! 
+
 
 # Statistical tests 
 
 ## Parametric vs. Non-parametric tests
 
-## Parametric Tests 
+**Parametric Tests**
+
 - Evaluate hypothesis for specific parameters 
-- Typically have assumptions about the distribution - e.g. assumed normal distribution 
+- Typically have assumptions about the distribution 
+  - e.g. assumed normal distribution 
+- Continuous data 
 
-## Non-parametric Tests 
-- Evaluate hypotheis for entire population distirbution 
-- Typcially less assumptions on the ditribution 
+. . .
 
-## How many tails 
+**Non-parametric Tests**
 
-Tests can be one-tailed or two-tailed. 
-
-![](L3_images/one-tailed-vs-two-tailed-test.jpg){.absolute top="170" left="30" width="700"}
+- Evaluate hypothesis for entire population distribution 
+- Typcially less assumptions on the distribution 
+- Continuous or discrete data 
 
 # Parametric tests 
 
-## T-test 
-Assumes the data is normally distributed. 
+## Student's T-test 
 
-## T-test example 
+:::: {.columns}
 
-What is the probability of someone age 15 being a student on CASA007? 
+::: {.column width="50%"}
+[*Student's T-test is used to compare the mean of a dataset.*]{style="color:#49a0c4"} 
 
-The probability is very small so we reject. 
+::: {.incremental}
+- parametric statistical test 
+- assumes the data is normally distributed
+:::
 
-## Regression T-tests
+:::
+
+::: {.column width="50%"}
+
+<div style="text-align:center;">
+  <img src="L3_images/William_Sealy_Gosset.jpg" alt="A photograph of William Sealy Gosset" style="max-width:80%;">
+  <div style="font-size:0.8em; color: #555; margin-top:4px;">
+    This is William Sealy Gosset - he was **not** a student.
+    Image credit: https://en.wikipedia.org/wiki/William_Sealy_Gosset#/media/File:William_Sealy_Gosset.jpg
+    
+  </div>
+</div>
+
+:::
+
+::::
+
+::: {.notes}
+William Gosset was working for Guinness brewing company when he came up with the t-test - but his company wanted his to publish under a pseudonym - hence 'student'
+:::
+
+## Student's T-test: one sample
+[*Tests whether the population mean is equal to a specific value or not*]{style="color:#49a0c4"} 
+
+. . .
+
+The test statistic is calculated as: 
+
+```{=tex}
+\begin{align}
+t = \frac{\bar{x} - \mu_{0}}{s / \sqrt{n}}
+\end{align}
+```
+
+where
+
+- $\bar{x}$ is the sample mean
+- $\mu_{0}$ is the hypothesised population mean
+- $s$ is the sample standard deviation
+- $n$ is the sample size
+
+## Student's T-test: two sample 
+[*Tests if the population means for two different groups are equal or not.*]{style="color:#49a0c4"}
+
+. . .
+
+The test statistic is:
+
+```{=tex}
+\begin{align}
+t = \frac{\bar{x}_1 - \bar{x}_2}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}
+\end{align}
+```
+
+- $\bar{x}_1, \bar{x}_2$ are the sample means of groups 1 and 2
+- $n_1, n_2$ are the sample sizes of groups 1 and 2
+- $s_p$ is the pooled standard deviation
+
+. . .
+
+```{=tex}
+\begin{align}
+s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
+\end{align}
+```
+
+with $s_1, s_2$ the sample standard deviations.
+
+## Student's T-test: paired 
+[*Tests if the difference between paired measurements for a population is zero or not - normally used with longitudinal data.*]{style="color:#49a0c4"} 
+
+. . .
+
+The test statistic is: 
+```{=tex}
+\begin{align}
+t = \frac{\bar{d}}{s_d / \sqrt{n}}
+\end{align}
+```
+
+where
+
+- $\bar{d}$ is the mean of the paired differences
+- $s_d$ is the standard deviation of the paired differences
+- $n$ is the number of pairs
+
+::: {.notes}
+For example used when I have data from different years, and want to figure out if there's a difference across the years. 
+
+You need to be able to pair the data - i.e. the same things being observed at time point 1 and time point 2. 
+:::
+
+
+## How many tails 
+
+Tests can be one-tailed or two-tailed. Determined when you define the hypothesis.
+
+*One tailed:* if you only care is the mean is significant in one direction
+*Two tailed:* if you care about the mean being different regardless of direction 
+
+<div style="text-align:center;">
+  <img src="L3_images/one_vs_two_tailed.png" alt="Normal distribution with one vs two tails." style="max-width:100%">
+</div>
+
+
+<!-- ## Regression T-tests
 
 Is the gradient non-zero?
 
@@ -254,27 +714,216 @@ This indicates a correlation between the two variables.
 
 ...
 
-This will be covered further in lecture X on linear regression. 
+This will be covered further in lecture X on linear regression.  -->
 
-## Mean comparison t-test 
-
-Compares the mean of two distributions. 
 
 # Non-parametric tests 
 
-## Kolmogorov-Smirnov test 
+## Kolmogorov-Smirnov
 ::: {.incremental}
 - Compares two probability distributions 
-- Can be used to test whether an observed sameple came from a given distribution 
+- Can be used to test whether an observed sample came from a given distribution 
 - Or to test whether two samples both came from the same distribution
 :::
 
-## Kernel density estimate 
+## K-S: empirical distribution function 
+
+The empirical distribution function (EDF) is:  
+
+```{=tex}
+\begin{align}
+F_{n}(x) = \frac{1}{n} \sum_{i=1}^{n} 1_{(-\infty ,x]}(X_{i})
+\end{align}
+```
+
+where
+
+- $n$ is the number of observations
+- $X_i$ are the ordered sample values
+- $1_{(-\infty ,x]}(X_{i})$ is an indicator function (1 if $X_i \leq x$, else 0)
+
+## K-S test: one sample test
+
+The Kolmogorov–Smirnov test statistic is:
+
+```{=tex}
+\begin{align}
+D_n = \sup_x \, | F_n(x) - F(x) |
+\end{align}
+```
+
+where
+
+- $F_n(x)$ is the empirical distribution function of the sample
+- $F(x)$ is the cumulative distribution function (CDF) of the reference distribution
+
+. . .
+
+<div style="background-color:#2e6260; color:white; padding:8px; border-radius:5px; margin-top:10px;"> <em>Note</em> 
+
+\n '$sup$' is the suprenum - think of it as the smallest upper bound. </div>
+
+## K-S test: two sample test 
+
+For the two-sample test:
+```{=tex}
+\begin{align}
+D_{n,m} = \sup_x \, | F_n(x) - G_m(x) |
+\end{align}
+```
+where 
+
+- $F_n(x)$ and $G_m(x)$ are the EDFs of the two samples.
+
+## K-S test: decision rule
+
+The hypotheses would be: 
+
+$H_0$: the distributions are the same
+$H_1$: the distributions differ
+
+Larger values of the test statistic $D$ is stronger evidence against $H_0$. 
+
+## Kernel density estimate (KDE)
 ::: {.incremental}
 - Used to generate a smooth PDF for a random variable dataset. 
+- Useful for understanding the underlying distribution of a sample .
 - Think of it as getting a smooth function to describe a histogram of data. 
-- There are no assumptions about the prior distribution
+- There are no assumptions about the prior distribution.
 :::
+
+## KDE of simulated heights  
+
+It's easy to fit a KDE to data in Python:
+
+```{python}
+#| echo: true
+#| eval: false
+
+import numpy as np
+import pandas as pd 
+from scipy.stats import gaussian_kde
+
+# Supposing you have some data 
+data = pd.read_csv('/path_to_data')
+
+# Kernel Density Estimation
+kde = gaussian_kde(data)
+x_vals = np.linspace(100, 200, 100)
+y_vals = kde(x_vals)
+```
+
+## KDE of simulated heights  
+
+<div style="text-align:center;">
+  <img src="L3_images/height_histogram_kde.png" alt="KDE of heights." style="max-width:90%">
+</div>
+
+## KDE use case
+
+::: {.incremental}
+- fit the KDE to two samples
+- compare visually 
+- carry out non-paremetric test - such as Kolmogorov-Smirnov
+:::
+
+# Example: students height
+
+## Example - step 1, 2, 3
+**Define the null and alternative hypothesis**
+
+$H_0$: The mean height of male and female students is the same.
+
+$H_1$: The mean height of male and female students is different.
+
+. . .
+
+**Set your significance level**
+
+$\alpha = 0.05$ 
+
+. . .
+
+**Identify the evidence**
+
+Group 1 – female students  
+$\bar{x}_1 = 170$, $s_1 = 5$, $n_1$ = 95  
+
+Group 2 – male students  
+$\bar{x}_2 = 180$, $s_2 = 6$, $n_2$ = 103
+
+## Example - step 4
+**Calculate the p-value**
+
+- Use Student's T-test: two sample
+- don't care if students are taller or shorter - so use two-tailed test 
+
+
+## Example - step 4 - calculation
+
+Substituting values:
+
+```{=tex}
+\begin{align}
+s_p &= \sqrt{\frac{(95-1)\cdot 5^2 + (103-1)\cdot 6^2}{95+103-2}} \approx 5.55
+\end{align}
+```
+
+Now compute $t$:
+
+```{=tex}
+\begin{align}
+t &= \frac{170 - 180}{5.55 \cdot \sqrt{\tfrac{1}{95} + \tfrac{1}{103}}} \approx -12.7
+\end{align}
+```
+
+## Example - step 5
+**Compare p-value with hypothesis level**
+
+Now we need to compare the test statistic to the critical t-value.  
+
+## Example - step 5 - calculation
+
+For Student's T-Test we need degrees of freedom:  
+```{=tex}
+\begin{align}
+df = n_1 + n_2 - 2 = 95 + 103 - 2 = 196
+\end{align}
+```
+Then use Python to calculate the two-tailed critical t-value at $\alpha = 0.05$.
+
+```{python}
+#| echo: true
+#| output: true 
+from scipy.stats import t
+
+alpha = 0.05
+df = 196
+
+# two-tailed: split alpha
+t_crit = t.ppf(1 - alpha/2, df)
+print("Critical t-value:", t_crit.round(2))
+```
+
+## Example - conclusion 
+
+Test statistic: $t \approx -12.7$.
+
+Critical t-value at $\alpha=0.05$: $t_{crit} = 1.97$
+
+. . . 
+
+<br>
+
+Since
+
+```{=tex}
+\begin{align}
+t= |-12.7| \gg 1.97= t_crit
+\end{align}
+```
+
+we reject $H_0$. Male and female students have significantly different heights.
 
 # Overview 
 We've covered: 
@@ -285,6 +934,8 @@ We've covered:
 
 
 # Practical 
-Practical will focus on establishing a evaluation a hypothesis. 
+The practical will focus on establishing and evaluating a research hypothesis. 
 
-- Have questions prepared!
+. . .
+
+Have questions prepared!
