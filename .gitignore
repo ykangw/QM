@@ -9,6 +9,7 @@ cloud-config.yml
 .DS_Store
 .ipynb_checkpoints/
 
+# *.csv
 *.gz
 *.parquet
 *.xlsx
