@@ -3,26 +3,9 @@ title: "Linear Algebra"
 author: 
   - name: "Beatrice Taylor"
 email: "beatrice.taylor@ucl.ac.uk"
-date-as-string: "22nd October 2025"
+date-as-string: "8th October 2025"
 from: markdown+emoji
-format:
-  revealjs: 
-    logo: "images/CASA_logo.svg"
-    template-partials: 
-      - title-slide.html
-    transition: none
-    slide-number: true
-    preview-links: auto
-    theme: casa-slides.scss
-    footer: "&copy; CASA &nbsp; | &nbsp; [ucl.ac.uk/bartlett/casa](https://www.ucl.ac.uk/bartlett/casa)"
-filters:
- - code-visibility
-lightbox: auto
-title-slide-attributes:
-    data-background-image: "images/title-slide.png"
-    data-background-size: stretch
-    data-background-opacity: "0.08"
-    data-background-color: "#4e3c56"
+format: revealjs
 ---
 
 # Last week
