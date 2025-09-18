@@ -12,7 +12,7 @@ jobs:
       contents: write
 
     env:
-      GITHUB_PAT: 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
+      GITHUB_PAT: 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
 
     steps:
       - name: Check out repository
