@@ -5,7 +5,6 @@ author:
   - name: "Huanfa Chen"
 email: "huanfa.chen@ucl.ac.uk"
 date-as-string: "12 September 2025"
-other: "Any other information"
 from: markdown+emoji
 format: revealjs
 ---

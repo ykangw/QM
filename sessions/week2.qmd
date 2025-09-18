@@ -5,21 +5,15 @@ author:
 email: "beatrice.taylor@ucl.ac.uk"
 date-as-string: "8th October 2025"
 from: markdown+emoji
-format: 
-  revealjs:
-    slide-number: true
+format: revealjs 
+jupyter: python3
 ---
 
 # Last week
 
 ## Overview of lecture 1
 
-Last week we covered: 
-
-- Data types: levels of measurements; quantitative & qualitative
-- Key metrics 
-- Null values and outliers
-- Visualising data
+Need to fill this in. 
 
 # This week 
 
@@ -98,7 +92,7 @@ Better to try and understand the distribution of heights.
 This week thinking about the distribution of data. 
 How do we understand the spread of height data, how to we calculate important features of this data, how can we describe this data using mathematical equations? 
 
-Next week thinking about formulating and answering the research question. 
+Next week, thinking about formulating and answering the research question. 
 :::
 
 # Random Sampling 
@@ -130,7 +124,7 @@ We need to choose our sample carefully. We want what happens in the sample to ap
 **In practise**
 
 ::: {.incremental}
-We can try different sampling approaches
+- different sampling approaches
   - random sampling 
   - systematic sampling 
 :::
@@ -169,7 +163,6 @@ These can impact our research:
 - data selection 
 - data processing 
 - modelling choices
-- interpretation of results
 :::
 
 :::
@@ -236,7 +229,7 @@ Examples:
 ::: {.notes}
 Police profiling models - meant to make easy to spot criminals - but use exisitng crime data - which reflect racist prejudices in society - and the model learns to pick out people of certain ethnic backgrounds. 
 
-Tools also used to help the sentencing of criminals in courts of law - observe the hungry judges effect, where they sentnece differently based on how hungry they are - tend to be harsher just before lunch and more lenient after lunch. 
+Tools also used to help the sentnecing of criminals in courts of law - observe the hungry judges effect, where they sentnece differently based on how hungry they are - tend to be harsher just before lunch and more lenient after lunch. 
 :::
 
 ## Selection bias 
@@ -253,7 +246,7 @@ Examples:
 ::: {.notes}
 Roy model - example from economics - basically there's not a random selection of people in a specific job - thye have chosen that job based on underlying unobserved characterisitcs. For example suppose I'm interested in wages of workers in different occupations - but they have self-selected into that occupation based on their unique skill set - so it's a biased representation. 
 
-WEIRD = western, educated, industrialised, rich, democratic. Often studied in healthcare, and results assumed to apply to global population - but in reality actually not representative - at best representative of a small fraction of global pop.  
+WEIRD = western, educated, industrialised, rich, democratic
 :::
 
 ## Can data ever be truly representative? 
@@ -282,7 +275,6 @@ Not necessarilly a bad thing, but important to keep in mind. And if the bias is 
 </div>
 
 # Descriptive Statistics 
-Summary of the key characteristics of a dataset.
 
 ## What to declare 
 
@@ -444,10 +436,6 @@ The most fundamental distribution
 
 . . .
 
-When modelling, we need to account for the fact that we don't have all the data. 
-
-. . .
-
 In the case of the normal distribution - standard deviation becomes: 
 
 ```{=tex}
@@ -484,16 +472,16 @@ p(x=0.5) = \frac{1}{\sqrt{2 \pi \times 1^2}} e^{-\frac{(0.5-0)^2}{(2\times 1)^2}
 \end{align}
 ```
 
-::: {.notes}
-Generally want the probability that $x>p$ or $x<=p$ -> this is the area under the curve.
-:::
+<!-- Generally want the probability that $x>p$ or $x<=p$. 
+
+Area under the curve. -->
 
 ## Not everything is normal 
 Many real world datasets are *approximately* normally distributed.
 
 . . .
 
-But not all ---  might not be continuous, might not have a characteristic size, or might not be symmetric. 
+But not all ---  might not have a characteristic size, or not continuous, or not symmetric. 
 
 # More generally, what is a probability distribution? 
 
@@ -509,9 +497,7 @@ Measurable data which can take seperate, countable values.
 [*example*: shoe size]{style="color:#abc766"} 
 
 ::: {.notes}
-Thinking back to data types as we discussed last week. 
-
-Suppose I have someone who is 170 cm tall, and someone who is 171 cm tall, I can find someone in between whose 170.5cm tall. 
+Suppose I have someone who is x cm tall, and someone who is y cm tall, I can find someone in between whose x.5cm tall. 
 
 But shoe sizes are discrete (not the length of your foot). 
 :::
@@ -553,6 +539,7 @@ As for the normal distribution, in the general case we should be aware of the sa
 
 ::: {.column width="50%"}
 
+<br>
 <br>
 
 <div style="text-align:center;">
@@ -597,7 +584,6 @@ Note the combination here.
 
 ::: {.incremental}
 - I flip a coin 10 times 
-  - (assuming it's a fair coin)
   - **$n=10$, $p=0.5$**
 - How often can I expect to get at least 7 heads? 
   - **$k \geq 7$**
@@ -645,7 +631,7 @@ P(X \geq 7) &= P(X=7) + P(X=8) + P(X=9) + P(X=10)
 ## Measuring rare events
 
 ::: {.incremental}
-- Imagine a situation where certain events can occur in an **independent** fashion. 
+- Imagine a situation where certain rare events (like arrival of mail) can occur in an **independent** fashion. 
 - The Poisson distribution estimates how many such events are expected within a time interval
 - Fixed interval (e.g. one minute)
 - Fixed rate of events ($\lambda$) (e.g. 4 cars per minute, $\lambda=4$)
@@ -677,7 +663,7 @@ Where $\lambda$ is the expected number of events in a given interval.
 ::: {.incremental}
 - Between 1883 and 1893 there were an average of 2 deaths from horse kicks a year. 
   - **$\lambda=2$**
-- What's the probability of seeing 10 deaths from horse kicks in the year 1894? 
+- What's the probability of seeing 10 deaths from horse kicks in 1894? 
 ::: 
 
 . . .
@@ -700,7 +686,7 @@ If the Poisson measures the probability of x events within a time period, then t
 [*The greatest shortcoming of the human race is our inability to understand the exponential function*]{style="color:#49a0c4"} – Albert Bartlett (physicist)
 
 ::: {.notes}
-Nothing to do with the Bartlett school. Also, he's a bit dramatic
+He's a bit dramatic
 :::
 
 ## A game of chess...
@@ -736,7 +722,7 @@ Nothing to do with the Bartlett school. Also, he's a bit dramatic
 ::::
 
 ::: {.notes}
-Ancient legend about the wise sage who invented chess. 
+Famous story, of the man who invented chess. 
 Emperor was so grateful, he said what do you want in return 
 The man asked for rice, such that on each square of the chess board, the number of grains of rice doubled. 
 The Emperor thought this was a really small ask for such a great invention. He asked if he didn't want a better gift. 
@@ -885,16 +871,16 @@ Like pi comes from geometry (circles etc), e comes from the limit of the equatio
 
 ## When I can feed my town?
 
-The exponential function allows us to answer questions like: 
+Allows us to answer questions like: 
 
 ::: {.incremental}
 - "how many grains of rice at t=10?"
-- or “when will I have enough rice to feed my entire town?” 
+- “when will I have enough rice to feed my entire town?” 
 :::
 
 . . . 
 
-Answering the second question is easier said than done – the best way is to invert the equation.
+This is easier said than done – the best way is to invert the equation.
 
 ## Inverse operations 
 [*The mathematical operation that reverses.*]{style="color:#49a0c4"} 
