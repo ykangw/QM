@@ -292,7 +292,7 @@
         "\n",
         "Easy to print the summary statistics in Python, using `pandas`: "
       ],
-      "id": "3ef34bf5"
+      "id": "1048d848"
     },
     {
       "cell_type": "code",
@@ -305,7 +305,7 @@
         "height_df = pd.read_csv(\"L2_data/heights.csv\")\n",
         "height_df.describe().round(2)"
       ],
-      "id": "1b33d5ed",
+      "id": "1af87bad",
       "execution_count": null,
       "outputs": []
     },
@@ -317,7 +317,7 @@
         "\n",
         "::: column\n"
       ],
-      "id": "b82dcf92"
+      "id": "c4987459"
     },
     {
       "cell_type": "code",
@@ -330,7 +330,7 @@
         "height_df = pd.read_csv(\"L2_data/heights.csv\")\n",
         "height_df.describe().round(2)"
       ],
-      "id": "3a79d547",
+      "id": "61c9c7d8",
       "execution_count": null,
       "outputs": []
     },
@@ -948,7 +948,7 @@
         "\n",
         "Have questions prepared!"
       ],
-      "id": "b4b22d87"
+      "id": "30d36edc"
     }
   ],
   "metadata": {

@@ -14,3 +14,4 @@ cloud-config.yml
 *.parquet
 *.xlsx
 *.shp
+.Rproj.user

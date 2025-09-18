@@ -10,27 +10,44 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
+    env:
+      GITHUB_PAT: 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
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-        
-      - name: Install R
+
+      - name: Set up R
         uses: r-lib/actions/setup-r@v2
 
-      - name: Install R packages
-        run: Rscript setup.R
+      - name: Cache renv packages
+        uses: actions/cache@v3
+        with:
+          path: renv/library
+          key: ${{ runner.os }}-renv-${{ hashFiles('renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
 
-      - name: Install Python and Dependencies
+      - name: Restore R environment and install GitHub package
+        run: Rscript renv-setup.R
+
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           cache: 'pip'
-      - run: pip install jupyter
-      - run: python -m pip install --upgrade pip
-      - run: python -m pip install -r requirements.txt
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install jupyter
+          pip install -r requirements.txt
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
