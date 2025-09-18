@@ -1,12 +1,8 @@
 ---
-title: "Exploratory Data Analysis #1"
-subtitle: "Understanding and describing data"
-author: 
-  - name: "Huanfa Chen"
-email: "huanfa.chen@ucl.ac.uk"
-date-as-string: "12 September 2025"
-from: markdown+emoji
-format: revealjs
+format: html
+date: last-modified
+author: "Huanfa Chen"
+title: "Week 1"
 ---
 
 ## Introduction
