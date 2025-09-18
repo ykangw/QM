@@ -71,7 +71,7 @@ title: "Overview"
 
 ## Moodle Feedback
 Please provide anonymous feedback on Moodle
-![](images/moodle_feedback.png)
+![](L1_images/moodle_feedback.png)
 
 ## Github Feedback
 You can also give feedback on [Github issues](https://github.com/huanfachen/qm/issues).
