@@ -35,9 +35,9 @@ What is the probability of someone at UCL being over 190cm?
 Try to understand the distribution of heights. 
 
 ::: {.notes}
-Last week we asked this question and we thought about the distribution of the data. 
+Last week we asked this question and we thought about the distribution of the data. How to describe the distirbution of the data mathematically.
 
-This week we look at how to pose and address the research question. 
+This week we look at how to properly ask the research question, and how to answer it.  
 :::
 
 # This week 
@@ -68,9 +68,9 @@ Research science is about coming up with hypotheses and evaluating them.
 
 
 ::: {.notes}
-This lecture thinking about posing and answering reserach questions. 
+This lecture thinking about posing and answering research questions. 
 
-I have this great idea - considering the data is this idea plausibly true?
+You come up with a greta idea - then need to think considering the data is this idea plausibly true?
 :::
 
 ## Learning Objectives
@@ -119,7 +119,7 @@ A research question focuses on a specific problem.
 
 **Hypothesis**
 
-A statement that you will seek to confirm or disprove the research question.
+A formal statement that you will seek to confirm or disprove the research question.
 
 ## Flip a coin
 
@@ -211,11 +211,15 @@ If the coin is fair, how likely would it be to see 7 heads out of 10 flips?
 
 **Correct formulation:** 
 
-If the coin is fair, how likely would it be to see 7 heads out of 10 flips *OR AN EVEN MORE EXTREME RESULT?*
+If the coin is fair, how likely would it be to see 7 heads out of 10 flips *or an even more extreme result?*
 
 :::
 
 ::::
+
+::: {.notes}
+Interested in the probability of seeing the event or something even more extreme. 
+:::
 
 
 # Establishing and evaluating a Hypothesis 
@@ -234,7 +238,8 @@ If the coin is fair, how likely would it be to see 7 heads out of 10 flips *OR A
 [**$H_1$** - the alternative hypothesis ]{style="color:#49a0c4"} 
 
 - your hypothesis
-- needs some evidence to verify
+- it requires some evidence (data) to verify
+
 
 ## Step 2
 **Set your significance level $\alpha$**
@@ -242,10 +247,14 @@ If the coin is fair, how likely would it be to see 7 heads out of 10 flips *OR A
 [*The significance level is the threshold below which you reject the null hypothesis.*]{style="color:#49a0c4"} 
 
 ::: {.incremental}
-- Decide what “too unlikely” means **before you do the test**.
+- Decide what "too unlikely" means **before you do the test**.
 - Common choice is 5% significance
-  - $𝜶 = 0.05$ 
+  - $\alpha = 0.05$ 
   - This means that if we see evidence that would have less than a 5% chance of occurring under the null hypothesis, then we reject the null hypothesis. 
+:::
+
+::: {.notes}
+It's important to decide on your significance level prior, as otherwise you might find an event which is significant at the 10% threshold and not at 5% - which could lead to bad scientific practise.
 :::
 
 ## Step 3
@@ -259,7 +268,11 @@ f(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
 
 ::: {.incremental}
 - This could mean collecting the data
-- Or identifying a suitable dataset
+- Or identifying a suitable exisiting dataset
+:::
+
+::: {.notes}
+In quant methods this normally means finding an open public dataset to use. 
 :::
 
 ## Step 4
@@ -280,7 +293,7 @@ We'll come back to different types of statistical test later in the lecture
 **Compare p-value with significance level**
 
 ::: {.incremental}
-- p-value > $\alpha$ 
+- p-value $> \alpha$ 
   - Evidence not that unlikely. 
   - Not enough evidence to reject $H_0$.
 - p-value $\leq \alpha$ 
@@ -299,6 +312,7 @@ We'll come back to different types of statistical test later in the lecture
 :::
 
 # Types of error 
+Where things can go wrong 
 
 ## Type I error
 [*The true null hypothesis is incorrectly rejected.*]{style="color:#49a0c4"} 
@@ -321,27 +335,28 @@ This is caused by a **false negative**. The null hypothesis is false, but you ge
 NHS offers breast cancer screening for all women between the ages of 50 and 70.
 
 ::: {.notes}
-The idea is to screen all women in the popualtion at high risk of brast cancer - in the hope they pick up results better. 
+The idea is to screen all women in the popualtion at high risk of brast cancer - in the hope they pick up results better. Whilst the tests are good they're not completely accurate. 
 :::
 
 ## Example: Screening outcomes 
 
-[**False positive**]{style="color:#abc766"} 
-
 The null hypothesis is that the patient doesn't have cancer. 
+
+. . .
+
+[**False positive**]{style="color:#abc766"} 
 $\approx$ 10% of tests return a false positive. The test says they do have cancer even when they don't. 
 
 . . .
 
 [**False negative**]{style="color:#abc766"} 
-
-The null hypothesis is that the patient doesn't have cancer. 
 $\approx$ 20% of tests return a false negative. The test says they don't have cancer but they do.
+
 
 ::: {.notes}
 False positive is bad as you might pursue a healthcare treatment which is unecessary.
 
-False negative - in healthcare this is the worst outcome - as goes undiagnosed and hence untreated. 
+False negative - in healthcare context this is the worst outcome - as goes undiagnosed and hence untreated. 
 :::
 
 ## Matrix of errors 
@@ -350,20 +365,23 @@ False negative - in healthcare this is the worst outcome - as goes undiagnosed a
   <img src="L3_images/error_matrix.png" alt="Error matrix" style="max-width:80%">
 </div>
 
+::: {.notes}
+Possible outcomes form a matrix. 
+:::
 
 # A good hypothesis or a bad hypothesis? 
-What makes a hypothesis good? 
 
 ## Understanding the literature and the context 
 The hypothesis should not come out of thin air. 
 
 . . .
 
-What research have other people done? 
+::: {.incremental}
+- What do you know about the context? 
+- What research have other people done? 
+- What is the broader cultural context? 
+:::
 
-. . .
-
-What is the cultural context? 
 
 ## Asking ethical hypothesis questions 
 It's important to not make unethical assumptions in choosing the hypothesis. 
@@ -401,6 +419,10 @@ Lots of things can be correlated **BUT** it doesn't mean one event caused anothe
   </div>
 </div>
 
+::: {.notes}
+It's a dumb example but it's quite easy to find nonsense correlations between random variables. Can genertae your own at the website spurious correlations.  
+:::
+
 
 ## Correlation **IS NOT** causation 
 You might not know whether events are correlated, or causing each other. 
@@ -414,7 +436,7 @@ You might not know whether events are correlated, or causing each other.
 
 <br>
 
-The point of the hypothesis test is to test your idea – but use your contextual understanding to come up with plausible (and ethical) initial questions.
+The point of the hypothesis test is to test your idea – but you should use your contextual understanding to come up with plausible (and ethical) initial questions.
 
 ## The point of the scientific method
 

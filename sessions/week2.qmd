@@ -5,7 +5,9 @@ author:
 email: "beatrice.taylor@ucl.ac.uk"
 date-as-string: "8th October 2025"
 from: markdown+emoji
-format: revealjs
+format: 
+  revealjs:
+    slide-number: true
 ---
 
 # Last week
@@ -55,6 +57,10 @@ link to scientific process and how we test and then iterate over ideas and conce
 - Data science is about using ideas from statistics to describe large datasets 
 - Here looking to describe numerical data
 - Focus on probability distributions 
+:::
+
+::: {.notes}
+In large datasets its not practical to describe every data point - instead interested in the overall pattern. Moreover maybe that general pattern is more interetsing
 :::
 
 ## Learning Objectives
@@ -129,14 +135,22 @@ We can try different sampling approaches
   - systematic sampling 
 :::
 
+::: {.notes}
+I might assign everyone a number and then choose 100 random numbers and measure them. Or I might choose a specific subset, for exampel just everyone in this lecture theatre. 
+:::
+
 # Is the data representative? 
 
 ## Bias
-It's important to understand if your dataset truly representative or is it susceptible to bias? 
+It's important to understand if your dataset is unrepresentative or biased. 
 
 <div style="text-align:center;">
   <img src="L2_images/stickfigures_biased.gif" alt="Random Sampling" style="max-width:80%;">
 </div>
+
+::: {.notes}
+Bias is the idea that there is an unrepresentative pattern in your data.
+:::
 
 
 ## Cognitive bias 
@@ -174,7 +188,7 @@ These can impact our research:
 ::::
 
 ::: {.notes}
-Example of cognitive bias - confirmation bias, whereby I favour information that agrees with my existing beliefs. 
+Example of cognitive bias - confirmation bias, whereby I favour information that agrees with my existing beliefs. I'm writing a report on the spatial impact of a new railway line. Suppose I hate the idea of a new railway line, and then I see some data, fact a: 60% of residents living near the railline don't want it due to noise. fact b: 75% of residents in the UK do want the railway line. i might only include fact a in my report as it confirms my existing beliefs. 
 :::
 
 ## Why is this important? 
@@ -186,20 +200,25 @@ If we're not careful we can propagate bias to the research, and hence results.
 This can lead to incorrect conclusions. 
 
 ::: {.notes}
-If we're more aware of our biases it can be easier to try and actively avoid them. 
+As scientists we should try and present an accurate and fair balance of information. If we're more aware of our biases it can be easier to try and actively avoid them. 
 :::
 
 ## Types of bias 
 
 - Research bias
-  - Cognitive bias 
+Cognitive bias is a specific type of research bias. 
 
 - Dataset bias 
+Particularly important when thinking about analysing large datasets, as there could be non-obvious patterns reflecting biases. 
+
+Types of dataset bias include: 
   - Historical bias 
   - Selection bias 
 
 ::: {.notes}
 Already talked about the idea of cognitive bias. There are lots and lots of different types of biases - going to talk a little about different ways they can bias the dataset. 
+
+Dataset bias has become a more prevalent topic of concern on the era of large AI models. These models are really good at learnign patterns which aren't obvious to the human eye - but the pattern might reflect a bias. For example generative AI models learn that scientists are white men, even though if I asked you you'd tell me anyone can be a scientist. 
 :::
 
 ## Historical bias
@@ -242,7 +261,9 @@ WEIRD = western, educated, industrialised, rich, democratic. Often studied in he
 Probably not. 
 
 ::: {.notes}
-Even when we think we have really good data, someone has made the choice to collect this data. Why that data over other data? Does that data reflect their underlying cognitive biases?
+Even when we think we have really good data, someone has made the choice to collect this data. Why that data over other data? Does that data reflect their underlying cognitive biases? For example the choice to collect information of peoples opnion about a new trainline might be driven by a political goal of understanding public support for a new government infrastructure project. 
+
+Not necessarilly a bad thing, but important to keep in mind. And if the bias is noticeable then it should be acknowledged and reported. 
 :::
 
 . . .
@@ -265,16 +286,18 @@ Summary of the key characteristics of a dataset.
 
 ## What to declare 
 
-The most basic statistical information about the dataset. 
+Descriptive statistics refers to the most basic statistical information about the dataset. 
 
 . . .
 
+::: {.incremental}
 - Sample size (n) 
-- Mean, median, mode (depending on data type)
+- Mean, median, mode
 - Standard deviation 
 - Range 
+:::
 
-## Example 
+## Example 1
 ::: columns
 
 ::: column
@@ -310,21 +333,35 @@ height_df.describe().round(2)
 :::
 :::
 
+## Example 2 
+Sometimes we need more information. 
 
+```{python}
+#| echo: true
+#| output: true 
+import pandas as pd 
+
+# read data
+df_4datasets = pd.read_csv("L2_data/anscombe_quartet.csv")
+# print descriptive statistics
+df_4datasets.groupby("dataset").describe()
+```
+
+::: {.notes}
+all 4 datasets have very similar descriptive statistics of both the x, and y variables. 
+:::
 
 ## Same same but different 
-What about when the descriptive statistics don't tell us enough? 
 
 <div style="text-align:center;">
   <img src="L2_images/anscombes_four.png" alt="Anscombes quartet" style="max-width:70%">
 </div>
 
-These four datasets all have the same mean and variance of both $x$ and $y$. 
-
 ::: {.notes}
-These all have mean x = 9, variance x = 11. mean y = 7.5, variance y =4.1
-:::
+These all have mean x = 9, variance x = 11. mean y = 7.5, variance y =4.1. 
 
+But we can see from the diagrams that the distribution of the data is very different, some is linear, some is elliptic etc... So we need more advanced ways of describing the data. 
+:::
 
 # Normal Distribution
 The most fundamental distribution
@@ -338,11 +375,11 @@ The most fundamental distribution
 
 ::: {.notes}
 - Human height
-- Happiness
-- Petal size
+- Petal size (specifically length of iris petals)
+- blood pressure
+- birth weight of babies 
+- measurement errors in science experiments 
 :::
-
-
 
 ## You've seen it all before  
 
@@ -391,11 +428,14 @@ The most fundamental distribution
 ## Key features 
 
 ::: {.incremental}
-- Data is continuous -> it is something you measure not something you count
-- Characteristic size, all data points are close to the mean -> single peak
-- Data is equally likely to be larger or smaller than average -> symmetric
-- There is less data further away from the mean -> smooth tails on both sides
-
+- Data is continuous 
+  - it is something you measure not something you count
+- Data is equally likely to be larger or smaller than average 
+  - symmetric
+- Characteristic size, all data points are close to the mean 
+  - single peak
+- There is less data further away from the mean 
+  - smooth tails on both sides
 :::
 
 ## Sampling distributions 
@@ -504,12 +544,6 @@ As for the normal distribution, in the general case we should be aware of the sa
 
 ::: {.column width="50%"}
 
-**Discrete outcomes**
-
-Describes the frequency of successes in a test with 2 outcomes. 
-
-<br>
-
 ::: {.incremental}
 - I flip a coin 10 times
 - How often can I expect to get at least 7 heads? 
@@ -522,7 +556,7 @@ Describes the frequency of successes in a test with 2 outcomes.
 <br>
 
 <div style="text-align:center;">
-  <img src="L2_images/coin_flip.jpg" alt="A hand flipping a coin." style="max-width:60%">
+  <img src="L2_images/coin_spin.jpg" alt="A spinning coin." style="max-width:80%">
 </div>
 
 :::
@@ -530,6 +564,8 @@ Describes the frequency of successes in a test with 2 outcomes.
 ::::
 
 ::: {.notes}
+**Discrete outcomes**
+Describes the frequency of successes in a test with 2 outcomes. 
 Coin flip is the classic example - have exactly two outcomes, either heads or tails. 
 :::
 
@@ -547,6 +583,16 @@ Where $n$ is the number of trials, and $p$ is the probability of success for eac
 
 [*The probability mass function (PMF) describes the likelihood of different outcomes for a discrete random variable*]{style="color:#49a0c4"} 
 
+::: {.notes}
+Note the combination here. 
+:::
+
+## Plotting the distribution
+
+<div style="text-align:center;">
+  <img src="L2_images/binomial_distribution.png" alt="Binomial distribution" style="max-width:90%">
+</div>
+
 ## Example 
 
 ::: {.incremental}
@@ -554,7 +600,7 @@ Where $n$ is the number of trials, and $p$ is the probability of success for eac
   - (assuming it's a fair coin)
   - **$n=10$, $p=0.5$**
 - How often can I expect to get at least 7 heads? 
-  - **$k=7$**
+  - **$k \geq 7$**
 :::
 
 . . . 
@@ -563,8 +609,9 @@ Evaluating the PMF, we get:
 
 ```{=tex}
 \begin{align}
-P(X = 7) = \binom{10}{7} 0.5^7 (1-0.5)^{10-7}
-\\ = 0.1172
+P(X \geq 7) &= P(X=7) + P(X=8) + P(X=9) + P(X=10)
+\\
+&= 0.1719
 \end{align}
 ```
 
@@ -602,7 +649,6 @@ P(X = 7) = \binom{10}{7} 0.5^7 (1-0.5)^{10-7}
 - The Poisson distribution estimates how many such events are expected within a time interval
 - Fixed interval (e.g. one minute)
 - Fixed rate of events ($\lambda$) (e.g. 4 cars per minute, $\lambda=4$)
--	Events occur independently.
 -	Poisson distribution gives the probability of $k$ events.
 :::
 
@@ -619,6 +665,12 @@ P(X = k) = \frac{\lambda^k e^{- \lambda}}{k!}
 ```
 
 Where $\lambda$ is the expected number of events in a given interval.
+
+## Plotting the distribution 
+
+<div style="text-align:center;">
+  <img src="L2_images/poisson_distribution.png" alt="Poisson distribution" style="max-width:90%">
+</div>
 
 ## Example 
 
@@ -663,8 +715,9 @@ Nothing to do with the Bartlett school. Also, he's a bit dramatic
 
 ::: {.incremental}
 - You've invented chess. 
-- The emperor asks what you would like as thanks. 
+- The emperor is really grateful - and asks what gift you would like in thanks. 
 - You ask for grains of rice.  
+- Specifically, rice to fill the chessboard, such that the number of grains double on each square. 
 :::
 
 :::
@@ -688,6 +741,8 @@ Emperor was so grateful, he said what do you want in return
 The man asked for rice, such that on each square of the chess board, the number of grains of rice doubled. 
 The Emperor thought this was a really small ask for such a great invention. He asked if he didn't want a better gift. 
 But the man insisted that what he wanted was rice. 
+
+Image is of Chatarunga - which is the earliest known form of chess dating to 6th century AD northern India. 
 :::
 
 ## ...and rice 
@@ -704,9 +759,13 @@ But the man insisted that what he wanted was rice.
 
 ::: {.column width="20%"}
 
-::: {.incremental}
-- which is more rice than the world's total rice production...  
-:::
+. . . 
+
+10^18
+
+. . . 
+
+Which is more than the global production of rice.  
 
 :::
 
@@ -716,7 +775,7 @@ But the man insisted that what he wanted was rice.
 A bowl of rice is around 4,000 grains. 
 :::
 
-## Writing the equation
+<!-- ## Writing the equation
 
 :::: {.columns}
 
@@ -725,13 +784,14 @@ A bowl of rice is around 4,000 grains.
 
 | x   | y           |
 |-----|-------------|
-| 1   | 2           |
-| 2   | 4           |
-| 3   | 8           |
-| 4   | 16          |
-| 5   | 32          |
-| 6   | 64          |
-| 7   | 128         |
+| 1   | 1           |
+| 2   | 2           |
+| 3   | 4           |
+| 4   | 8          |
+| 5   | 16          |
+| 6   | 32          |
+| 7   | 64         |
+| ... | ...         |
 </div>
 :::
 
@@ -739,7 +799,7 @@ A bowl of rice is around 4,000 grains.
 
 ```{=tex}
 \begin{align}
-y = 2^x
+y = 2^(x-1)
 \end{align}
 ```
 
@@ -750,7 +810,7 @@ y = 2^x
 
 :::{.notes}
 Here we have base 2, and the exponent x. 
-:::
+::: -->
 
 ## What does this look like on a graph?
 
@@ -794,6 +854,13 @@ Here we have base 2, and the exponent x.
 
  -->
 
+## Generally we have
+
+<div style="text-align:center;">
+  <img src="L2_images/exponential_functions.png" alt="Exponential function" style="max-width:90%;">
+</div>
+
+
 ## The exponential function
 
 The (natural) exponential function is:
@@ -812,7 +879,7 @@ e \approx 2.718...
 ```
 
 :::{.notes}
-Its a mathematical constant simialr to pi - it's just a fixed number which we have a name for. 
+Its a mathematical constant similar to pi - it's just a fixed number which we have a name for. 
 Like pi comes from geometry (circles etc), e comes from the limit of the equation of compound interest. 
 :::
 
@@ -824,6 +891,8 @@ The exponential function allows us to answer questions like:
 - "how many grains of rice at t=10?"
 - or “when will I have enough rice to feed my entire town?” 
 :::
+
+. . . 
 
 Answering the second question is easier said than done – the best way is to invert the equation.
 
@@ -920,6 +989,10 @@ When we have exponential data we can take the logarithm of it - and hence simpli
 We will return to the idea of taking the log of data in future weeks - especially in the context of regression analyses. 
 :::
 
+<!-- ## Log it 
+
+NOTE - need to add plot here of what happens to exponential data after taking the logarithm of it.  -->
+
 # Overview 
 We've covered: 
 
@@ -932,7 +1005,7 @@ We've covered:
 
 
 # Practical 
-Practical will focus on plotting and generating summary statistics for data following a range of probability distributions. 
+The practical will focus on exploratory data analysis for a variety of different datasets.
 
 . . .
 

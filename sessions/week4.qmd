@@ -64,7 +64,7 @@ Maths underpins quantitative methods
 </div>
 
 ::: {.notes}
-Maths can seem scary – but goal is to have a better understanding of key ideas.
+Maths can seem scary – but goal is to have a better understanding of key ideas. Going to cover quite abit - so focus on the goal of being able to understand equations. 
 
 Not expecting students to be experts!
 :::
@@ -115,21 +115,22 @@ This is an equation for a geographically weighted regression model.
 - Mathematical models help us to understand the data
 - In a regression setting the model describes a function that maps input to real-valued outputs 
 - We can use mathematical models to validate our hypotheses/research questions 
-  - How does the number of bedrooms affect house price? 
-  - What's the relationship between time spent studying and student's grades? 
 :::
 
 ::: {.notes}
-Thinking back to hypotheses from last week - mathematical models help us to evaluate our research question.
+Thinking back to hypotheses from last week - mathematical models help us to evaluate our research question. Lats week we looked at simple statistical tests - but might have a more sophisticated model of what's happening. 
 :::
 
 ## Machine learning 
 [*A model which improves after data is taken into account.*]{style="color:#49a0c4"} 
 
-- A specific type of mathematical model 
+- Mayne of these concepts are also integral to machine learning
+- Really just a specific type of mathematical model 
 - The learning part is about automatically finding patterns 
 
 ::: {.notes}
+These ideas are also fundamental for machine learning. 
+
 Lots of different definitions of machine learning - but this us a simple one. 
 
 In later weeks of the course we will look at machine learning concepts. 
@@ -160,12 +161,15 @@ Mathematical notation cheat sheet: https://www.upyesp.org/posts/makrdown-vscode-
 
 ## Letters for numbers 
 
+There are mathematical conventions for how we describe different things. 
+
 ::: {.incremental}
 - $a, b, c$ represent **constants**  
 - $x, y, z, \dots$ represent **variables**  
 - $f, g, h, \dots$ represent **functions**  
 - $i, j, \dots$ often used for **indices** (i.e. counting)  
 - $a_i$ means the $i$-th element of a sequence  
+- $A, B, C$ represent **matrices**
 :::
 
 ## Numbers replaced by letters 
@@ -183,6 +187,10 @@ The power to represent any number!
 :::
 
 ::::
+
+::: {.notes}
+This is powerful as it allows is to represent abstract concepts - a universal x, rather than a specific number.
+:::
 
 ## Sums 
 
@@ -707,6 +715,8 @@ d & -b \cr
 \end{align}
 ```
 
+. . .
+
 If $\det(A) = 0$, the matrix has no inverse.
 
 <!-- ## Example 
@@ -787,7 +797,7 @@ Equation 2:
 \end{align}
 ```
 
-## Translating equation 1 
+## Equation 1 
 
 ```{=tex}
 \begin{align}
@@ -796,20 +806,30 @@ y_i = \beta_0(u_i, v_i) + \sum_{k=1}^p \beta_{ik}(u_i, v_i)x_{ik} + \epsilon_i
 ```
 
 where: 
+
 - $y_i$: the outcome (response) for observation $i$
 - $\beta_0(u_i,v_i)$: the intercept, which can vary with location $(u_i,v_i)$
 - $\sum_{k=1}^p \beta_{ik}(u_i,v_i) x_{ik}$: the weighted sum of predictors $x_{ik}$,
 where each predictor has its own coefficient that may depend on $(u_i,v_i)$
 - $\epsilon_i$: the error term for observation $i$
 
-. . .
+::: {.notes}
+Read the equation out
+:::
 
-*Translation:*
+## Translating equation 1
 
-“The outcome $y_i$ is explained by an intercept and a weighted combination of predictors,
-with coefficients that may change depending on the location $(u_i,v_i)$, plus some error.”
+```{=tex}
+\begin{align}
+y_i = \beta_0(u_i, v_i) + \sum_{k=1}^p \beta_{ik}(u_i, v_i)x_{ik} + \epsilon_i
+\end{align}
+```
 
-## Translating equation 2
+*The outcome $y_i$ is explained by an intercept and a weighted combination of predictors,
+with coefficients that may change depending on the location $(u_i,v_i)$, plus some error.*
+
+
+## Equation 2
 
 
 ```{=tex}
@@ -820,18 +840,28 @@ $\hat{\beta}(i)$: the estimated coefficients at location $i$
 ```
 
 where:
+
 - $X$: the matrix of predictor variables
 - $Y$: the vector of observed outcomes
 - $W(i)$: a weight matrix that depends on location $i$
 - $X^T$: the transpose of $X$
 - $[X^TW(i)X]^{-1}$: the inverse of the weighted cross-product matrix
 
-. . .
+::: {.notes}
+Read the equation out
+:::
 
-*Translation:*
+## Translating equation 2
 
-“The estimated coefficients $\hat{\beta}(i)$ are obtained by solving a weighted least squares problem:
-take the predictors $X$, weight them with $W(i)$, and solve for the coefficients that best fit $Y$.”
+```{=tex}
+\begin{align}
+\hat{\beta}(i) = [X^TW(i)X]^{-1}X^TW(i)Y
+$\hat{\beta}(i)$: the estimated coefficients at location $i$
+\end{align}
+```
+
+*The estimated coefficients $\hat{\beta}(i)$ are obtained by solving a weighted least squares problem:
+take the predictors $X$, weight them with $W(i)$, and solve for the coefficients that best fit $Y$.*
 
 # Overview 
 
