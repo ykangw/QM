@@ -18,6 +18,11 @@ metadata-files:
 
 highlight-style: pygments
 
+qna:
+  ipynb: question
+  html: both
+  pdf: question
+
 format:
   html:
     theme: 
