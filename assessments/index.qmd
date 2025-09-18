@@ -74,7 +74,7 @@ Your report and technical appendix should be uploaded to Moodle as a single PDF 
 
 ## Mark Scheme
 
-This is how we will mark your work - take note of the
+This is how we will mark your work - take note of them
 
 ::: column-page
 ```{r}
