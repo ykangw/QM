@@ -23,8 +23,6 @@ To access the lecture notes: [Week 1 lecture](week1_lecture.qmd)
 
 ## Practical
 
-:::
-
 :::{.callout-note}
 
 To save a copy of notebook to your own GitHub Repo: follow the GitHub link, click on `Raw` and then `Save File As...` to save it to your own computer. Make sure to change the extension from `.ipynb.txt` (which will probably be the default) to `.ipynb`before adding the file to *your* GitHub repository.
