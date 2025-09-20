@@ -157,7 +157,7 @@ print("Max population: ", df_pop_la['Population_2021'].max(skipna=True))
 Which LAs have the maximum population size? *The code above is a bit complicated*.
 
 ```{python}
-print("{} have the maximum population of {}".format(", ".join(df_pop_la.loc[df_pop_la['Population_2021'] == df_pop_la['Population_2021'].max(skipna=True), 'Area_name']), df_pop_la['Population_2021'].max(skipna=True)))
+# print("{} have the maximum population of {}".format(", ".join(df_pop_la.loc[df_pop_la['Population_2021'] == df_pop_la['Population_2021'].max(skipna=True), 'Area_name']), df_pop_la['Population_2021'].max(skipna=True)))
 ```
 
 What it does:
