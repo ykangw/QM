@@ -21,7 +21,7 @@ This week is focussed on ensuring that you're able to access the teaching materi
 
 The process for every week will be the same: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. If you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.
 
-::: {.callout-info}
+:::{.callout-note}
 
 Suggestions for a Better Learning Experience:
 
@@ -137,10 +137,8 @@ print(df_pop_la.describe())
 
 Now, we focus on describing the local authority population from census 2021. The first question is, what data type is this variable - *nominal*, *ordinal*, *interval*, or *ratio*？
 
-::: callout-info
-### 
-
-Note: The data type of a variable is different from how it’s stored in memory. For example, the *Area_type* variable can be encoded for convenience as 0 (“national”), 1 (“country”), and 2 (“local authority”). Although these are stored as numbers, Area_type is not truly numeric data — it’s an *nominal* variable.
+:::{.callout-note}
+The data type of a variable is different from how it’s stored in memory. For example, the *Area_type* variable can be encoded for convenience as 0 (“national”), 1 (“country”), and 2 (“local authority”). Although these are stored as numbers, Area_type is not truly numeric data — it’s an *nominal* variable.
 :::
 
 Does it make sense to say 'The population of LA AAA is twice of LA BBB'? Yes. So, this variable is of *ratio* type.
@@ -166,10 +164,13 @@ What it does: - Finds the max population while ignoring NaNs. - Selects all rows
 
 Two new Python functions here: - *format()*: Inserts variables into a string by replacing {} placeholders in order with provided arguments. - *join()*: Combines the elements of an iterable into one string using the given separator before .join().
 
-Which LA has the minimum population?
+Which LAs have the minimum population?
 
 ```{python}
-# print("{} have the minimum population of {}".format(", ".join(df_pop_la.loc[df_pop_la['Population_2021'] == df_pop_la['Population_2021'].min(skipna=True), 'Area_name']), df_pop_la['Population_2021'].min(skipna=True)))
+print("{} have the minimum population of {}".format(
+    ", ".join(df_pop_la.loc[df_pop_la['Population_2021'] == df_pop_la['Population_2021'].min(skipna=True), 'Area_name']), 
+    df_pop_la['Population_2021'].min(skipna=True))
+    )
 ```
 
 ### NA value and outliers?
@@ -221,7 +222,7 @@ plt.grid(axis='y', linestyle='--', alpha=0.6)
 plt.show()
 ```
 
-What do you observe from this boxplot?
+What do you observe from this boxplot? There are lots of values above the 
 
 ## Exploring Percentage_change
 
