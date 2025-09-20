@@ -213,11 +213,11 @@ To create a boxplot of this variable:
 import matplotlib.pyplot as plt
 
 # Create boxplot
-df_pop_la['Population_2021'].plot(kind='box', title='LA Population 2021 Boxplot')
+# df_pop_la['Population_2021'].plot(kind='box', title='LA Population 2021 Boxplot')
 
-plt.ylabel('Population')
-plt.grid(axis='y', linestyle='--', alpha=0.6)
-plt.show()
+# plt.ylabel('Population')
+# plt.grid(axis='y', linestyle='--', alpha=0.6)
+# plt.show()
 ```
 
 What do you observe from this boxplot?
