@@ -156,7 +156,10 @@ print("Max population: ", df_pop_la['Population_2021'].max(skipna=True))
 Which LAs have the maximum population size? *The code above is a bit complicated*.
 
 ```{python}
-# print("{} have the maximum population of {}".format(", ".join(df_pop_la.loc[df_pop_la['Population_2021'] == df_pop_la['Population_2021'].max(skipna=True), 'Area_name']), df_pop_la['Population_2021'].max(skipna=True)))
+print("{} have the maximum population of {}".format(
+    ", ".join(df_pop_la.loc[df_pop_la['Population_2021'] == df_pop_la['Population_2021'].max(skipna=True), 'Area_name']), 
+    df_pop_la['Population_2021'].max(skipna=True))
+    )
 ```
 
 What it does: - Finds the max population while ignoring NaNs. - Selects all rows with that population. - Joins their Area_name values into a comma-separated string.
@@ -197,7 +200,11 @@ print("How many outliers?", outliers.shape[0])
 print("Outliers:\n", outliers)
 ```
 
-There are 33 outliers in this dataset.
+There are 33 outliers in this dataset. Think about the three types of outliers that we discussed. Which type do these 33 outliers beloong to?
+
+- **Error Outlier**
+- **Irregular Pattern Outlier**
+- **Influential Outlier**
 
 ### Boxplot
 
@@ -207,11 +214,11 @@ To create a boxplot of this variable:
 import matplotlib.pyplot as plt
 
 # Create boxplot
-# df_pop_la['Population_2021'].plot(kind='box', title='LA Population 2021 Boxplot')
+df_pop_la['Population_2021'].plot(kind='box', title='LA Population 2021 Boxplot')
 
-# plt.ylabel('Population')
-# plt.grid(axis='y', linestyle='--', alpha=0.6)
-# plt.show()
+plt.ylabel('Population')
+plt.grid(axis='y', linestyle='--', alpha=0.6)
+plt.show()
 ```
 
 What do you observe from this boxplot?
@@ -222,42 +229,83 @@ What do you observe from this boxplot?
 
 Try completing the code below on your own. Practice makes perfect!
 
-### Checking Lists
-
-Finally, how can you check if the city of Moscow is in the list and let the user know if it is or is not?
+### Which LAs experienced the largest population percentage change? To what extent?
 
 ::: qna
 #### Question
 
 ``` python
-if ??
-    ??
-else:
-    ??
+print("{} have the largest population percentage change of {}%".format(
+    ", ".join(df_pop_la.loc[??['??'] == ??['??'].max(skipna=True), 'Area_name']), 
+    df_pop_la['Population_2021'].??(skipna=True))
+    )
 ```
 
 #### Answer
 
 ```{python}
-if 'Moscow' in ['Moscow', 'Beijing']:
-    print("Moscow is in the cities list.")
-else:
-    print("Moscow is not in the cities list.")
+print("{} have the largest population percentage change of {}%".format(
+    ", ".join(df_pop_la.loc[df_pop_la['Percentage_change'] == df_pop_la['Percentage_change'].max(skipna=True), 'Area_name']), 
+    df_pop_la['Percentage_change'].max(skipna=True))
+    )
+```
+:::
+
+### Which LAs experienced the smallest population percentage change? To what extent?
+
+::: qna
+#### Question
+
+``` python
+print("{} have the smallest population percentage change of {}%".format(
+    ", ".??(df_pop_la.loc[df_pop_la[??] == ??['Percentage_change'].??(skipna=True), 'Area_name']), 
+    df_pop_la['Percentage_change'].??(skipna=True))
+    )
+```
+
+#### Answer
+
+```{python}
+print("{} have the smallest population percentage change of {}%".format(
+    ", ".join(df_pop_la.loc[df_pop_la['Percentage_change'] == df_pop_la['Percentage_change'].min(skipna=True), 'Area_name']), 
+    df_pop_la['Percentage_change'].min(skipna=True))
+    )
+```
+:::
+
+### Make a boxplot of Percentage_change
+
+::: qna
+#### Question
+
+``` python
+import matplotlib.pyplot as plt
+
+# Create boxplot
+df_pop_la[??].plot(kind=??, title='LA Population Percentage Change Boxplot')
+
+plt.??('Percentage change')
+plt.grid(axis='y', linestyle='--', alpha=0.6)
+plt.show()
+```
+
+#### Answer
+
+```{python}
+import matplotlib.pyplot as plt
+
+# Create boxplot
+df_pop_la['Percentage_change'].plot(kind='box', title='LA Population Percentage Change Boxplot')
+
+plt.ylabel('Percentage change')
+plt.grid(axis='y', linestyle='--', alpha=0.6)
+plt.show()
 ```
 :::
 
 ## You're Done!
 
-This is quite a lot to get through. If you've managed it in under 2 hours then *congratulations*! Either you must have paid a lot of attention when doing Code Camp, or you might want to check in with us as to whether you should really be doing this module...
+Congratulations on completing the first QM practical session! If you are still working on it, take you time.
 
-### No Wait, One More Thing...
+Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.
 
-You now want to add/commit/push your completed notebook to your GitHub reposistory. Using the Terminal you need to:
-
-1.  Navigate to your repository (e.g.`$HOME/Documents/CASA/<your repository>`).
-2.  Check the status of your notebooks using `git status` (you should see that `Practical-02-Foundations_1.ipynb has been modified`).
-3.  Add the *changes* to Git using `git add  Practical-02-Foundations_1.ipynb`
-4.  Commit this changed notebook with a message using `git commit -m "<your message here...>"`
-5.  Push this change to GitHub using: `git push`
-
-You should now be able to visit your repository on [GitHub](https://github.com/) and see that your changes are now stored there as well!
