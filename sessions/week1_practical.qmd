@@ -248,7 +248,7 @@ else:
 #### Answer
 
 ```{python}
-if 'Moscow' in ['Moscow', 'Beijing']]:
+if 'Moscow' in ['Moscow', 'Beijing']:
     print("Moscow is in the cities list.")
 else:
     print("Moscow is not in the cities list.")
