@@ -21,8 +21,7 @@ This week is focussed on ensuring that you're able to access the teaching materi
 
 The process for every week will be the same: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. If you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.
 
-:::{.callout-note}
-
+::: callout-note
 Suggestions for a Better Learning Experience:
 
 -   **Set your operating system and software language to English**: this will make it easier to follow tutorials, search for solutions online, and understand error messages.
@@ -58,9 +57,9 @@ If you are a bit confused with *container*, *JupyterLab*, *terminal*, or *Git*, 
 
 ## Loading data
 
-We are going to describe the population of local authorities in the UK. 
+We are going to describe the population of local authorities in the UK.
 
-The data is sourced from [Office for National Statistics](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/howyourareahaschangedin10yearscensus2021/2022-11-08) and is donwloadable [here](https://www.ons.gov.uk/visualisations/censusareachanges/data/mapdatadownload.csv). 
+The data is sourced from [Office for National Statistics](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/howyourareahaschangedin10yearscensus2021/2022-11-08) and is donwloadable [here](https://www.ons.gov.uk/visualisations/censusareachanges/data/mapdatadownload.csv).
 
 We have saved a copy of this dataset to the Github repo, in case that the dataset is removed from the website.
 
@@ -78,13 +77,13 @@ df_pop = pd.read_csv(
 print(df_pop.head())
 ```
 
-You might wonder why skipping the first 5 rows and setting *thousands=','*. I learnt this after opening this csv file in a text editor and lots of trial-and-errors. 
+You might wonder why skipping the first 5 rows and setting *thousands=','*. I knew about this after opening this csv file in a text editor and lots of trial-and-errors.
 
-![]({{< var module.web >}}/sessions/L1_images/uk_pop_csv_screenshot.jpg){width="600"} 
+![](%7B%7B%3C%20var%20module.web%20%3E%7D%7D/sessions/L1_images/uk_pop_csv_screenshot.jpg){width="600"}
 
 <!-- ![](L1_images/uk_pop_csv_screenshot.jpg){width=600} -->
 
-Then, we printed the first few rows of this dataset using *df_pop.head()*.
+Then, we check the first few rows of this dataset using *df_pop.head()*.
 
 ## Describing the dataframe
 
@@ -137,11 +136,11 @@ print(df_pop_la.describe())
 
 Now, we focus on describing the local authority population from census 2021. The first question is, what data type is this variable - *nominal*, *ordinal*, *interval*, or *ratio*？
 
-:::{.callout-note}
-The data type of a variable is different from how it’s stored in memory. For example, the *Area_type* variable can be encoded for convenience as 0 (“national”), 1 (“country”), and 2 (“local authority”). Although these are stored as numbers, Area_type is not truly numeric data — it’s an *nominal* variable.
+::: callout-note
+The *data type* of a variable is different from *how it’s stored in a computer*. For example, the *Area_type* variable can be encoded for convenience as 0 (“national”), 1 (“country”), and 2 (“local authority”). Although these are stored as numbers, Area_type is not truly numeric data — it’s an *nominal* variable.
 :::
 
-Does it make sense to say 'The population of LA AAA is twice of LA BBB'? Yes. So, this variable is of *ratio* type.
+Does it make sense to say 'the population of LA AAA is twice of LA BBB'? Yes. So, this variable is of *ratio* type.
 
 ### max and min
 
@@ -151,7 +150,7 @@ What is the maximum population size in census 2021?
 print("Max population: ", df_pop_la['Population_2021'].max(skipna=True))
 ```
 
-Which LAs have the maximum population size? *The code above is a bit complicated*.
+Which LAs have the maximum population size? *The code below is a bit complicated*.
 
 ```{python}
 print("{} have the maximum population of {}".format(
@@ -160,9 +159,17 @@ print("{} have the maximum population of {}".format(
     )
 ```
 
-What it does: - Finds the max population while ignoring NaNs. - Selects all rows with that population. - Joins their Area_name values into a comma-separated string.
+What it does:
 
-Two new Python functions here: - *format()*: Inserts variables into a string by replacing {} placeholders in order with provided arguments. - *join()*: Combines the elements of an iterable into one string using the given separator before .join().
+-   Finds the *max* population while ignoring NaNs. *It is always safe to use skipna=True, even though there is no NA values.*
+-   Selects all rows with that population.
+-   Joins their Area_name values into a comma-separated string.
+
+Two new Python functions here:
+
+-   *format()*: Inserts variables into a string by replacing {} placeholders in order with provided arguments.
+
+-   *join()*: Combines the elements of an iterable into one string using the given separator before .join().
 
 Which LAs have the minimum population?
 
@@ -173,9 +180,29 @@ print("{} have the minimum population of {}".format(
     )
 ```
 
-### NA value and outliers?
+### Standard deviation
 
-Are there NA values or outliers in this variable? From results of `info()`, there are no NA values.
+The result from `df_pop_la.describe()` indicates that the standard deviation of Population_2021 is `2.245442e+05`.
+
+Another way to calculate this standard deviation and to reformat it is:
+
+```{python}
+std_dev = df_pop_la['Population_2021'].std()
+# plain notation
+print("The standard deviation of Population_2021 is: {}".format(std_dev)) 
+# scientific notation
+print("Using scientific notation: {:.3e}".format(std_dev)) 
+# thousands separator notation + 2 decimal places
+print("Using thousands separator notation: {:,.2f}".format(std_dev))
+```
+
+There are several ways to represent numbers, and which one you choose depends on the situation.
+
+Equally important is to ensure the numbers are meaningful, or to use proper **significant figures**. For example, reporting a population’s standard deviation with 10 decimal places does not make sense.
+
+### Null value and outliers?
+
+Are there Null values or outliers in this variable? From results of `info()`, there are no NA values.
 
 To detect outliers, we will implement the Tukey Fences method using pandas function, as pandas does not provide a built-in function for this method.
 
@@ -203,9 +230,9 @@ print("Outliers:\n", outliers)
 
 There are 33 outliers in this dataset. Think about the three types of outliers that we discussed. Which type do these 33 outliers beloong to?
 
-- **Error Outlier**
-- **Irregular Pattern Outlier**
-- **Influential Outlier**
+-   **Error Outlier**
+-   **Irregular Pattern Outlier**
+-   **Influential Outlier**
 
 ### Boxplot
 
@@ -222,7 +249,7 @@ plt.grid(axis='y', linestyle='--', alpha=0.6)
 plt.show()
 ```
 
-What do you observe from this boxplot? There are lots of values above the 
+What do you observe from this boxplot? There are lots of values above the
 
 ## Exploring Percentage_change
 
@@ -309,4 +336,3 @@ plt.show()
 Congratulations on completing the first QM practical session! If you are still working on it, take you time.
 
 Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.
-
