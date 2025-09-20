@@ -21,8 +21,7 @@ This week is focussed on ensuring that you're able to access the teaching materi
 
 The process for every week will be the same: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. If you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.
 
-::: callout-info
-### 
+::: {.callout-info}
 
 Suggestions for a Better Learning Experience:
 
