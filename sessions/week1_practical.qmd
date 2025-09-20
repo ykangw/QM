@@ -301,7 +301,7 @@ print("{} have the smallest population percentage change of {}%".format(
 ```
 :::
 
-### Make a boxplot of Percentage_change
+### Making a boxplot of Percentage_change
 
 ::: qna
 #### Question
