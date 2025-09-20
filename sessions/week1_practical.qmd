@@ -24,11 +24,11 @@ The process for every week will be the same: download the notebook to your `QM` 
 ::: callout-info
 ### 
 
-Suggestions for a Better Learning Experience - **Set your operating system and software language to English**\
-This will make it easier to follow tutorials, search for solutions online, and understand error messages.
+Suggestions for a Better Learning Experience:
 
--   **Save all files to a cloud storage service**\
-    Use platforms like Google Drive, OneDrive (2TB OneDrive space from UCL), Dropbox, or Git to ensure your work is backed up and can be restored easily when the laptop gets stolen or broken.
+-   **Set your operating system and software language to English**: this will make it easier to follow tutorials, search for solutions online, and understand error messages.
+
+-   **Save all files to a cloud storage service**: use platforms like Google Drive, OneDrive, Dropbox, or Git to ensure your work is backed up and can be restored easily when the laptop gets stolen or broken.
 
 -   **Avoid whitespace in file names and column names in datasets**
 :::
@@ -59,7 +59,11 @@ If you are a bit confused with *container*, *JupyterLab*, *terminal*, or *Git*, 
 
 ## Loading data
 
-We are going to describe the population of local authorities in the UK. The data is sourced from [Office for National Statistics](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/howyourareahaschangedin10yearscensus2021/2022-11-08) and is donwloadable [here](https://www.ons.gov.uk/visualisations/censusareachanges/data/mapdatadownload.csv). We have saved a copy of this dataset to the Github repo, in case that the dataset is removed from the website.
+We are going to describe the population of local authorities in the UK. 
+
+The data is sourced from [Office for National Statistics](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/howyourareahaschangedin10yearscensus2021/2022-11-08) and is donwloadable [here](https://www.ons.gov.uk/visualisations/censusareachanges/data/mapdatadownload.csv). 
+
+We have saved a copy of this dataset to the Github repo, in case that the dataset is removed from the website.
 
 ```{python}
 import pandas as pd
