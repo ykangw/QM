@@ -178,7 +178,7 @@ Are there NA values or outliers in this variable? From results of `info()`, ther
 
 To detect outliers, we will implement the Tukey Fences method using pandas function, as pandas does not provide a built-in function for this method.
 
-```{Python}
+```{python}
 # Calculate Q1, Q3, and IQR
 Q1 = df_pop_la['Population_2021'].quantile(0.25)
 Q3 = df_pop_la['Population_2021'].quantile(0.75)

@@ -2,24 +2,24 @@
 format: html
 date: last-modified
 author: "Huanfa Chen"
-title: "Week 5"
+title: "Week 9"
 ---
 
 ## Introduction
 
-This week, we’ll explore how to *tell if several groups are truly different* and how to *measure the strength and direction of the relationship between two variables*.
+This week will introduce how to simplify complex datasets by reducing the number of variables while preserving important information.
 
 ## Learning Objectives
 
 By the end of this week, you will be able to:
 
-1. Understand ANOVA.
-2. Understand correlation between two variables.
-3. Understand the difference of Pearson and Spearman correlation.
+1. Understand the principle of dimensionality reduction.
+2. Understand the method of principle component analysis.
+3. Visualise and describe the results of PCA.
 
 ## Lecture 
 
-To access the lecture notes: [Week 5 lecture](week5_lecture.qmd)
+To access the lecture notes: [Week 9 lecture](week9_lecture.qmd)
 
 ## Practical
 
@@ -31,7 +31,7 @@ To save a copy of notebook to your own GitHub Repo: follow the GitHub link, clic
 
 To access the practical:
 
-1. [Preview](week5_practical.html)
-2. [Download](week5_practical.ipynb)
+1. [Preview](week9_practical.html)
+2. [Download](week9_practical.ipynb)
 
 ## Further resources
