@@ -36,3 +36,6 @@ The website is here: https://huanfachen.github.io/QM/.
 1. Moodle: add link to lecture recording video
 1. Quarto: week 1 practical - add standard deviation
 1. Quarto: week 5/9/10
+1. Technical issue: when importing images from a folder to lecture/practical, which method should be used?
+   - ![WHATEVER]({{< var module.web >}}/practicals/img/1.1-Repo_Created.png): **failed** on Github build. Moreover, the symbols of {} and <> are automatically transformed into ASCII in VSCode. Why?
+   - ![WHATEVER](img/1.1-Repo_Created.png): **using relative path** works here.
