@@ -79,9 +79,9 @@ print(df_pop.head())
 
 You might wonder why skipping the first 5 rows and setting *thousands=','*. I knew about this after opening this csv file in a text editor and lots of trial-and-errors.
 
-![](%7B%7B%3C%20var%20module.web%20%3E%7D%7D/sessions/L1_images/uk_pop_csv_screenshot.jpg){width="600"}
+<!-- ![](%7B%7B%3C%20var%20module.web%20%3E%7D%7D/sessions/L1_images/uk_pop_csv_screenshot.jpg){width="600"} -->
 
-<!-- ![](L1_images/uk_pop_csv_screenshot.jpg){width=600} -->
+![](L1_images/uk_pop_csv_screenshot.jpg){width="600"}
 
 Then, we check the first few rows of this dataset using *df_pop.head()*.
 
