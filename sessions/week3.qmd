@@ -24,6 +24,8 @@ Continued concepts from data analysis, in particular probability distributions.
 
 ## What is the likelihood of events occuring? 
 
+NOTE: add a picture here
+
 **Question**
 
 ::: {.fragment .highlight-red}
@@ -35,7 +37,7 @@ What is the probability of someone at UCL being over 190cm?
 Try to understand the distribution of heights. 
 
 ::: {.notes}
-Last week we asked this question and we thought about the distribution of the data. How to describe the distirbution of the data mathematically.
+Last week we asked this question and we thought about the distribution of the data. How to describe the distribution of the data mathematically.
 
 This week we look at how to properly ask the research question, and how to answer it.  
 :::
@@ -61,6 +63,9 @@ This week we look at how to properly ask the research question, and how to answe
 
 Research science is about coming up with hypotheses and evaluating them.
 
+It's iterative - as we find out new information we update our method and processes accordingly. 
+(Gelman et al. 2020. Bayesian Workflow)
+
 :::
 
 ::::
@@ -70,7 +75,9 @@ Research science is about coming up with hypotheses and evaluating them.
 ::: {.notes}
 This lecture thinking about posing and answering research questions. 
 
-You come up with a greta idea - then need to think considering the data is this idea plausibly true?
+You come up with a great idea - then need to think considering the data is this idea plausibly true?
+
+Link to the idea of a Bayesian workflow - Gelman. 
 :::
 
 ## Learning Objectives
@@ -79,14 +86,20 @@ By the end of this lecture you should be able to:
 ::: {.incremental}
 1. Establish a hypothesis for a given research project. 
 2. Define the Type I and Type II errors. 
-3. Calculate the p-value.
+3. Evaluate a hypothesis using appropriate statistical tests. 
 :::
 
 # Motivations
 
 ## How do we know what to believe?
 
-<div style="text-align:center;">
+NOTE: change this to focus on the idea of using statistics to validate claims - i.e. what we see in the media or on the news. 
+
+- Crime rates across cities 
+- Spatial patterns of school achievement 
+- Inequalities in access to transport 
+
+<!-- <div style="text-align:center;">
   <img src="L3_images/lime_bike_leg.png"
        alt="Screenshot from the Telegraph online of an article about a rise in Lime Bike accidents."
        style="max-width:70%" class="fragment">
@@ -107,7 +120,15 @@ By the end of this lecture you should be able to:
 <div class="fragment"
      style="text-align:center; margin-top:-60%; background:#4e3c56; color:white; padding:1em; border-radius:10px;">
   <strong>Is cycling in London less safe since the introduction of Lime bikes?</strong>
-</div>
+</div> -->
+
+::: {.notes}
+We see stories in the news, how do we know what to believe and what not to believe? This is where having an understanding of statistical tests can help us - we can evaluate claims to try and figure out which are/ aren't statistically significant.
+
+Statisitical tests are frequently used in science to figure out if our findings are important or not - essentially a way to formally define a threshold of what is an interesting result vs, what isn't an interesting result. 
+
+A clearly defined, and reporducible way to evaluate findings. 
+:::
 
 # How do you come up with a hypothesis? 
 
@@ -115,11 +136,15 @@ By the end of this lecture you should be able to:
 
 **Research question** 
 
-A research question focuses on a specific problem.
+A research *question* focuses on a specific problem.
 
 **Hypothesis**
 
-A formal statement that you will seek to confirm or disprove the research question.
+A formal *statement* that you will seek to prove or disprove. 
+
+::: {.notes}
+The hypothesis is something you can explicitly test, and come to a judgement about it's truth value. 
+::: 
 
 ## Flip a coin
 
@@ -139,6 +164,8 @@ A formal statement that you will seek to confirm or disprove the research questi
 ::::
 
 ## The hypothesis
+
+NOTE: add poll here - what do students think the hypothesis is? 
 
 :::: {.columns}
 
@@ -221,8 +248,8 @@ If the coin is fair, how likely would it be to see 7 heads out of 10 flips *or a
 Interested in the probability of seeing the event or something even more extreme. 
 :::
 
-
 # Establishing and evaluating a Hypothesis 
+In **five** simple steps. 
 
 ## Step 1
 **Define the null and alternative hypothesis**
@@ -252,6 +279,20 @@ Interested in the probability of seeing the event or something even more extreme
   - $\alpha = 0.05$ 
   - This means that if we see evidence that would have less than a 5% chance of occurring under the null hypothesis, then we reject the null hypothesis. 
 :::
+
+
+## [WARNING]{style="color:#FF0000"}
+Decide what "too unlikely" means **before you do the test**
+
+NOTE: add the banned symbol here
+
+- otherwise considered 'HARKing' 
+  - **H**ypothesising 
+  - **A**fter 
+  - the 
+  - **R**esults 
+  - are 
+  - **K**nown
 
 ::: {.notes}
 It's important to decide on your significance level prior, as otherwise you might find an event which is significant at the 10% threshold and not at 5% - which could lead to bad scientific practise.
@@ -302,6 +343,7 @@ We'll come back to different types of statistical test later in the lecture
 :::
 
 ## The steps
+In order to evaluate our hypothesis we just have to do the five steps:
 
 ::: {.incremental}
 1. Define the null and alternative hypothesis
@@ -312,18 +354,26 @@ We'll come back to different types of statistical test later in the lecture
 :::
 
 # Types of error 
-Where things can go wrong 
+... where things can go wrong. 
 
 ## Type I error
 [*The true null hypothesis is incorrectly rejected.*]{style="color:#49a0c4"} 
 
-This is caused by a **false positive**. The null hypothesis is true, but you get a false positive leading to you rejecting the null hypothesis. 
+The null hypothesis is true, but you get a false positive leading to you rejecting the null hypothesis. 
+
+This is also called a **false positive**. 
+
+*Example:* In court a defendant is found guilty despite being innocent. 
 
 
 ## Type II error
 [*The false null hypothesis is incorrectly accepted.*]{style="color:#49a0c4"} 
 
-This is caused by a **false negative**. The null hypothesis is false, but you get a false negative result, leading you to accepting the null hypothesis. 
+The null hypothesis is false, but you get a false negative result, leading you to accepting the null hypothesis. 
+
+This is also called a **false negative**. 
+
+*Example:* In court a defendant is found innocent despite being guilty.  
 
 
 ## Example: Mammograms
@@ -332,25 +382,34 @@ This is caused by a **false negative**. The null hypothesis is false, but you ge
 ![](L3_images/mammogram_van_woman.avif){width="700"}
 </div>
 
-NHS offers breast cancer screening for all women between the ages of 50 and 70.
+NHS offers breast cancer screening for all people with breasts between the ages of 50 and 70.
 
 ::: {.notes}
-The idea is to screen all women in the popualtion at high risk of brast cancer - in the hope they pick up results better. Whilst the tests are good they're not completely accurate. 
+The idea is to screen all those in the population who are at high risk of breast cancer - in the hope they pick up results better. 
+
+Whilst the tests are good they're not 100% accurate. 
 :::
 
 ## Example: Screening outcomes 
 
-The null hypothesis is that the patient doesn't have cancer. 
+$H_0:$ The individual doesn't have breast cancer. 
+$H_1:$ The individual does have breast cancer. 
 
 . . .
 
-[**False positive**]{style="color:#abc766"} 
-$\approx$ 10% of tests return a false positive. The test says they do have cancer even when they don't. 
+From [NHS digital](https://digital.nhs.uk/data-and-information/publications/statistical/breast-screening-programme/england---2020-21/qualitystatement3).
 
-. . .
+[False positive]{style="color:#abc766"} 
 
-[**False negative**]{style="color:#abc766"} 
-$\approx$ 20% of tests return a false negative. The test says they don't have cancer but they do.
+- In 2020-2021, $4.0%$ of those screened had an abnormal results and were referred for assessment. 
+- Of these, $77.1%$ were found to not have breast cancer at follow up assessment. 
+- Leading to a **false positive rate of $3.1%$.**
+
+[False negative]{style="color:#abc766"} 
+
+- Those who had a negative screening but did in fact have breast cancer.
+- Harder to calculate the false negative rate, as they might be diagnosed with breast cancer at any later point in time. 
+- Studies suggest the false negative rate could be as high as $20%$. 
 
 
 ::: {.notes}
@@ -366,7 +425,11 @@ False negative - in healthcare context this is the worst outcome - as goes undia
 </div>
 
 ::: {.notes}
-Possible outcomes form a matrix. 
+Possible outcomes form a matrix. Have two good outcomes, and two bad outcomes which we want to look out for (these are the Type I and Type II errors).
+
+This is something to bear in mind when we look at evaluating our hypotheses. How good is our data, so how reliable is our outcome? 
+
+Often this language is used when evaluating the outcomes of an ML classification model. Where we report the quality of a model in terms of its rate of false positives and false negatives. 
 :::
 
 # A good hypothesis or a bad hypothesis? 
@@ -376,10 +439,11 @@ The hypothesis should not come out of thin air.
 
 . . .
 
+Should consider: 
+
 ::: {.incremental}
 - What do you know about the context? 
 - What research have other people done? 
-- What is the broader cultural context? 
 :::
 
 
@@ -397,15 +461,19 @@ It's important to not make unethical assumptions in choosing the hypothesis.
 - Or correlation linked to other factors?
 
 ## Correlation vs. Causation 
-[**Correlation:** *Two variables are linearly related, as one changes so does the other.*]{style="color:#49a0c4"}
 
-. . .
+[**Correlation:** *Two variables are statistically related, as one changes so does the other.*]{style="color:#49a0c4"}
 
 [**Causation:** *One variable influences the other variable to occur.*]{style="color:#49a0c4"}
 
 . . .
 
+Causation implies correlation. 
+**BUT** correlation **does not** imply causation!!!
+
+::: {.notes}
 Lots of things can be correlated **BUT** it doesn't mean one event caused another. 
+:::
 
 ## Aliens and librarians
 
@@ -420,7 +488,7 @@ Lots of things can be correlated **BUT** it doesn't mean one event caused anothe
 </div>
 
 ::: {.notes}
-It's a dumb example but it's quite easy to find nonsense correlations between random variables. Can genertae your own at the website spurious correlations.  
+It's a dumb example but it's quite easy to find nonsense correlations between random variables. Can generate your own at the website spurious correlations.  
 :::
 
 
@@ -571,7 +639,6 @@ Aha!
 
 We need to know what statistical test to use! 
 
-
 # Statistical tests 
 
 ## Parametric vs. Non-parametric tests
@@ -590,6 +657,10 @@ We need to know what statistical test to use!
 - Evaluate hypothesis for entire population distribution 
 - Typcially less assumptions on the distribution 
 - Continuous or discrete data 
+
+## Deciding on a test 
+
+NOTE: want a table here that guides you on how to choose an appropriate statistical test 
 
 # Parametric tests 
 
@@ -623,11 +694,13 @@ We need to know what statistical test to use!
 ::::
 
 ::: {.notes}
-William Gosset was working for Guinness brewing company when he came up with the t-test - but his company wanted his to publish under a pseudonym - hence 'student'
+William Gosset was working for Guinness brewing company when he came up with the t-test - but his company wanted his to publish under a pseudonym - hence 'student'. He was comparing the chemical properties of different samples of barley. 
 :::
 
 ## Student's T-test: one sample
 [*Tests whether the population mean is equal to a specific value or not*]{style="color:#49a0c4"} 
+
+NOTE: want a diagram showing this. 
 
 . . .
 
@@ -649,6 +722,7 @@ where
 ## Student's T-test: two sample 
 [*Tests if the population means for two different groups are equal or not.*]{style="color:#49a0c4"}
 
+NOTE: want a diagram showing this.
 . . .
 
 The test statistic is:
@@ -676,6 +750,8 @@ with $s_1, s_2$ the sample standard deviations.
 ## Student's T-test: paired 
 [*Tests if the difference between paired measurements for a population is zero or not - normally used with longitudinal data.*]{style="color:#49a0c4"} 
 
+NOTE: want a diagram showing this.
+
 . . .
 
 The test statistic is: 
@@ -700,7 +776,7 @@ You need to be able to pair the data - i.e. the same things being observed at ti
 
 ## How many tails 
 
-Tests can be one-tailed or two-tailed. Determined when you define the hypothesis.
+Tests can be one-tailed or two-tailed - which you want is determined when you define the hypothesis.
 
 *One tailed:* if you only care is the mean is significant in one direction
 *Two tailed:* if you care about the mean being different regardless of direction 
@@ -724,11 +800,40 @@ This will be covered further in lecture X on linear regression.  -->
 # Non-parametric tests 
 
 ## Kolmogorov-Smirnov
+
+NOTE: want a diagram showing this.
+
 ::: {.incremental}
 - Compares two probability distributions 
 - Can be used to test whether an observed sample came from a given distribution 
 - Or to test whether two samples both came from the same distribution
 :::
+
+::: {.notes}
+Named after two Russian soviet mathematicians working in the mid 20th century
+::: 
+
+
+## K-S test: one sample test
+
+The Kolmogorov–Smirnov test statistic is:
+
+```{=tex}
+\begin{align}
+D_n = \sup_x \, | F_n(x) - F(x) |
+\end{align}
+```
+
+where
+
+- $F_n(x)$ is the empirical distribution function (EDF) of the sample
+- $F(x)$ is the cumulative distribution function (CDF) of the reference distribution
+
+. . .
+
+<div style="background-color:#2e6260; color:white; padding:8px; border-radius:5px; margin-top:10px;"> <em>Note</em> 
+
+\n '$sup$' is the suprenum - think of it as the smallest upper bound. </div>
 
 ## K-S: empirical distribution function 
 
@@ -745,27 +850,6 @@ where
 - $n$ is the number of observations
 - $X_i$ are the ordered sample values
 - $1_{(-\infty ,x]}(X_{i})$ is an indicator function (1 if $X_i \leq x$, else 0)
-
-## K-S test: one sample test
-
-The Kolmogorov–Smirnov test statistic is:
-
-```{=tex}
-\begin{align}
-D_n = \sup_x \, | F_n(x) - F(x) |
-\end{align}
-```
-
-where
-
-- $F_n(x)$ is the empirical distribution function of the sample
-- $F(x)$ is the cumulative distribution function (CDF) of the reference distribution
-
-. . .
-
-<div style="background-color:#2e6260; color:white; padding:8px; border-radius:5px; margin-top:10px;"> <em>Note</em> 
-
-\n '$sup$' is the suprenum - think of it as the smallest upper bound. </div>
 
 ## K-S test: two sample test 
 
@@ -825,6 +909,8 @@ y_vals = kde(x_vals)
 
 ## KDE use case
 
+NOTE: want a diagram to show this. 
+
 ::: {.incremental}
 - fit the KDE to two samples
 - compare visually 
@@ -865,6 +951,8 @@ $\bar{x}_2 = 180$, $s_2 = 6$, $n_2$ = 103
 
 ## Example - step 4 - calculation
 
+NOTE: want to add how to calculate this in Python 
+
 Substituting values:
 
 ```{=tex}
@@ -887,6 +975,8 @@ t &= \frac{170 - 180}{5.55 \cdot \sqrt{\tfrac{1}{95} + \tfrac{1}{103}}} \approx 
 Now we need to compare the test statistic to the critical t-value.  
 
 ## Example - step 5 - calculation
+
+NOTE: need to add a description of degrees of freedom
 
 For Student's T-Test we need degrees of freedom:  
 ```{=tex}
