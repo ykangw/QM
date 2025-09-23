@@ -29,6 +29,7 @@ We have saved a copy of this dataset to the Github repo, in case that the datase
 
 ```{python}
 import pandas as pd
+import matplotlib.pyplot as plt
 import scipy.stats as sps
 
 # Read CSV file, handling common missing value entries
