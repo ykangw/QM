@@ -7,21 +7,22 @@ title: "Week 6"
 
 ## Introduction
 
-This week will introduce linear regression. The most useful and widely used model in all of statistics. Regression underpins more 'advanced' methods like machine learning, but for most situations, it is likely to be the only model you will require.
+This week will introduce **Linear Regression**. The most useful and widely used model in all of statistics. Regression underpins more 'advanced' methods like machine learning, but for most situations, it is likely to be the *only* model you will require.
 
-Regression is also one of the most misused and misunderstood models in the spatial data scientist's toolbox. Therefore, understanding the basics is absolutely fundamental. If you understand the basics, then you stand a better chance of understanding what more sophisticated methods bring to the table.
+Because of its popularity, regression is also one of the most misused models in the spatial data scientist's toolbox. Therefore, understanding the basics is absolutely fundamental. If you understand the basics, then you stand a better chance of understanding what the more sophisticated methods related to standard linear regression bring to the table.
 
 Getting a regression model right is no more challenging than following a baking recipe - almost anyone can follow the instructions. However, like baking an amazing cake, skill, experience and understanding gained through hours of experimentation, failures, the odd amazing success and lots of perseverance are what make the difference between a great model and a soggy bottom!
 
-![](L6_images/soggybottom.webp)
+[![](L6_images/soggybottom.webp){width="50%"}](https://www.youtube.com/watch?v=F8yx453Lgh4)
 
 ## Learning Objectives
 
-By the end of this week, you will be able to:
+By the end of this week, you will:
 
-1.  XXX
-2.  XXX
-3.  XXX
+1.  Understand what basic bivariate regression model is and how it might be used to explore / describe the relationship between two continuous variables
+2.  Understand the importance of visualising your model first and how to interpret the outputs from a statistical regression model
+3.  Understand how the coefficients in a model will vary depending on your study population and how representative it is of the wider population you are making inferences about. In doing this, you will understand why 'degrees of freedom' are important
+4.  Understand
 
 ## Lecture
 
