@@ -126,7 +126,7 @@ What do you observe from this boxplot? Because the bins are quite large it's dif
 ::: qna
 #### Question
 
-```{python}
+``` python
 n_bins = ??
 fig, ax = plt.subplots(figsize=(12, 8))
 
