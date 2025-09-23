@@ -31,6 +31,7 @@ We have saved a copy of this dataset to the Github repo, in case that the datase
 ```{python}
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np 
 
 # Read CSV file, handling common missing value entries
 na_vals = ["", "NA", "SUPP", "NP", "NE", "SP", "SN", "SUPPMAT"]
