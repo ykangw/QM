@@ -1,0 +1,41 @@
+---
+title: "XXX"
+subtitle: "XXX"
+author: 
+  - name: "XXX"
+email: "XXX"
+date-as-string: "12 September 2025"
+from: markdown+emoji
+format: revealjs
+---
+# This week 
+
+## Understanding and describing data 
+
+- Quantitative research is the process of collecting and analysing **numerical data** to describe, model, and predict variables of interest.
+
+- Garbage in, garbage out.
+
+::: {.notes}
+This lecture focuses on understanding and describing data. 
+
+:::
+
+## Learning Objectives
+By the end of this lecture you should:
+
+1. Understand basic data types;
+2. Consider how to summarise and represent data.
+
+# Overview 
+We've covered: 
+
+- Data types: levels of measurements; quantitative & qualitative
+- Key metrics 
+- Null values and outliers
+- Visualising data
+
+# Practical 
+Practical will focus on setting up Python environment and describing a dataset.
+
+- Have questions prepared!
