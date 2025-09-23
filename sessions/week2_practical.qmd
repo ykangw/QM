@@ -11,83 +11,202 @@ filters:
 
 This week is focussed on using some common functions in Python to plot data and distributions. 
 
-## To add a callout-note
+## Learning Outcomes 
 
-:::{.callout-note}
+- Familiarise yourself with opening data files in Python. 
+- Familiarise yourself with plotting histograms of data in Python. 
 
-Suggestions for a Better Learning Experience:
+# Starting the Practical
 
--   XXX
-:::
+As per last week, the process for every week will be the same: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. If you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.
 
-## To add Python code without running them ...
-``` python
-import pandas as pd
+## Loading the data 
 
-# Read CSV file, skipping first 5 rows, using row 6 as header, and handling comma as thousands separator
-df_pop = pd.read_csv(
-    'L1_data/UK_census_population.csv',
-    skiprows=5,        # Skip first 5 rows. Wnhy?
-    thousands=',',     # Interpret commas as thousands separators
-    header=0           # After skipping, the first row becomes the header
-)
+We are going to look at schools perfomance data in England. 
 
-print(df_pop.head())
-```
+The data is sourced from []() and is downloadable [here]().
 
-## To add and run Python code
+We have saved a copy of this dataset to the Github repo, in case that the dataset is removed from the website.
 
 ```{python}
 import pandas as pd
 
-# Read CSV file, skipping first 5 rows, using row 6 as header, and handling comma as thousands separator
-df_pop = pd.read_csv(
-    'L1_data/UK_census_population.csv',
-    skiprows=5,        # Skip first 5 rows. Wnhy?
-    thousands=',',     # Interpret commas as thousands separators
-    header=0           # After skipping, the first row becomes the header
+# Read CSV file, handling common missing value entries
+na_vals = ["", "NA", "SUPP", "NP", "NE", "SP", "SN", "SUPPMAT"]
+df_ks4 = pd.read_csv(
+    'L2_data/england_ks4final.csv',
+    na_values = na_vals
 )
 
-print(df_pop.head())
+info_cols = ['RECTYPE', 'LEA', 'SCHNAME', 'TOTPUPS']
+ebaccs_cols = ['EBACCAPS', 'EBACCAPS_LO', 'EBACCAPS_MID', 'EBACCAPS_HI']
+
+df_ks4 = df_ks4[info_cols + ebaccs_cols]
+
+df_ks4[['TOTPUPS']+ebaccs_cols] = df_ks4[['TOTPUPS']+ebaccs_cols].apply(pd.to_numeric, errors='coerce')
+
+df_ks4.head()
 ```
 
-## To add a photo - replace the path. Using relative path is also okay.
+You might be wondering why I've chosen the columns `info_cols` and `ebaccs_cols`. 
 
-![]({{< var module.web >}}/sessions/L1_images/uk_pop_csv_screenshot.jpg){width="600"} 
+Looking at the metadata (which you can see in 'L2_data/ks4_meta.xlsx') we can see the full meaning of each column header: 
 
-<!-- ![](L1_images/uk_pop_csv_screenshot.jpg){width=600} -->
+- 'RECTYPE' = Record type (1=mainstream school; 2=special school; 4=local authority; 5=National (all schools); 7=National (maintained schools))
+- 'LEA' = Local authority 
+- 'SCHNAME' = School name 
+- 'TOTPUPS' = Number of pupils on roll (all ages)
+- 'EBACCAPS' = Average EBacc APS score per pupil
+- 'EBACCAPS_LO' = Average EBacc APS score per pupil with low prior attainment
+- 'EBACCAPS_MID' = Average EBacc APS score per pupil with middle prior attainment
+- 'EBACCAPS_HI' = Average EBacc APS score per pupil with high prior attainment
 
-## To add some "questions"
+The EBacc is a measure of students school grades calculated as an avergae score across a set number of subjects. It is used as a performance indicator of English schools. You can read more about it [here](https://en.wikipedia.org/wiki/English_Baccalaureate#:~:text=Added%20together%2C%20this%20gives%20a,for%20girls%202018%20was%204.33.).
 
-The qmd file will be rendered as two files in sessions folder, including a html and ipynb format. The html file will contain both *question* and *answer*, while the ipynb file will contain only the *question*.
+## Describing the dataframe 
 
-For the effect, please check [HTML](https://huanfachen.github.io/QM/sessions/weekX_practical.html) and [ipynb](https://huanfachen.github.io/QM/sessions/weekX_practical.ipynb).
+### Check how much data is missing 
+
+```{python}
+# print how much data is missing for each column
+df_ks4.isna().mean() * 100 
+```
+
+It seems suspiscious that the school names are missing for some of the entries - let's check these. 
+
+```{python}
+# return rows where SCHNAME is missing
+df_ks4[df_ks4['SCHNAME'].isna()]
+```
+
+So, these are all record type 4, 5, or 7 - i.e. they're not individual schools! Let's limit the selection to only mainstream and special schools. 
+
+```{python}
+# only keep rows where RECTYPE is 1 or 2 
+df_ks4 = df_ks4[df_ks4['RECTYPE'].isin([1, 2])].copy()
+```
+
+Now we can check the data dimensions. 
+
+```{python}
+rows, cols = df_ks4.shape
+print(f"Rows: {rows}, Columns: {cols}")
+```
+
+### Summary statistics 
+
+We can use the `describe` function in pandas to easily get the summary statistics for a dataframe. 
+
+```{python}
+numerical_cols = ['TOTPUPS', 'EBACCAPS', 'EBACCAPS_LO', 'EBACCAPS_MID', 'EBACCAPS_HI']
+
+df_ks4[numerical_cols].describe()
+```
+
+## Histograms 
+
+Let's try plotting the Average EBacc APS score per pupil. 
+
+```{python}
+n_bins = 10
+fig, ax = plt.subplots(figsize=(12, 8))
+
+ax.hist(df_ks4['EBACCAPS'].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
+ax.set_title('EBacc distribution')
+ax.set_xlabel('EBacc score')
+ax.set_ylabel('Number of schools')  
+ax.set_xlim(0,9) # the EBacc has a maximum score of 9
+
+plt.show()
+```
+
+What do you observe from this boxplot? Because the bins are quite large it's difficult to get a sense of the distribution - try changing this to get a better idea of the data spread. 
 
 ::: qna
 #### Question
 
-```python
-if ??
-    ??
-else:
-    ??
-```
+```{python}
+n_bins = ??
+fig, ax = plt.subplots(figsize=(12, 8))
 
-#### Answer
+ax.hist(df_ks4['EBACCAPS'].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
+ax.set_title('EBacc distribution')
+ax.set_xlabel('EBacc score')
+ax.set_ylabel('Number of schools')  
+ax.set_xlim(0,9) # the EBacc has a maximum score of 9
+
+plt.show()
+```
 
 #### Answer
 
 ```{python}
-if 'Moscow' in ['Moscow', 'Beijing']:
-    print("Moscow is in the cities list.")
-else:
-    print("Moscow is not in the cities list.")
+n_bins = 30
+fig, ax = plt.subplots(figsize=(12, 8))
+
+ax.hist(df_ks4['EBACCAPS'].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
+ax.set_title('EBacc distribution')
+ax.set_xlabel('EBacc score')
+ax.set_ylabel('Number of schools')  
+ax.set_xlim(0,9) # the EBacc has a maximum score of 9
+
+plt.show()
 ```
 :::
 
+### Is it normally distributed? 
+
+Looking at the histogram does the data look normally distributed? 
+
+Remember the key features of the normal distribution:
+
+- Data is continuous 
+  - it is something you measure not something you count
+- Data is equally likely to be larger or smaller than average 
+  - symmetric
+- Characteristic size, all data points are close to the mean 
+  - single peak
+- There is less data further away from the mean 
+  - smooth tails on both sides
+
+One way to consider whether it is normally distributed is to overlay the normal distribution on top.
+
+We can use the package `scipy.stats` which has functions for generating probability density functions for common distributions. You can see which common distributions [here](https://docs.scipy.org/doc/scipy/reference/stats.html).
+
+```{python}
+import scipy.stats as sps
+
+# first let's get the mean and stand deviation 
+mu = df_ks4['EBACCAPS'].dropna().mean()
+std = df_ks4['EBACCAPS'].dropna().std()
+
+## Create the plot 
+
+# plot the histogram
+plt.figure(figsize=(12, 8))
+plt.hist(df_ks4['EBACCAPS'], bins=30, density=True, color='#abc766', edgecolor='black')
+
+# plot the Probability Density Function (PDF)
+xmin = 0 
+xmax = 9
+x = np.linspace(xmin, xmax, 100)
+p = sps.norm.pdf(x, mu, std)
+plt.plot(x, p, 'k', linewidth=2, color="#e16fca")
+
+plt.title(f"Fit results: $\mu$ = {mu:.2f},  $\sigma$ = {std:.2f}")
+plt.xlim(0, 9)
+plt.xlabel("EBacc score")
+plt.ylabel("Density")
+
+plt.show()
+```
+
+Note that this time we plot the histogram with `density=True` - this scales the histogram data. 
+
+
 ## You're Done!
 
-Congratulations on completing the first QM practical session! If you are still working on it, take you time.
+Congratulations on completing the first QM practical session! If you are still working on it, take your time.
 
 Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.
 

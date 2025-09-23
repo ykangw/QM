@@ -13,7 +13,20 @@ jupyter: python3
 
 ## Overview of lecture 1
 
-Need to fill this in. 
+- Different data types 
+- Key data metrics
+  - the middle and the spread 
+- Visualising the data 
+- Data outliers 
+
+::: {.notes}
+4 data types: nominal, ordinal, interval, ratio 
+Numerical vs categorical 
+
+Key data metrics - the middle: mean, median, mode and the spread: variance and standard deviation
+
+different types of data outliers: caused by measurement error, or irregular pattern or influential outliers 
+:::
 
 # This week 
 

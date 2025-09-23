@@ -1,6 +1,6 @@
 ---
-title: 'Practical XXX: XXX'
-subtitle: "XXX"
+title: 'Practical 3: Establishing and testing the hypothesis'
+subtitle: ""
 format:
   html: default
   ipynb: default
@@ -9,85 +9,210 @@ filters:
   - quarto
 ---
 
-This week is focussed on XXX.
+This week is focussed on defining research hypotheses, and using statistical tests to evaluate them. In particular we will use the Student's T-test, and the KS distribution test. 
 
 ## To add a callout-note
 
 :::{.callout-note}
 
-Suggestions for a Better Learning Experience:
+This practical follows on from practical 2, so if you haven't done that yet I suggest going back and working through that first!
 
--   XXX
 :::
 
-## To add Python code without running them ...
-``` python
-import pandas as pd
+## Loading the data 
 
-# Read CSV file, skipping first 5 rows, using row 6 as header, and handling comma as thousands separator
-df_pop = pd.read_csv(
-    'L1_data/UK_census_population.csv',
-    skiprows=5,        # Skip first 5 rows. Wnhy?
-    thousands=',',     # Interpret commas as thousands separators
-    header=0           # After skipping, the first row becomes the header
-)
+We are going to look at schools perfomance data in England once again. 
 
-print(df_pop.head())
-```
+The data is sourced from []() and is downloadable [here]().
 
-## To add and run Python code
+We have saved a copy of this dataset to the Github repo, in case that the dataset is removed from the website.
 
 ```{python}
 import pandas as pd
+import scipy.stats as sps
 
-# Read CSV file, skipping first 5 rows, using row 6 as header, and handling comma as thousands separator
-df_pop = pd.read_csv(
-    'L1_data/UK_census_population.csv',
-    skiprows=5,        # Skip first 5 rows. Wnhy?
-    thousands=',',     # Interpret commas as thousands separators
-    header=0           # After skipping, the first row becomes the header
+# Read CSV file, handling common missing value entries
+na_vals = ["", "NA", "SUPP", "NP", "NE", "SP", "SN", "SUPPMAT"]
+df_ks4 = pd.read_csv(
+    'L2_data/england_ks4final.csv',
+    na_values = na_vals
 )
 
-print(df_pop.head())
+info_cols = ['RECTYPE', 'LEA', 'SCHNAME', 'TOTPUPS', 'TOWN']
+ebaccs_cols = ['EBACCAPS', 'EBACCAPS_LO', 'EBACCAPS_MID', 'EBACCAPS_HI']
+
+df_ks4 = df_ks4[info_cols + ebaccs_cols]
+
+df_ks4[['TOTPUPS']+ebaccs_cols] = df_ks4[['TOTPUPS']+ebaccs_cols].apply(pd.to_numeric, errors='coerce')
+
+df_ks4 = df_ks4[df_ks4['RECTYPE'].isin([1, 2])].copy()
+
+df_ks4.head()
 ```
 
-## To add a photo - replace the path. Using relative path is also okay.
+Looking at the metadata (which you can see in 'L2_data/ks4_meta.xlsx') we can see the full meaning of each column header: 
 
-![]({{< var module.web >}}/sessions/L1_images/uk_pop_csv_screenshot.jpg){width="600"} 
+- 'RECTYPE' = Record type (1=mainstream school; 2=special school; 4=local authority; 5=National (all schools); 7=National (maintained schools))
+- 'LEA' = Local authority 
+- 'SCHNAME' = School name 
+- 'TOTPUPS' = Number of pupils on roll (all ages)
+- 'TOWN' = School town 
+- 'EBACCAPS' = Average EBacc APS score per pupil
+- 'EBACCAPS_LO' = Average EBacc APS score per pupil with low prior attainment
+- 'EBACCAPS_MID' = Average EBacc APS score per pupil with middle prior attainment
+- 'EBACCAPS_HI' = Average EBacc APS score per pupil with high prior attainment
 
-<!-- ![](L1_images/uk_pop_csv_screenshot.jpg){width=600} -->
+## Research question 
 
-## To add some "questions"
+The department for education is worried about regional inequality in school grades. With this in mind they've come up with a research question they'd like to address. 
 
-The qmd file will be rendered as two files in sessions folder, including a html and ipynb format. The html file will contain both *question* and *answer*, while the ipynb file will contain only the *question*.
+**Research question:** Is average pupil attainment on the EBacc significantly different in London compared to the rest of England? 
 
-For the effect, please check [HTML](https://huanfachen.github.io/QM/sessions/weekX_practical.html) and [ipynb](https://huanfachen.github.io/QM/sessions/weekX_practical.ipynb).
+To do this we're going to use the mean comparison test to compare the schools in London to those outside of London. 
+
+## Preparing the data 
+
+### Splitting the groups 
+
+```{python}
+df_London = df_ks4[df_ks4['TOWN'] == 'London']
+df_London = df_London[df_London['EBACCAPS'].notna()]
+
+df_notLondon = df_ks4[df_ks4['TOWN'] != 'London']
+df_notLondon = df_notLondon[df_notLondon['EBACCAPS'].notna()]
+```
+
+And lets look at the summary statistics for each group. 
+
+```{python}
+df_London['EBACCAPS'].describe()
+```
+
+```{python}
+df_notLondon['EBACCAPS'].describe()
+```
+
+So from looking at their summary statistics the two groups are different sizes. The two groups also have different means - but we want to test if these means are statistically significantly different. 
+
+## The hypothesis test 
+
+We're now going to work through the steps of the hypothesis test according to the five steps discussed in the lecture: 
+
+1. Define the null and alternative hypothesis
+2. Set you significance level
+3. Identify the evidence
+4. Calculate the p-value
+5. Compare p-value with hypothesis level
+
+### Step 1
+
+What is the null and alternative hypothesis? 
 
 ::: qna
 #### Question
 
-```python
-if ??
-    ??
-else:
-    ??
-```
+```{python}
+H_0 = '??'
+H_1 = '??'
 
-#### Answer
+print(f'The null hypothesis is {H_0}')
+print(f'The alternative hypothesis is {H_1}')
+```
 
 #### Answer
 
 ```{python}
-if 'Moscow' in ['Moscow', 'Beijing']:
-    print("Moscow is in the cities list.")
-else:
-    print("Moscow is not in the cities list.")
+H_0 = 'Mean EBacc score in London = Mean EBacc score outside London'
+H_1 = 'Mean EBacc score in London > Mean EBacc score outside London OR Mean EBacc score in London < Mean EBacc score outside London'
+
+print(f'The null hypothesis is {H_0}')
+print(f'The alternative hypothesis is {H_1}')
 ```
 :::
 
+### Step 2 
+
+```{python}
+# Set the level of statistical significance 
+
+alpha = 0.05
+```
+
+### Step 3 
+
+We already have the evidence - it's our datasets `df_London['EBACCAPS']` and `df_notLondon['EBACCAPS']`. 
+
+### Step 4 
+
+We can use a built in function from `scipy.stats` called `ttest_ind` to do step 4 for us. You can read more about this function [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html). 
+
+First we need to check whether we can assume that the samples are drawn from populations with the same standard deviation or not. (Provided neither standard deviation is double the other, this should be ok). 
+
+```{python}
+London_std = df_London['EBACCAPS'].mean()
+notLondon_std = df_notLondon['EBACCAPS'].mean()
+
+# Calculate the ratio of standard deviations 
+std_ratio = London_std/notLondon_std
+
+print("std ratio =", std_ratio)
+
+if std_ratio > 0.5 and std_ratio < 2:
+    print("Can assume equal population standard deviations.")
+    equal_stds = True
+else:
+    print("Cannot assume equal population standard deviations.")
+    equal_stds = False
+```
+
+There are two outputs from the function `scipy.stats.ttest_ind`: the **test statistic** and the **p value**. 
+
+```{python}
+test_stat, p_value = sps.ttest_ind(df_London['EBACCAPS'], df_notLondon['EBACCAPS'], equal_var = equal_stds)
+
+print("test statistic = ", test_stat)
+print("p-value =", p_value)
+```
+
+### Step 5 
+
+For the final step we compare the p-value to the significance value in order to reach a decision. 
+
+::: qna
+#### Question
+
+```{python}
+if p_value ?? ?? :
+    print(f"Reject the null hypothesis ({H_0}). Accept the alternative hypothesis ({H_1}).")
+    print("Conclude that samples are drawn from populations with different means.")
+elif p_value ?? ?? :
+    print(f"No significant evidence to reject the null hypothesis ({H_0}).")
+    print("Assume samples are drawn from populations with the same mean.")
+```
+
+#### Answer
+
+```{python}
+if p_value < alpha:
+    print(f"Reject the null hypothesis ({H_0}). Accept the alternative hypothesis ({H_1}).")
+    print("Conclude that samples are drawn from populations with different means.")
+elif p_value >= alpha:
+    print(f"No significant evidence to reject the null hypothesis ({H_0}).")
+    print("Assume samples are drawn from populations with the same mean.")
+```
+:::
+
+Hence we can conclude that the evidence supports there is a statistically significant differnece between the mean student attainment on the EBacc in London, versus outside of London. 
+
+## A more complicated research question
+
+Now I'd also like to know: Are the distribution of EBacc scores in London drawn from a normal distribution? 
+
+
+
+
+
 ## You're Done!
 
-Congratulations on completing the first QM practical session! If you are still working on it, take you time.
-
-Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.
+Well done you've completed this weeks practical on establishing and evaluating hypothesis questions. If you are still working on it, take your time. And if you have any questions just ask! 
 
