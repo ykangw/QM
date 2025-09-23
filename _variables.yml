@@ -4,3 +4,9 @@ module:
   code: "CASA0007"
   name: "Quantitative Methods"
   abbr: "QM"
+  web: "https://huanfachen.github.io/QM"
+
+assess:
+  deadline-date: "Tuesday, 13 January 2026"
+  deadline-time: "10:00"
+

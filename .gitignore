@@ -15,3 +15,5 @@ cloud-config.yml
 *.xlsx
 *.shp
 .Rproj.user
+
+/.luarc.json

@@ -68,13 +68,13 @@ Examples – Here is just one example of the kind of article you might produce (
 
 ### Deadline and Handing In
 
-The Deadline for the assessment is \*\*\* January.
+The Deadline for the assessment is {{< var assess.deadline-date >}} \@ {{< var assess.deadline-time >}}.
 
-Your report and technical appendix should be uploaded to Moodle as a single document - MS Word or PDF.
+Your report and technical appendix should be uploaded to Moodle as a single PDF document.
 
 ## Mark Scheme
 
-This is how we will mark your work - take note of the
+This is how we will mark your work - take note of them
 
 ::: column-page
 ```{r}
