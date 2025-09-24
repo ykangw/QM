@@ -208,7 +208,7 @@ Note that this time we plot the histogram with `density=True` - this scales the 
 
 ## You're Done!
 
-Congratulations on completing the first QM practical session! If you are still working on it, take your time.
+Congratulations on completing the second QM practical session! If you are still working on it, take your time.
 
 Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.
 
