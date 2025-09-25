@@ -11,8 +11,6 @@ filters:
 
 This week is focussed on the key ideas from linear algebra which are the building blocks of regression, computational modelling and machine learning. 
 
-## To add a callout-note
-
 :::{.callout-note}
 
 Don't be intimidated by the maths!
@@ -26,31 +24,55 @@ In the tutorial we're going to explore the mathematical concepts from the lectur
 
 ### Background
 
-A factory produces three products:
+A factory specialises in producing parts for bicycles: handlebars, brakes and wheels. 
 
-- $x$ — handlebars  
-- $y$ — brakes  
-- $z$ — wheels  
+- $x_1$ — the number of handlebars they can make  
+- $x_2$ — the number of brakes they can make 
+- $x_3$ — the number of wheels they can make
 
-From **each unit of aluminium** they can produce: 4 of $x$, 3 of $y$, and 8 of $z$.  
-From **each unit of rubber** they can produce: 1 of $x$, 100 of $y$, and 9 of $z$.  
-From **each unit of paint** they can produce: 9 of $x$, 0 of $y$, and 2 of $z$.  
+These require resources to be made: aluminium, rubber and paint. 
 
-Suppose the factory has:  
-- $a=100$ units of aluminium,  
-- $r=300$ units of rubber,  
-- $p=150$ units of paint.  
+For **each handlebar** they need 8 units of aluminium, 4 units of rubber and 4 units of paint. 
+For **each brake** they need 1 unit of aluminium, 1 unit of rubber and 1 unit of paint. 
+For **each wheel** they need 10 units of aluminium, 23 units of rubber, and 5 units of paint. 
 
-How many of each product $x, y, z$ can they produce?  
+![]({{< var module.web >}}/sessions/L4_images/bike_factory.jpg){width="600"} 
+
+The factory is having problems with the supply of raw materials. On a given day they have: 
+- $b_1=400$ units of aluminium,  
+- $b_2=750$ units of rubber,  
+- $b_3=200$ units of paint.  
+
+What is the optimal number of each bike part  that they can produce?   
 
 ### Linear equations  
 
-We can express the resource constraints as a system of equations:  
+We can express the resource constraints as a system of equations. If they are producing $x_1, x_2, x_3$ units of each part we need:
 
 $$
-4x + 3y + 8z &= a, 
-x + 100y + 9z &= r, 
-9x + 0y + 2z &= p.
+8x_1 + x_2 + 10x_3
+$$
+
+of aluminium. 
+
+$$
+4x_1 + x_2 + 23x_3
+$$
+
+of rubber. 
+
+$$
+4x_1 + x_2 + 5x_3
+$$
+
+of paint. 
+
+Given the contraints of raw materials we can have: 
+
+$$
+8x_1 + x_2 + 10x_3 = b_1 = 400
+\\ 4x_1 + x_2 + 23x_3 = b_2 = 750
+\\ 4x_1 + x_2 + 5x_3 = b_3 = 200
 $$
 
 ### Matrix form
@@ -59,39 +81,41 @@ This can be written compactly as:
 
 $$
 \begin{pmatrix}
-4 & 3 & 8 \\
-1 & 100 & 9 \\
-9 & 0 & 2
+8 & 1 & 10 \\
+4 & 1 & 23 \\
+4 & 1 & 5
 \end{pmatrix}
-
-\begin{pmatrix}x\\y\\z\end{pmatrix}
+\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}
 =
-\begin{pmatrix}a\\r\\p\end{pmatrix}.
+\begin{pmatrix}b_1\\b_2\\b_3\end{pmatrix}.
 $$
 
 That is, 
 $$
-M\bar{x} =b 
+Mx =b 
 $$
 
-Where 
+Where $M$ is the coefficient matrix, 
 
 $$
 M = 
 \begin{pmatrix}
-4 & 3 & 8 \\
-1 & 100 & 9 \\
-9 & 0 & 2
+8 & 1 & 10 \\
+4 & 1 & 23 \\
+4 & 1 & 5
 \end{pmatrix}
 $$
 
+$x$ is the vector of the number of each part, i.e. the variables in our equation:
+
 $$
-\bar{x} = \begin{pmatrix}x\\y\\z\end{pmatrix}
+x = \begin{pmatrix}x\\y\\z\end{pmatrix}
 $$
 
-and 
+and $b$ is the resource constraint: 
+
 $$
-b = \begin{pmatrix}a\\r\\p\end{pmatrix}.
+b = \begin{pmatrix}b_1\\b_2\\b_3\end{pmatrix}.
 $$
 
 ### Writing this is Python 
@@ -107,13 +131,14 @@ We can write this same information in Python by creating variables.
 
 ```{python}
 # Coefficient matrix
-M = np.array([[4, 3, 8],
-              [1, 100, 9],
-              [9, 0, 2]], dtype=float)
+# M 
+M = np.array([[8, 1, 10],
+              [4, 1, 23],
+              [4, 1, 5]], dtype=float)
 
 # Resource availability
-# [a, r, p]
-b = np.array([100.0, 300.0, 150.0], dtype=float)  
+# [b_1, b_2, b_3]
+b = np.array([400, 750, 200], dtype=float)  
 ```
 
 In Python matrices are represented as an array of arrays ([] within other []) - each array [] is a row of the matrix. 
@@ -194,12 +219,12 @@ We use the function `np.dot()` to take the [dot product](https://www.mathsisfun.
 
 ```{python}
 # do M^-1 * b to get x_bar
-x_bar = np.dot(M_inv, b)
+x = np.dot(M_inv, b)
 
-print(x_bar)
+print(np.round(x,2))
 ```
 
-So we see that we can make 15.9 handlebrars, 2.5 brakes and 3.6 wheels. Which really limits the factories production to just one bike (or a tricycle). 
+So we see that the optimal use of resources is to make 11 handlebrars, 0 brakes and 30 wheels. Potentially some terrifying brake-less bikes!  
 
 ### Let's solve it again!
 
@@ -207,65 +232,52 @@ So above we calculated each step of the process. Alternatively we can solve the 
 
 ```{python}
 ## Solve the equations using numpy's linear algebra solver
-x_bar = np.linalg.solve(M, b)
+x = np.linalg.solve(M, b)
 
-print(x_bar)
+print(np.round(x, 2))
 ```
 
 ## Visualising 
 
 In 2-dimensions and 3-dimensions we can visualise the solution to our set of equations. For two equations the solution will be the point where the two lines intersect. In three dimensiosn the solution is the intersection of the three planes described by the equation. 
 
-We can plot our equations in 3D space to see this. 
+We can plot our equations in 3D space to see this. We we-write the equations as 
 
 ```{python}
-# Coefficients and resources
-a, r, p = 100, 300, 150
+# Define grid for x1 (handlebars) and x2 (brakes)
+x1 = np.linspace(0, 30, 50)
+x2 = np.linspace(0, 30, 50)
+X1, X2 = np.meshgrid(x1, x2)
 
-# Define grid
-x = np.linspace(0, 30, 50)
-y = np.linspace(0, 30, 50)
-X, Y = np.meshgrid(x, y)
+# Constraint surfaces (solving for x3 = wheels)
+Z_al = (b[0] - 8*X1 - 1*X2) / 10 # from aluminium
+Z_rb = (b[1] - 4*X1 - 1*X2) / 23 # from rubber
+Z_pn = (b[2] - 4*X1 - 1*X2) / 5 # from paint
 
-# Constraint surfaces
-Z1 = (a - 4*X - 3*Y) / 8
-Z2 = (r - X - 100*Y) / 9
-Z3 = (p - 9*X) / 2
+# Interactive 3D plot
+fig = go.Figure()
 
-# Solve system
-M = np.array([[4, 3, 8],
-              [1,100, 9],
-              [9, 0, 2]], dtype=float)
-b = np.array([a, r, p], dtype=float)
-solution = np.linalg.solve(M, b)
+fig.add_surface(x=x1, y=x2, z=Z_al, opacity=0.5, colorscale="Blues", name="Aluminium")
+fig.add_surface(x=x1, y=x2, z=Z_rb, opacity=0.5, colorscale="Oranges", name="Rubber")
+fig.add_surface(x=x1, y=x2, z=Z_pn, opacity=0.5, colorscale="Greens", name="Paint")
+
+# Add solution point
+fig.add_trace(go.Scatter3d(x=[x[0]], y=[x[1]], z=[x[2]],
+mode="markers", marker=dict(size=6, color="red"),
+name="Solution"))
+
+fig.update_layout(
+scene=dict(
+xaxis_title="Handlebars",
+yaxis_title="Brakes",
+zaxis_title="Wheels"
+))
+
+fig.show()
 ```
 
 And now we can plot the intersecting planes. 
 
-```{python}
-# Create interactive 3D plot
-fig = go.Figure()
-
-fig.add_surface(x=x, y=y, z=Z1, opacity=0.5, colorscale="Blues", name="Aluminium")
-fig.add_surface(x=x, y=y, z=Z2, opacity=0.5, colorscale="Oranges", name="Rubber")
-fig.add_surface(x=x, y=y, z=Z3, opacity=0.5, colorscale="Greens", name="Paint")
-
-# Add solution point
-fig.add_trace(go.Scatter3d(x=[solution[0]], y=[solution[1]], z=[solution[2]],
-                           mode="markers", marker=dict(size=6, color="red"),
-                           name="Solution"))
-
-fig.update_layout(
-    scene=dict(
-        xaxis_title="Handlebars (x)",
-        yaxis_title="Brakes (y)",
-        zaxis_title="Wheels (z)"
-    ),
-    title="Interactive 3D Production Constraints"
-)
-
-fig.show()
-```
 
 ## Conclusions 
 
@@ -273,13 +285,26 @@ Here we solved a set of linear equations using algebra. Solving sets of liunear 
 
 ## Extension 
 
-Try and implement an OLS regression for the data.... 
+If you have time you can explore implementing an ordinary least squares regression. 
+
+We have data from the factory - every day for a year they recorded how many handlebars, brakes and wheels they made and the corresponding amount of each resource used. We can load the data as:
+
+```{python}
+import pandas as pd 
+
+df = pd.read_csv('L4_data/factory_data.csv')
+
+df.head()
+```
+
+
+You might want to use `statsmodels` OLS package which you can read about [here](https://www.statsmodels.org/dev/generated/statsmodels.regression.linear_model.OLS.html). 
 
 ## You're Done!
 
 Congratulations on completing the linear algebra practical! If you are still working on it, take your time.
 
-Don't worry here about understanding every detail of the maths - the goal here is to help with some baseline understanding of the maths so that it's easier to read maths you might come across in further research. Focus on each of the operations we looked at - do you know what is being calculated here? Why is that a useful thing to calculate? 
+Don't worry here about understanding every detail of the maths - focus on each of the operations we looked at. Do you know what is being calculated here? Why is that a useful thing to calculate? If you're struggling to understand this just ask!
 
 It takes time to learn - remember practice makes perfect! 
 

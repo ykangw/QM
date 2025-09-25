@@ -11,8 +11,6 @@ filters:
 
 This week is focussed on defining research hypotheses, and using statistical tests to evaluate them. In particular we will use the Student's T-test, and the KS distribution test. 
 
-## To add a callout-note
-
 :::{.callout-note}
 
 This practical follows on from practical 2, so if you haven't done that yet I suggest going back and working through that first!
@@ -75,6 +73,8 @@ To do this we're going to use the mean comparison test to compare the schools in
 
 ### Splitting the groups 
 
+For simplicity let's create two dataframes for the two different areas. 
+
 ```{python}
 df_London = df[df['TOWN'] == 'London']
 df_London = df_London[df_London['EBACCAPS'].notna()]
@@ -83,7 +83,7 @@ df_notLondon = df[df['TOWN'] != 'London']
 df_notLondon = df_notLondon[df_notLondon['EBACCAPS'].notna()]
 ```
 
-And lets look at the summary statistics for each group. 
+And look at the summary statistics for each group. 
 
 ```{python}
 df_London['EBACCAPS'].describe()
@@ -93,14 +93,14 @@ df_London['EBACCAPS'].describe()
 df_notLondon['EBACCAPS'].describe()
 ```
 
-So from looking at their summary statistics the two groups are different sizes. The two groups also have different means - but we want to test if these means are statistically significantly different. 
+From looking at the summary statistics the two groups are different sizes. The two groups also have different means - but we want to test if these means are statistically-significantly different. 
 
 ## The hypothesis test 
 
 We're now going to work through the steps of the hypothesis test according to the five steps discussed in the lecture: 
 
 1. Define the null and alternative hypothesis
-2. Set you significance level
+2. Set the significance level
 3. Identify the evidence
 4. Calculate the p-value
 5. Compare p-value with hypothesis level
@@ -133,6 +133,8 @@ print(f'The alternative hypothesis is {H_1}')
 
 ### Step 2 
 
+Set the significance level.
+
 ```{python}
 # Set the level of statistical significance 
 
@@ -141,9 +143,13 @@ alpha = 0.05
 
 ### Step 3 
 
+Identify the evidence.
+
 We already have the evidence - it's our datasets `df_London['EBACCAPS']` and `df_notLondon['EBACCAPS']`. 
 
 ### Step 4 
+
+Calculate the p-value. 
 
 We can use a built in function from `scipy.stats` called `ttest_ind` to do step 4 for us. You can read more about this function [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html). 
 
@@ -177,6 +183,8 @@ print("p-value =", p_value)
 
 ### Step 5 
 
+Compare p-value with hypothesis level.
+
 For the final step we compare the p-value to the significance value in order to reach a decision. 
 
 ::: qna
@@ -207,7 +215,7 @@ Hence we can conclude that the evidence supports there is a statistically signif
 
 ## A more complicated research question
 
-Now I'd like to know, are the EBacc scores for boys and girls in England distributed simiarly? 
+Now I'd like to know, are the EBacc scores for boys and girls in England distributed similarly? 
 
 In the dataset we have the average EBacc score for each school split by gender. To address whether these two samples come from the same distribution we're going to use the Kolmogorov-Smirnov two sample test. 
 
@@ -215,7 +223,7 @@ In the dataset we have the average EBacc score for each school split by gender. 
 
 ### Summary statistics
 
-Let's start by looking at the summary statistics. 
+As before, let's start by looking at the summary statistics. 
 
 ::: qna
 #### Question
@@ -247,7 +255,7 @@ plt.legend()
 plt.show()
 ```
 
-From visually looking at the plot we can see that the two distributions look quite similar - but let's formally test that. As before, we're going to follow the five steps of hypothesis testing. 
+From visually looking at the plot we can see that the two distributions look quite similar - but we want to formally test that. As before, we're going to follow the five steps of hypothesis testing. 
 
 ### Step 1
 
@@ -277,6 +285,8 @@ print(f'The alternative hypothesis is {H_1}')
 
 ### Step 2 
 
+Set the significance level.
+
 ::: qna
 #### Question
 
@@ -297,9 +307,13 @@ alpha = 0.05
 
 ### Step 3 
 
+Identify the evidence. 
+
 We already have the evidence - it's our datasets `df['EBACCAPS_GIRLS']` and `df['EBACCAPS_BOYS']`. 
 
-### Step 4 NOTE: got to here 
+### Step 4 
+
+Calculate the p-value
 
 We can use a built in function from `scipy.stats` called `ks_2samp` to do step 4 for us. You can read more about this function [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html). 
 
@@ -326,6 +340,8 @@ print("KS p-value =", ks_p_value)
 :::
 
 ### Step 5 
+
+Compare p-value with hypothesis level.
 
 For the final step we compare the p-value to the significance value in order to reach a decision. 
 
@@ -366,5 +382,5 @@ plt.show()
 
 ## You're Done!
 
-Well done you've completed this weeks practical on establishing and evaluating hypothesis questions. If you are still working on it, take your time. And if you have any questions just ask! 
+Well done you've completed this weeks practical on establishing and evaluating hypothesis questions. If you are still working on it, take your time. If you have any questions just ask! 
 
