@@ -41,15 +41,15 @@ df_ks4 = pd.read_csv(
 )
 
 info_cols = ['RECTYPE', 'LEA', 'SCHNAME', 'TOTPUPS', 'TOWN']
-ebaccs_cols = ['EBACCAPS', 'EBACCAPS_LO', 'EBACCAPS_MID', 'EBACCAPS_HI']
+ebaccs_cols = ['EBACCAPS', 'EBACCAPS_GIRLS', 'EBACCAPS_BOYS']
 
-df_ks4 = df_ks4[info_cols + ebaccs_cols]
+df = df_ks4[info_cols + ebaccs_cols]
 
-df_ks4[['TOTPUPS']+ebaccs_cols] = df_ks4[['TOTPUPS']+ebaccs_cols].apply(pd.to_numeric, errors='coerce')
+df[['TOTPUPS']+ebaccs_cols] = df[['TOTPUPS']+ebaccs_cols].apply(pd.to_numeric, errors='coerce')
 
-df_ks4 = df_ks4[df_ks4['RECTYPE'].isin([1, 2])].copy()
+df = df[df['RECTYPE'].isin([1, 2])].copy()
 
-df_ks4.head()
+df.head()
 ```
 
 Looking at the metadata (which you can see in 'L2_data/ks4_meta.xlsx') we can see the full meaning of each column header: 
@@ -60,9 +60,8 @@ Looking at the metadata (which you can see in 'L2_data/ks4_meta.xlsx') we can se
 - 'TOTPUPS' = Number of pupils on roll (all ages)
 - 'TOWN' = School town 
 - 'EBACCAPS' = Average EBacc APS score per pupil
-- 'EBACCAPS_LO' = Average EBacc APS score per pupil with low prior attainment
-- 'EBACCAPS_MID' = Average EBacc APS score per pupil with middle prior attainment
-- 'EBACCAPS_HI' = Average EBacc APS score per pupil with high prior attainment
+- 'EBACCAPS_GIRLS' = Average EBacc APS score per girl
+- 'EBACCAPS_BOYS' = Average EBacc APS score per boy
 
 ## Research question 
 
@@ -77,10 +76,10 @@ To do this we're going to use the mean comparison test to compare the schools in
 ### Splitting the groups 
 
 ```{python}
-df_London = df_ks4[df_ks4['TOWN'] == 'London']
+df_London = df[df['TOWN'] == 'London']
 df_London = df_London[df_London['EBACCAPS'].notna()]
 
-df_notLondon = df_ks4[df_ks4['TOWN'] != 'London']
+df_notLondon = df[df['TOWN'] != 'London']
 df_notLondon = df_notLondon[df_notLondon['EBACCAPS'].notna()]
 ```
 
@@ -208,10 +207,161 @@ Hence we can conclude that the evidence supports there is a statistically signif
 
 ## A more complicated research question
 
-Now I'd also like to know: Are the distribution of EBacc scores in London drawn from a normal distribution? 
+Now I'd like to know, are the EBacc scores for boys and girls in England distributed simiarly? 
+
+In the dataset we have the average EBacc score for each school split by gender. To address whether these two samples come from the same distribution we're going to use the Kolmogorov-Smirnov two sample test. 
+
+## Preparing the data 
+
+### Summary statistics
+
+Let's start by looking at the summary statistics. 
+
+::: qna
+#### Question
+
+``` python
+df[[??]].??
+```
+
+#### Answer
+
+```{python}
+df[['EBACCAPS_GIRLS', 'EBACCAPS_BOYS']].describe()
+```
+:::
+
+### Plotting the data 
+
+Let's also visually inspect the data. 
+
+```{python}
+plt.hist(df['EBACCAPS_GIRLS'], bins=20, color='#abc766', alpha=0.5, label='Girls')
+plt.hist(df['EBACCAPS_BOYS'], bins=20, color='#4e3c56', alpha=0.5, label='Boys')
+plt.xlim(0,9) # the EBacc has a maximum score of 9
+plt.xlabel('EBacc Score')
+plt.ylabel('Number of Schools')
+plt.title('Distribution of EBacc Scores')
+plt.legend()
+
+plt.show()
+```
+
+From visually looking at the plot we can see that the two distributions look quite similar - but let's formally test that. As before, we're going to follow the five steps of hypothesis testing. 
+
+### Step 1
+
+What is the null and alternative hypothesis? 
+
+::: qna
+#### Question
+
+``` python
+H_0 = '??'
+H_1 = '??'
+
+print(f'The null hypothesis is {H_0}')
+print(f'The alternative hypothesis is {H_1}')
+```
+
+#### Answer
+
+```{python}
+H_0 = 'Mean EBacc score for Girls is drawn from the same distribution as the mean EBacc score for Boys.'
+H_1 = 'Mean EBacc score for Girls is drawn from a different distirbution to the mean EBacc score for Boys.'
+
+print(f'The null hypothesis is {H_0}')
+print(f'The alternative hypothesis is {H_1}')
+```
+:::
+
+### Step 2 
+
+::: qna
+#### Question
+
+``` python
+# Set the level of statistical significance 
+
+alpha = ??
+```
+
+#### Answer
+
+```{python}
+# Set the level of statistical significance 
+
+alpha = 0.05
+```
+:::
+
+### Step 3 
+
+We already have the evidence - it's our datasets `df['EBACCAPS_GIRLS']` and `df['EBACCAPS_BOYS']`. 
+
+### Step 4 NOTE: got to here 
+
+We can use a built in function from `scipy.stats` called `ks_2samp` to do step 4 for us. You can read more about this function [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html). 
+
+There are two outputs from the function `scipy.stats.ks_2samp`: the **test statistic** and the **p value**. 
+
+::: qna
+#### Question
+
+``` python
+ks_stat, ks_p_value = ?? 
+
+print("KS test statistic = ", ks_stat)
+print("KS p-value =", ks_p_value)
+```
+
+#### Answer
+
+```{python}
+ks_stat, ks_p_value = sps.ks_2samp(df['EBACCAPS_GIRLS'].notna(), df['EBACCAPS_BOYS'].notna()) 
+
+print("KS test statistic = ", ks_stat)
+print("KS p-value =", ks_p_value)
+```
+:::
+
+### Step 5 
+
+For the final step we compare the p-value to the significance value in order to reach a decision. 
+
+::: qna
+#### Question
+
+``` python
+if ??
+    print(??)
+else ?? 
+    print(??)
+```
+
+#### Answer
+
+```{python}
+if ks_p_value < alpha:
+    print(f"Reject the null hypothesis that the samples are drawn from the same distribution.")
+    print("Conclude that samples are drawn from populations with different distributions.")
+else: 
+    print(f"Fail to reject the null hypothesis that the samples are drawn from the same distribution.")
+    print("Assume that samples are drawn from populations with the same distribution.")
+```
+:::
 
 
+## Extension 
+If you've finished working through the examples in the tutorial then have a go at coming up with your own research question and hypothesis. 
 
+A good place to start would be by looking at the data in `df_ks4` - theres a lot of numerical information here - are there two variables you could compare? 
+
+```{python}
+df_ks4.hist(bins=50, figsize=(20, 15))
+plt.tight_layout()
+plt.show()
+```
 
 
 ## You're Done!
