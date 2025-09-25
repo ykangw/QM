@@ -1,6 +1,6 @@
 ---
-title: 'Practical XXX: XXX'
-subtitle: "XXX"
+title: 'Practical 4: Practising practical Linear Algebra'
+subtitle: ""
 format:
   html: default
   ipynb: default
@@ -9,85 +9,244 @@ filters:
   - quarto
 ---
 
-This week is focussed on XXX.
+This week is focussed on the key ideas from linear algebra which are the building blocks of regression, computational modelling and machine learning. 
 
 ## To add a callout-note
 
 :::{.callout-note}
 
-Suggestions for a Better Learning Experience:
+Don't be intimidated by the maths!
 
--   XXX
+Even if you're struggling with the maths try to focus on what you think the code is doing. 
 :::
 
-## To add Python code without running them ...
-``` python
-import pandas as pd
+In the tutorial we're going to explore the mathematical concepts from the lecture through an example. 
 
-# Read CSV file, skipping first 5 rows, using row 6 as header, and handling comma as thousands separator
-df_pop = pd.read_csv(
-    'L1_data/UK_census_population.csv',
-    skiprows=5,        # Skip first 5 rows. Wnhy?
-    thousands=',',     # Interpret commas as thousands separators
-    header=0           # After skipping, the first row becomes the header
-)
+## A problem with bike parts
 
-print(df_pop.head())
-```
+### Background
 
-## To add and run Python code
+A factory produces three products:
+
+- $x$ — handlebars  
+- $y$ — brakes  
+- $z$ — wheels  
+
+From **each unit of aluminium** they can produce: 4 of $x$, 3 of $y$, and 8 of $z$.  
+From **each unit of rubber** they can produce: 1 of $x$, 100 of $y$, and 9 of $z$.  
+From **each unit of paint** they can produce: 9 of $x$, 0 of $y$, and 2 of $z$.  
+
+Suppose the factory has:  
+- $a=100$ units of aluminium,  
+- $r=300$ units of rubber,  
+- $p=150$ units of paint.  
+
+How many of each product $x, y, z$ can they produce?  
+
+### Linear equations  
+
+We can express the resource constraints as a system of equations:  
+
+$$
+4x + 3y + 8z &= a, 
+x + 100y + 9z &= r, 
+9x + 0y + 2z &= p.
+$$
+
+### Matrix form
+
+This can be written compactly as:
+
+$$
+\begin{pmatrix}
+4 & 3 & 8 \\
+1 & 100 & 9 \\
+9 & 0 & 2
+\end{pmatrix}
+
+\begin{pmatrix}x\\y\\z\end{pmatrix}
+=
+\begin{pmatrix}a\\r\\p\end{pmatrix}.
+$$
+
+That is, 
+$$
+M\bar{x} =b 
+$$
+
+Where 
+
+$$
+M = 
+\begin{pmatrix}
+4 & 3 & 8 \\
+1 & 100 & 9 \\
+9 & 0 & 2
+\end{pmatrix}
+$$
+
+$$
+\bar{x} = \begin{pmatrix}x\\y\\z\end{pmatrix}
+$$
+
+and 
+$$
+b = \begin{pmatrix}a\\r\\p\end{pmatrix}.
+$$
+
+### Writing this is Python 
+
+We can write this same information in Python by creating variables. 
 
 ```{python}
-import pandas as pd
+# Coefficient matrix
+M = np.array([[4, 3, 8],
+              [1, 100, 9],
+              [9, 0, 2]], dtype=float)
 
-# Read CSV file, skipping first 5 rows, using row 6 as header, and handling comma as thousands separator
-df_pop = pd.read_csv(
-    'L1_data/UK_census_population.csv',
-    skiprows=5,        # Skip first 5 rows. Wnhy?
-    thousands=',',     # Interpret commas as thousands separators
-    header=0           # After skipping, the first row becomes the header
-)
-
-print(df_pop.head())
+# Resource availability
+# [a, r, p]
+b = np.array([100.0, 300.0, 150.0], dtype=float)  
 ```
 
-## To add a photo - replace the path. Using relative path is also okay.
+In Python matrices are represented as an array of arrays ([] within other []) - each array [] is a row of the matrix. 
 
-![]({{< var module.web >}}/sessions/L1_images/uk_pop_csv_screenshot.jpg){width="600"} 
+## Solving the equations 
 
-<!-- ![](L1_images/uk_pop_csv_screenshot.jpg){width=600} -->
+We can use in-built functions in Python to solve the system of linear equations. The library `np.linalg` provides us with all the matrix operations we need. 
 
-## To add some "questions"
+### Checking the determinant
 
-The qmd file will be rendered as two files in sessions folder, including a html and ipynb format. The html file will contain both *question* and *answer*, while the ipynb file will contain only the *question*.
-
-For the effect, please check [HTML](https://huanfachen.github.io/QM/sessions/weekX_practical.html) and [ipynb](https://huanfachen.github.io/QM/sessions/weekX_practical.ipynb).
-
-::: qna
-#### Question
-
-```python
-if ??
-    ??
-else:
-    ??
-```
-
-#### Answer
-
-#### Answer
+From the lecture we saw that in order to solve a system of linear equations the corresponding coefficient matrix must be invertible - and this requires the determinant to be non-zero. So let's start by checking the determinant of M is non-zero. 
 
 ```{python}
-if 'Moscow' in ['Moscow', 'Beijing']:
-    print("Moscow is in the cities list.")
-else:
-    print("Moscow is not in the cities list.")
+# Calculate the determinant of M
+det_M = np.linalg.det(M)
+
+print(det_M)
 ```
+
+The det(M) is non-zero! This means that matrix M is invertible. 
+
+### Inverting the matrix 
+
+Now let's calculate the inverse of M.
+
+:::{.callout-note}
+
+Remember: The inverse of a matrix M is denoted M^-1 and has the property that M * M^-1 = I, where I is the identity matrix.
 :::
+
+```{python}
+# Invert M
+M_inv = np.linalg.inv(M)
+
+print(M_inv)
+```
+
+### The identity matrix 
+
+Let's check that $MM^{-1}= I$, where I is the 3x3 identity matrix: 
+
+$$
+\begin{pmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+$$
+
+```{python}
+# Multiply M by its inverse
+
+MM_inv = np.dot(M, M_inv)
+print(MM_inv)
+```
+
+Hmmmm... that's weird. It's not quite the identity matrix. 
+
+The reason it's not quite the dientity matrix is because we are using floating point values (`dtype=float`) in `Python` - which means there's always going to be a small error - i.e. epsilon -  $\epsilon$) 
+
+Rounding the matrix we see that it is very close to the identity.
+
+```{python}
+print(MM_inv.round(2))
+```
+
+Phew - it is the identity matrix! 
+
+### Let's solve it!
+
+As we saw in the lectures, we can get $x$ as follows: 
+
+$$
+x = M^{-1}b
+$$
+
+We use the function `np.dot()` to take the [dot product](https://www.mathsisfun.com/algebra/matrix-multiplying.html). 
+
+```{python}
+# do M^-1 * b to get x_bar
+x_bar = np.dot(M_inv, b)
+
+print(x_bar)
+```
+
+So we see that we can make 15.9 handlebrars, 2.5 brakes and 3.6 wheels. Which really limits the factories production to just one bike (or a tricycle). 
+
+### Let's solve it again!
+
+So above we calculated each step of the process. Alternatively we can solve the equations using `numpy`s linear algebra solver, which skips most of the steps. 
+
+```{python}
+## Solve the equations using numpy's linear algebra solver
+x_bar = np.linalg.solve(M, b)
+
+print(x_bar)
+```
+
+## Visualising 
+
+In 2-dimensions and 3-dimensions we can visualise the solution to our set of equations. For two equations the solution will be the point where the two lines intersect. In three dimensiosn the solution is the intersection of the three planes described by the equation. 
+
+We can plot our equations in 3D space to see this. 
+
+```{python}
+# Coefficients and resources
+a, r, p = 100, 300, 150
+
+# Define grid
+x = np.linspace(0, 30, 50)
+y = np.linspace(0, 30, 50)
+X, Y = np.meshgrid(x, y)
+
+# Constraint surfaces
+Z1 = (a - 4*X - 3*Y) / 8
+Z2 = (r - X - 100*Y) / 9
+Z3 = (p - 9*X) / 2
+
+# Solve system
+M = np.array([[4, 3, 8],
+              [1,100, 9],
+              [9, 0, 2]], dtype=float)
+b = np.array([a, r, p], dtype=float)
+solution = np.linalg.solve(M, b)
+```
+
+## Conclusions 
+
+Here we solved a set of linear equations using algebra. Solving sets of liunear equations is closely related to regression, a topic we will learn about in week 6. 
+
+## Extension 
+
+Try and implement an OLS regression for the data.... 
 
 ## You're Done!
 
-Congratulations on completing the first QM practical session! If you are still working on it, take you time.
+Congratulations on completing the linear algebra practical! If you are still working on it, take your time.
 
-Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.
+Don't worry here about understanding every detail of the maths - the goal here is to help with some baseline understanding of the maths so that it's easier to read maths you might come across in further research. Focus on each of the operations we looked at - do you know what is being calculated here? Why is that a useful thing to calculate? 
+
+It takes time to learn - remember practice makes perfect! 
+
 
