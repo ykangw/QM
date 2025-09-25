@@ -2,7 +2,7 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "7aa3b1ec",
+   "id": "05cde2ce",
    "metadata": {},
    "source": [
     "---\n",
@@ -48,7 +48,7 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "d6062a95",
+   "id": "815eb692",
    "metadata": {},
    "outputs": [
     {
@@ -87,7 +87,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "795984c9",
+   "id": "6e7aecbe",
    "metadata": {},
    "source": [
     "## To add a photo - replace the path. Using relative path is also okay.\n",
@@ -120,7 +120,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "2402d9aa",
+   "id": "8fe3ecb6",
    "metadata": {},
    "outputs": [
     {
@@ -140,7 +140,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "e4c583e6",
+   "id": "d943ccc2",
    "metadata": {},
    "source": [
     ":::\n",
@@ -158,7 +158,7 @@
    "display_name": "Python 3 (ipykernel)",
    "language": "python",
    "name": "python3",
-   "path": "C:\\Users\\Adam\\AppData\\Local\\Programs\\Python\\Python313\\share\\jupyter\\kernels\\python3"
+   "path": "C:\\Users\\Adam\\AppData\\Local\\R\\cache\\R\\reticulate\\uv\\cache\\archive-v0\\xi_lxd04oYgEvDZxRR08g\\share\\jupyter\\kernels\\python3"
   },
   "language_info": {
    "codemirror_mode": {
@@ -170,7 +170,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.13.7"
+   "version": "3.11.13"
   }
  },
  "nbformat": 4,

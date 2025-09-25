@@ -1,6 +1,6 @@
 ---
-title: 'Practical XXX: XXX'
-subtitle: "XXX"
+title: 'Practical 6: Applied Linear Regression Basics'
+subtitle: "Because you're worth it!"
 format:
   html: default
   ipynb: default
@@ -9,85 +9,251 @@ filters:
   - quarto
 ---
 
-This week is focussed on XXX.
+```{r}
+#| message: false
+#| warning: false
+#| include: false
+# reticulate::py_install("pyyaml")
+# reticulate::py_install("jupyter")
+# reticulate::py_install("statsmodels")
+# reticulate::py_install("pandas")
+# reticulate::py_install("numpy")
+# reticulate::py_install("pyjanitor")
+# reticulate::py_install("pathlib") 
+```
 
-## To add a callout-note
+This week's practical is focussed on understanding regression analysis in an applied context. You will essentially re-create some of the analysis you saw in the lecture, but for slightly different variables
 
-:::{.callout-note}
-
-Suggestions for a Better Learning Experience:
-
--   XXX
+::: callout-note
+Below you will find code-blocks that will allow you to run your analysis in either R or Python. It's up to you which you decide to use - you might even want to try both to compare.
 :::
 
-## To add Python code without running them ...
-``` python
-import pandas as pd
+## Tasks
 
-# Read CSV file, skipping first 5 rows, using row 6 as header, and handling comma as thousands separator
-df_pop = pd.read_csv(
-    'L1_data/UK_census_population.csv',
-    skiprows=5,        # Skip first 5 rows. Wnhy?
-    thousands=',',     # Interpret commas as thousands separators
-    header=0           # After skipping, the first row becomes the header
-)
+Make sure you complete each of the tasks below, 1-10. All of these will be covered in the code examples below, but this is the full workflow:
 
-print(df_pop.head())
-```
+### Downloading: Download and read into your software environment:
 
-## To add and run Python code
+1.  School locational and attribute information, downloaded from here - <https://get-information-schools.service.gov.uk/Downloads> - or read in using the code supplied below:
+    a.  **edubase_schools** = this is the 'all establishment' data for every school in England and Wales
+2.  School-level Key Stage 4 (14-16 GCSE level) attainment and other attribute information, downloaded from here - <https://www.compare-school-performance.service.gov.uk/download-data> - or read in using the code supplied below:
+    b.  **england_ks4final** = data on the 2022/23 academic year, school-level, KS4 outcomes and associated statistics
+    c.  **england_abs** = data on the 2022/23 academic year, school-level absence rates
+    d.  **england_census** = additional school-level pupil information for the 2022/23 academic year
+    e.  **england_school_information** = additional school-level institution information such as Ofsted rating etc. for the 2022/23 academic year
+    f.  **england_ks4_pupdest** = pupil destination data (where students go once they leave school at 16)
 
-```{python}
-import pandas as pd
+### Data Munging: Join, filter and select:
 
-# Read CSV file, skipping first 5 rows, using row 6 as header, and handling comma as thousands separator
-df_pop = pd.read_csv(
-    'L1_data/UK_census_population.csv',
-    skiprows=5,        # Skip first 5 rows. Wnhy?
-    thousands=',',     # Interpret commas as thousands separators
-    header=0           # After skipping, the first row becomes the header
-)
+3.  **england_school_2022_23** = Join together all of the school-level data above into a single file and then reduce it in size using:
+    a.  **filter** - so that it just contains open secondary schools
+    b.  **select** - so that only a few key variables relating to attainment, progress, deprivation, absence and school quality remain, alongside key locational and other attributes.
+4.  Create two data subsets:
+    a.  A **subset** containing all of the secondary schools in one of the 32 London Boroughs (not including the City of London)
+    b.  A subset containing all of the secondary schools in another local authority in England. Any local authority you like.
 
-print(df_pop.head())
-```
+### Exploratory Data Analysis
 
-## To add a photo - replace the path. Using relative path is also okay.
+5.  Create a series of graphs and statistical outputs to allow you to understand the structure and composition of your data. You should produce:
+    a.  A histogram for each variable you are analysing for **both your two subsets** and the **national dataset**, perhaps including
+        i.  mean and median lines
+        ii. lines for the upper and lower quartiles
+        iii. indications of outliners
+        iv. a kernel density smoothing
+    b.  Alternative plots such as violin plots or box plots to compare with the histogram
+    c.  A Map of the location of your schools in your two subsets
+    d.  A scatter plot of your dependent (attainment) and independent (disadvantage) variable
+        i.  include a regression line of best fit
+        ii. include the R-squared, slope and intercept parameters
 
-![]({{< var module.web >}}/sessions/L1_images/uk_pop_csv_screenshot.jpg){width="600"} 
+### Explanatory Data Analysis - Attainment and Disadvantage in Different Parts of England
 
-<!-- ![](L1_images/uk_pop_csv_screenshot.jpg){width=600} -->
+6.  Carry out You will choose two different
 
-## To add some "questions"
+## Task 1 - Download your data and read into your software environment
 
-The qmd file will be rendered as two files in sessions folder, including a html and ipynb format. The html file will contain both *question* and *answer*, while the ipynb file will contain only the *question*.
-
-For the effect, please check [HTML](https://huanfachen.github.io/QM/sessions/weekX_practical.html) and [ipynb](https://huanfachen.github.io/QM/sessions/weekX_practical.ipynb).
+-   I've made this task easy for you by giving you the code to download all of this data. You'll need to download - click on either tab to see the code for each.
 
 ::: qna
-#### Question
-
-```python
-if ??
-    ??
-else:
-    ??
-```
-
-#### Answer
-
-#### Answer
+#### ![](L6_images/python-logo-only.png){width="30"}
 
 ```{python}
-if 'Moscow' in ['Moscow', 'Beijing']:
-    print("Moscow is in the cities list.")
-else:
-    print("Moscow is not in the cities list.")
+import pandas as pd
+import numpy as np
+import janitor
+from pathlib import Path
+
+# Read CSV file
+edubase_schools = pd.read_csv(
+    "https://www.dropbox.com/scl/fi/fhzafgt27v30lmmuo084y/edubasealldata20241003.csv?rlkey=uorw43s44hnw5k9js3z0ksuuq&raw=1",
+    encoding="cp1252",
+    low_memory=False,
+    dtype={"URN": str}
+)
+edubase_schools = edubase_schools.clean_names()
+#py_edubase_schools.dtypes
+#dtype_df = py_edubase_schools.dtypes.reset_index()
+#dtype_df.columns = ["column_name", "dtype"]
+
+# Define base path and common NA values - NOTE YOU WILL NEED TO DOWNLOAD THIS DATA AND PUT INTO YOUR OWN base_path LOCATION ON YOUR MACHINE
+base_path = Path("E:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+na_values_common = ["", "NA", "SUPP", "NP", "NE"]
+na_values_extended = na_values_common + ["SP", "SN"]
+na_values_attainment = na_values_extended + ["LOWCOV", "NEW"]
+na_values_mats = na_values_common + ["SUPPMAT"]
+
+# Absence data
+england_abs = pd.read_csv(base_path / "england_abs.csv", na_values=na_values_common, dtype={"URN": str})
+
+# Census data
+england_census = pd.read_csv(base_path / "england_census.csv", na_values=na_values_common, dtype={"URN": str})
+england_census.iloc[:, 4:23] = england_census.iloc[:, 4:23].apply(lambda col: pd.to_numeric(col.astype(str), errors="coerce"))
+
+# KS4 MATs performance data
+england_ks4_mats_performance = pd.read_csv(base_path / "england_ks4-mats-performance.csv", na_values=na_values_mats, encoding="cp1252", low_memory=False, dtype={"URN": str})
+england_ks4_mats_performance["TRUST_UID"] = england_ks4_mats_performance["TRUST_UID"].astype(str)
+england_ks4_mats_performance["P8_BANDING"] = england_ks4_mats_performance["P8_BANDING"].astype(str)
+england_ks4_mats_performance["INSTITUTIONS_INMAT"] = england_ks4_mats_performance["INSTITUTIONS_INMAT"].astype(str)
+
+cols_to_convert = england_ks4_mats_performance.columns[10:]
+exclude = ["P8_BANDING", "INSTITUTIONS_INMAT"]
+cols_to_convert = [col for col in cols_to_convert if col not in exclude]
+england_ks4_mats_performance[cols_to_convert] = england_ks4_mats_performance[cols_to_convert].apply(lambda col: pd.to_numeric(col.astype(str), errors="coerce"))
+
+# KS4 pupil destination data
+england_ks4_pupdest = pd.read_csv(base_path / "england_ks4-pupdest.csv", na_values=na_values_extended, dtype={"URN": str})
+england_ks4_pupdest.iloc[:, 7:82] = england_ks4_pupdest.iloc[:, 7:82].apply(lambda col: pd.to_numeric(col.astype(str), errors="coerce"))
+
+# KS4 final attainment data
+england_ks4final = pd.read_csv(base_path / "england_ks4final.csv", na_values=na_values_attainment, dtype={"URN": str})
+start_col = "TOTPUPS"
+end_col = "PTOTENT_E_COVID_IMPACTED_PTQ_EE"
+cols_range = england_ks4final.loc[:, start_col:end_col].columns
+england_ks4final[cols_range] = england_ks4final[cols_range].apply(lambda col: pd.to_numeric(col.astype(str), errors="coerce"))
+
+# School information data
+england_school_information = pd.read_csv(
+    base_path / "england_school_information.csv",
+    na_values=na_values_extended,
+    dtype={"URN": str},
+    parse_dates=["OFSTEDLASTINSP"],
+    dayfirst=True  # Adjust if needed
+)
+
+```
+
+#### ![](L6_images/Rlogo.png){width="41" height="30"}
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(janitor)
+library(readr)
+library(dplyr)
+library(here)
+
+# Read CSV file
+edubase_schools <- read_csv("https://www.dropbox.com/scl/fi/fhzafgt27v30lmmuo084y/edubasealldata20241003.csv?rlkey=uorw43s44hnw5k9js3z0ksuuq&raw=1") %>% 
+  clean_names() %>% 
+  mutate(urn = as.character(urn))
+#str(r_edubase_schools)
+
+# Define base path and common NA values - NOTE YOU WILL NEED TO DOWNLOAD THIS DATA AND PUT INTO YOUR OWN base_path LOCATION ON YOUR MACHINE
+base_path <- here("sessions", "L6_data", "Performancetables_130242", "2022-2023")
+na_common <- c("", "NA", "SUPP", "NP", "NE")
+na_extended <- c(na_common, "SP", "SN")
+na_attainment <- c(na_extended, "LOWCOV", "NEW")
+na_mats <- c(na_common, "SUPPMAT")
+
+# Absence data
+england_abs <- read_csv(file.path(base_path, "england_abs.csv"), na = na_common) |>
+  mutate(URN = as.character(URN))
+
+# Other School Census data
+england_census <- read_csv(file.path(base_path, "england_census.csv"), na = na_common) |>
+  mutate(URN = as.character(URN)) |>
+  mutate(across(5:23, ~ parse_number(as.character(.))))
+
+# KS4 MATs performance data
+#First read
+england_ks4_mats_performance <- read_csv(
+  file.path(base_path, "england_ks4-mats-performance.csv"),
+  na = na_mats
+) |>
+  mutate(
+    TRUST_UID = as.character(TRUST_UID),
+    P8_BANDING = as.character(P8_BANDING),
+    INSTITUTIONS_INMAT = as.character(INSTITUTIONS_INMAT)
+  )
+
+# Then Identify columns to convert (excluding character columns)
+cols_to_convert <- england_ks4_mats_performance |>
+  select(-(1:10), -P8_BANDING, -INSTITUTIONS_INMAT) |>
+  names()
+
+# Then apply parse_number safely to convert characters to numbers
+england_ks4_mats_performance <- england_ks4_mats_performance |>
+  mutate(across(all_of(cols_to_convert), ~ parse_number(as.character(.))))
+
+
+# KS4 pupil destination data
+england_ks4_pupdest <- read_csv(file.path(base_path, "england_ks4-pupdest.csv"), na = na_extended) |>
+  mutate(URN = as.character(URN)) |>
+  mutate(across(8:82, ~ parse_number(as.character(.))))
+
+# KS4 final attainment data
+england_ks4final <- read_csv(file.path(base_path, "england_ks4final.csv"), na = na_attainment) |>
+  mutate(URN = as.character(URN)) |>
+  mutate(across(TOTPUPS:PTOTENT_E_COVID_IMPACTED_PTQ_EE, ~ parse_number(as.character(.))))
+
+# School information data
+england_school_information <- read_csv(
+  file.path(base_path, "england_school_information.csv"),
+  na = na_extended,
+  col_types = cols(
+    URN = col_character(),
+    OFSTEDLASTINSP = col_date(format = "%d-%m-%Y")
+  )
+)
 ```
 :::
 
-## You're Done!
+## Task 2 - Data Munging
+
+-   Use Python or R to join all of the datasets you loaded in the previous step into a single file that we will called `england_school_2022_23` using the unique school reference number (URN) as the key
+
+::: qna
+#### ![](L6_images/python-logo-only.png){width="30"}
+
+```{python}
+# Left join england_ks4final with england_abs, census, and school information
+england_school_2022_23 = (
+    england_ks4final
+    .merge(england_abs, on="URN", how="left")
+    .merge(england_census, on="URN", how="left")
+    .merge(england_school_information, on="URN", how="left")
+)
+```
+
+
+#### ![](L6_images/Rlogo.png){width="41" height="30"}
+
+```{r}
+#| warning: false
+# Left join england_ks4final with england_abs
+england_school_2022_23 <- england_ks4final %>%
+  left_join(england_abs, by = "URN") %>%
+  left_join(england_census, by = "URN") %>%
+  left_join(england_school_information, by = "URN")
+```
+:::
+
+-   Once you have joined all of these data frames into a single master dataframe for the whole of England you need to filter out some of the  
+
+
+
 
 Congratulations on completing the first QM practical session! If you are still working on it, take you time.
 
 Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.
-
