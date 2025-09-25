@@ -71,8 +71,10 @@ Given the contraints of raw materials we can have:
 
 $$
 8x_1 + x_2 + 10x_3 = b_1 = 400
-\\ 4x_1 + x_2 + 23x_3 = b_2 = 750
-\\ 4x_1 + x_2 + 5x_3 = b_3 = 200
+\\ 
+4x_1 + x_2 + 23x_3 = b_2 = 750
+\\ 
+4x_1 + x_2 + 5x_3 = b_3 = 200
 $$
 
 ### Matrix form

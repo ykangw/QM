@@ -9,9 +9,10 @@ format: revealjs
 jupyter: python3
 ---
 
-# Last week
 
-## Overview of lecture 1
+
+## Last week 
+**Overview of lecture 1**
 
 - Different data types 
 - Key data metrics
@@ -30,40 +31,36 @@ different types of data outliers: caused by measurement error, or irregular patt
 
 # This week 
 
-## First things first
-
-:::: {.columns}
-
-::: {.column width="60%"}
+## The scientific method 
 
 <div style="text-align:center;">
-  <img src="L3_images/scientific_method.png" alt="The scientific method" style="max-width:100%">
+  <img src="L3_images/scientific_method.png" alt="The scientific method" style="max-width:80%">
 </div>
 
-
+::: {.notes}
+A specific research model - quite formal - been around from the 19th century. Typifies how scientific research is done in the classical sciences like biology. Link to scientific process and how we test and then iterate over ideas and concepts. Something we will talk about more next lecture. 
 :::
 
-::: {.column width="40%"}
+## Exploratory data analysis 
 
-<br>
+When we're working with large datasets, exploratory data analysis is the first step in the scientific method. 
 
-Exploratory data analysis is the first step of any data science project. 
-
+::: {.incremental}
+- How to understand the dataset 
+- What do the variables represent 
+- What statistical techniques should be used
 :::
-
-::::
 
 ::: {.notes}
-link to scientific process and how we test and then iterate over ideas and concepts. Something we will talk about more next lecture. 
+More modern approach approach devloped by matehmatician John Turkey in the 1970s. 'Father of data science'. rather than being driven by more classical statistical analyses (something we'll look at next week) - the idea was to have a more flexible approach. 
 :::
 
 ## Introducing statistical concepts 
 
 ::: {.incremental}
-- This lecture is focussed on statistical concepts
 - Data science is about using ideas from statistics to describe large datasets 
-- Here looking to describe numerical data
-- Focus on probability distributions 
+- Focus on numerical data
+- Using probability distributions to characterise them 
 :::
 
 ::: {.notes}
@@ -79,17 +76,16 @@ By the end of this lecture you should be able to:
 3. Evaluate whether a dataset is representative. 
 :::
 
-# Motivation 
+# Motivation
+**How do we understand how likely events are to occur?** 
 
-## What is the likelihood of events occuring? 
-
-**Question**
+*Question*
 
 What is the probability of someone at UCL being over 190cm? 
 
 . . . 
 
-**How can we try to answer this?**
+*How can we try to answer this?*
 
 . . .
 
@@ -99,7 +95,7 @@ We could try and find someone on campus who is over 190cm.
 
 . . .
 
-Better to try and understand the distribution of heights. 
+Better idea is to try and understand the distribution of heights. 
 
 ::: {.notes}
 This week thinking about the distribution of data. 
@@ -108,7 +104,8 @@ How do we understand the spread of height data, how to we calculate important fe
 Next week, thinking about formulating and answering the research question. 
 :::
 
-# Random Sampling 
+# Representative data
+**Before we try to describe the data, it's important to know where the data came from.**
 
 ## The dream vs reality 
 Ideally, we would like all the relevant data.
@@ -127,26 +124,20 @@ It would be great if I knew the height of everyone at UCL, but unrealistic to co
 
 ## Approximating 
 Hence, we sample a subset of the data. 
+We need to choose our sample carefully - we want what happens in the sample to approximate what happens in the whole population. 
 
 . . .
 
-We need to choose our sample carefully. We want what happens in the sample to approximate what happens in the whole population. 
-
-. . .
-
-**In practise**
+**In practise** we might try different sampling approaches such as:
 
 ::: {.incremental}
-- different sampling approaches
-  - random sampling 
-  - systematic sampling 
+- random sampling 
+- systematic sampling 
 :::
 
 ::: {.notes}
 I might assign everyone a number and then choose 100 random numbers and measure them. Or I might choose a specific subset, for exampel just everyone in this lecture theatre. 
 :::
-
-# Is the data representative? 
 
 ## Bias
 It's important to understand if your dataset is unrepresentative or biased. 
@@ -159,7 +150,6 @@ It's important to understand if your dataset is unrepresentative or biased.
 Bias is the idea that there is an unrepresentative pattern in your data.
 :::
 
-
 ## Cognitive bias 
 [*Systematic patterns in how we think about, and perceive, the world.*]{style="color:#49a0c4"} 
 
@@ -167,9 +157,7 @@ Bias is the idea that there is an unrepresentative pattern in your data.
 
 ::: {.column width="50%"}
 
-We all have cognitive biases. 
-
-These can impact our research:
+Our cognitive biases can impact:
 
 ::: {.incremental}
 - data collection 
@@ -183,7 +171,6 @@ These can impact our research:
 ::: {.column width="50%"}
 
 <br>
-<br>
 
 <div style="text-align:center;">
   <img src="L2_images/human_brain_2.png" alt="Human Brain" style="max-width:60%">
@@ -194,6 +181,8 @@ These can impact our research:
 ::::
 
 ::: {.notes}
+
+We all have our own cognitive biases - shaped around our values and our backgrounds. 
 Example of cognitive bias - confirmation bias, whereby I favour information that agrees with my existing beliefs. I'm writing a report on the spatial impact of a new railway line. Suppose I hate the idea of a new railway line, and then I see some data, fact a: 60% of residents living near the railline don't want it due to noise. fact b: 75% of residents in the UK do want the railway line. i might only include fact a in my report as it confirms my existing beliefs. 
 :::
 
@@ -209,13 +198,12 @@ This can lead to incorrect conclusions.
 As scientists we should try and present an accurate and fair balance of information. If we're more aware of our biases it can be easier to try and actively avoid them. 
 :::
 
-## Types of bias 
+## Dataset bias
 
-- Research bias
-Cognitive bias is a specific type of research bias. 
+- Particularly important when thinking about analysing large datasets as there could be non-obvious patterns reflecting biases. 
+- More important in the era of large AI models 
 
-- Dataset bias 
-Particularly important when thinking about analysing large datasets, as there could be non-obvious patterns reflecting biases. 
+. . .
 
 Types of dataset bias include: 
   - Historical bias 
@@ -235,14 +223,15 @@ Examples:
 - [Police profiling](https://www.amnesty.org.uk/press-releases/uk-police-forces-supercharging-racism-crime-predicting-tech-new-report) 
   - Automated tools to detect 'criminals'. 
   - Trained on datasets which reflect current racist practises. 
-- [Hungry judges](https://en.wikipedia.org/wiki/Hungry_judge_effect)
-  - Tools to help sentencing of 'criminals'. 
-  - Patterns in the dataset --- judges are less lenient before lunch. 
 
 ::: {.notes}
 Police profiling models - meant to make easy to spot criminals - but use exisitng crime data - which reflect racist prejudices in society - and the model learns to pick out people of certain ethnic backgrounds. 
 
 Tools also used to help the sentnecing of criminals in courts of law - observe the hungry judges effect, where they sentnece differently based on how hungry they are - tend to be harsher just before lunch and more lenient after lunch. 
+
+- [Hungry judges](https://en.wikipedia.org/wiki/Hungry_judge_effect)
+  - Tools to help sentencing of 'criminals'. 
+  - Patterns in the dataset --- judges are less lenient before lunch. 
 :::
 
 ## Selection bias 
@@ -287,7 +276,7 @@ Not necessarilly a bad thing, but important to keep in mind. And if the bias is 
   </div>
 </div>
 
-# Descriptive Statistics 
+# Exploring the data - descriptive statistics 
 
 ## What to declare 
 
@@ -371,7 +360,7 @@ But we can see from the diagrams that the distribution of the data is very diffe
 # Normal Distribution
 The most fundamental distribution
 
-## Everywhere you look
+---
 
 <div style="text-align:center;">
   <img src="L2_images/normal_distribution.png" alt="Normal distribution" style="max-width:90%">
@@ -386,22 +375,27 @@ The most fundamental distribution
 - measurement errors in science experiments 
 :::
 
-## You've seen it all before  
+## Key features
+**You've seen it all before**  
 
 ::: {.incremental}
-- Symmetrical
-- Single peak 
-- Smooth tails on both sides
+- Data is continuous 
+  - it is something you measure not something you count
+- Data is equally likely to be larger or smaller than average 
+  - symmetric
+- Characteristic size, all data points are close to the mean 
+  - single peak
+- There is less data further away from the mean 
+  - smooth tails on both sides
 :::
 
-
-## Naturally occurring 
+---
 
 <div style="text-align:center;">
   <img src="L2_images/height_histogram.png" alt="Normal distribution" style="max-width:90%">
 </div>
 
-## Naturally occurring 
+---
 
 <div style="text-align:center;">
   <img src="L2_images/height_histogram_pdf.png" alt="Normal distribution" style="max-width:90%">
@@ -430,32 +424,25 @@ The most fundamental distribution
 \end{align}
 ``` -->
 
-## Key features 
-
-::: {.incremental}
-- Data is continuous 
-  - it is something you measure not something you count
-- Data is equally likely to be larger or smaller than average 
-  - symmetric
-- Characteristic size, all data points are close to the mean 
-  - single peak
-- There is less data further away from the mean 
-  - smooth tails on both sides
-:::
-
 ## Sampling distributions 
 
 [The distribution of the random variable when derived from a random sample of size $n$]{style="color:#49a0c4"} 
 
 . . .
 
-In the case of the normal distribution - standard deviation becomes: 
+In the case of the normal distribution the standard deviation becomes: 
 
 ```{=tex}
 \begin{align}
 \frac{\sigma}{\sqrt{n}}
 \end{align}
 ```
+
+::: {.notes}
+Need to account for the fact that we don't have all the data. 
+
+As the sample size increases the sampling distribution becomes more and more centralised.  
+:::
 
 ## Calculating probabilities 
 
