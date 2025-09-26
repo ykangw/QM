@@ -24,7 +24,7 @@ title: "Overview"
 ## Prerequisites
 - No prerequisite of university-level maths/statistics.
 - No prerequisite of programming.
-- Python is required for practicals and assessments.
+- Python (or R) is required for practicals and assessments.
 - This module doesn't teach programming, so CASA0013 is strongly recommneded if you don't know Python before.
 
 ## Course Structure
