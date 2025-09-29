@@ -10,10 +10,9 @@ format: revealjs
 ---
 
 # Last week
+**Overview of lecture 2**
 
-## Overview of lecture 2
-
-Continued concepts from data analysis, in particular probability distributions. 
+Continued concepts from exploratory data analysis, in particular probability distributions. 
 
 - Representative data 
 - Normal distribution
@@ -22,17 +21,18 @@ Continued concepts from data analysis, in particular probability distributions.
 - Exponentials 
 - Logarithms 
 
-## What is the likelihood of events occuring? 
+# This week 
 
-NOTE: add a picture here
+## Motivation
+**How do we understand how likely events are to occur?** 
 
-**Question**
+*Question*
 
 ::: {.fragment .highlight-red}
 What is the probability of someone at UCL being over 190cm?
 :::
 
-**How can we try to answer this?**
+*Answer*
 
 Try to understand the distribution of heights. 
 
@@ -42,42 +42,21 @@ Last week we asked this question and we thought about the distribution of the da
 This week we look at how to properly ask the research question, and how to answer it.  
 :::
 
-# This week 
-
-## Hypothesising 
-
-:::: {.columns}
-
-::: {.column width="60%"}
+## The scientific method 
 
 <div style="text-align:center;">
-  <img src="L3_images/scientific_method.png" alt="The scientific method" style="max-width:100%">
+  <img src="L3_images/scientific_method.png" alt="The scientific method" style="max-width:60%">
 </div>
 
+::: {.notes}
+This lecture thinking about posing and answering research questions. 
 
-:::
-
-::: {.column width="40%"}
-
-<br>
+Last week we looked at exploratory data analysis - now the formal process of coming up with and evaluating questions - very much part of the scientific method.
 
 Research science is about coming up with hypotheses and evaluating them.
 
 It's iterative - as we find out new information we update our method and processes accordingly. 
 (Gelman et al. 2020. Bayesian Workflow)
-
-:::
-
-::::
-
-
-
-::: {.notes}
-This lecture thinking about posing and answering research questions. 
-
-You come up with a great idea - then need to think considering the data is this idea plausibly true?
-
-Link to the idea of a Bayesian workflow - Gelman. 
 :::
 
 ## Learning Objectives
@@ -89,7 +68,7 @@ By the end of this lecture you should be able to:
 3. Evaluate a hypothesis using appropriate statistical tests. 
 :::
 
-# Motivations
+<!-- # Motivations
 
 ## How do we know what to believe?
 
@@ -128,22 +107,24 @@ We see stories in the news, how do we know what to believe and what not to belie
 Statisitical tests are frequently used in science to figure out if our findings are important or not - essentially a way to formally define a threshold of what is an interesting result vs, what isn't an interesting result. 
 
 A clearly defined, and reporducible way to evaluate findings. 
-:::
+::: -->
 
 # How do you come up with a hypothesis? 
 
 ## Research question vs. hypothesis 
 
-**Research question** 
+[**Research question**]{style="color:#49a0c4"} 
 
 A research *question* focuses on a specific problem.
 
-**Hypothesis**
+. . .
+
+[**Hypothesis**]{style="color:#49a0c4"} 
 
 A formal *statement* that you will seek to prove or disprove. 
 
 ::: {.notes}
-The hypothesis is something you can explicitly test, and come to a judgement about it's truth value. 
+The hypothesis is a statement you can explicitly test. It can either be true or false - and hence using evidence you can come to a judgement about it's truth value. 
 ::: 
 
 ## Flip a coin
@@ -163,9 +144,15 @@ The hypothesis is something you can explicitly test, and come to a judgement abo
 
 ::::
 
-## The hypothesis
+. . .
 
-NOTE: add poll here - what do students think the hypothesis is? 
+What do you think is the hypothesis here? 
+
+::: {.notes}
+WHich of these is something you can test? 
+:::
+
+## The hypothesis
 
 :::: {.columns}
 
@@ -188,7 +175,7 @@ The hypothesis is that it is a fair coin. </div>
 ::::
 
 
-## What question can you ask?
+## What research question can you ask?
 
 :::: {.columns}
 
@@ -221,7 +208,7 @@ If the coin is fair, how likely would it be to see 7 heads out of 10 flips?
 ::::
 
 
-## What question should you ask?
+## What research question should you ask?
 
 :::: {.columns}
 
@@ -249,7 +236,7 @@ Interested in the probability of seeing the event or something even more extreme
 :::
 
 # Establishing and evaluating a Hypothesis 
-In **five** simple steps. 
+In [five]{style="color:#49a0c4"} simple steps. 
 
 ## Step 1
 **Define the null and alternative hypothesis**
@@ -259,14 +246,21 @@ In **five** simple steps.
 [**$H_0$** - the null hypothesis]{style="color:#49a0c4"} 
 
 - this is the "status quo"
+- it is assumed to be true 
 
 . . .
 
-[**$H_1$** - the alternative hypothesis ]{style="color:#49a0c4"} 
+[**$H_1$** - the alternative hypothesis]{style="color:#49a0c4"} 
 
 - your hypothesis
-- it requires some evidence (data) to verify
+- it requires some evidence (i.e. data) to verify
+- it directly contradicts the null hypothesis
 
+::: {.notes}
+Be careful in how the two are defined. H_1 needs to contradict H_0. 
+
+For example if my H_0 was everyone likes chocolate. H_1 couldn't be some people prefer biscuits - since in this situation both H_0 and H_1 can be true at the same time. H_1 would have to be that not everyone likes chocolate. 
+:::
 
 ## Step 2
 **Set your significance level $\alpha$**
@@ -274,17 +268,26 @@ In **five** simple steps.
 [*The significance level is the threshold below which you reject the null hypothesis.*]{style="color:#49a0c4"} 
 
 ::: {.incremental}
-- Decide what "too unlikely" means **before you do the test**.
+- Decide what "too unlikely" means
 - Common choice is 5% significance
   - $\alpha = 0.05$ 
   - This means that if we see evidence that would have less than a 5% chance of occurring under the null hypothesis, then we reject the null hypothesis. 
 :::
 
-
 ## [WARNING]{style="color:#FF0000"}
 Decide what "too unlikely" means **before you do the test**
 
-NOTE: add the banned symbol here
+:::: {.columns}
+
+::: {.column width="60%"}
+
+<div style="text-align:center;">
+  <img src="L3_images/warning_sign.png" alt="Don't be an idiot." style="max-width:90%">
+</div>
+
+:::
+
+::: {.column width="40%"}
 
 - otherwise considered 'HARKing' 
   - **H**ypothesising 
@@ -294,8 +297,14 @@ NOTE: add the banned symbol here
   - are 
   - **K**nown
 
+:::
+
+::::
+
 ::: {.notes}
 It's important to decide on your significance level prior, as otherwise you might find an event which is significant at the 10% threshold and not at 5% - which could lead to bad scientific practise.
+
+There's a balance - often don't know what will be interesting - so you do some exploratory data analysis. But you shouldn't be fishing around for stuff - needs to be grounded in theory and literature. 
 :::
 
 ## Step 3
@@ -314,6 +323,8 @@ f(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
 
 ::: {.notes}
 In quant methods this normally means finding an open public dataset to use. 
+
+The evidence needs to be suitable to answer the question - think about biased/representtaive dtaa from last week. Soemthign they will be assessed on in the assessment. 
 :::
 
 ## Step 4
@@ -363,6 +374,10 @@ The null hypothesis is true, but you get a false positive leading to you rejecti
 
 This is also called a **false positive**. 
 
+. . .
+
+<br>
+
 *Example:* In court a defendant is found guilty despite being innocent. 
 
 
@@ -372,6 +387,10 @@ This is also called a **false positive**.
 The null hypothesis is false, but you get a false negative result, leading you to accepting the null hypothesis. 
 
 This is also called a **false negative**. 
+
+. . .
+
+<br>
 
 *Example:* In court a defendant is found innocent despite being guilty.  
 
@@ -393,9 +412,10 @@ Whilst the tests are good they're not 100% accurate.
 ## Example: Screening outcomes 
 
 $H_0:$ The individual doesn't have breast cancer. 
+
 $H_1:$ The individual does have breast cancer. 
 
-. . .
+## Example: Evaluating the evidence
 
 From [NHS digital](https://digital.nhs.uk/data-and-information/publications/statistical/breast-screening-programme/england---2020-21/qualitystatement3).
 
@@ -410,7 +430,6 @@ From [NHS digital](https://digital.nhs.uk/data-and-information/publications/stat
 - Those who had a negative screening but did in fact have breast cancer.
 - Harder to calculate the false negative rate, as they might be diagnosed with breast cancer at any later point in time. 
 - Studies suggest the false negative rate could be as high as $20%$. 
-
 
 ::: {.notes}
 False positive is bad as you might pursue a healthcare treatment which is unecessary.
@@ -505,6 +524,10 @@ You might not know whether events are correlated, or causing each other.
 <br>
 
 The point of the hypothesis test is to test your idea – but you should use your contextual understanding to come up with plausible (and ethical) initial questions.
+
+:::{.notes}
+Will return to looking at the correlation between variables in week 5. 
+:::
 
 ## The point of the scientific method
 
@@ -643,16 +666,18 @@ We need to know what statistical test to use!
 
 ## Parametric vs. Non-parametric tests
 
-**Parametric Tests**
+**Parametric tests**
 
 - Evaluate hypothesis for specific parameters 
-- Typically have assumptions about the distribution 
-  - e.g. assumed normal distribution 
+- Assumptions about the distribution 
+  - assumed normal distribution 
+  - independent and unbiased samples 
+  - equal/comparable variances 
 - Continuous data 
 
 . . .
 
-**Non-parametric Tests**
+**Non-parametric tests**
 
 - Evaluate hypothesis for entire population distribution 
 - Typcially less assumptions on the distribution 
@@ -700,8 +725,6 @@ William Gosset was working for Guinness brewing company when he came up with the
 ## Student's T-test: one sample
 [*Tests whether the population mean is equal to a specific value or not*]{style="color:#49a0c4"} 
 
-NOTE: want a diagram showing this. 
-
 . . .
 
 The test statistic is calculated as: 
@@ -722,7 +745,6 @@ where
 ## Student's T-test: two sample 
 [*Tests if the population means for two different groups are equal or not.*]{style="color:#49a0c4"}
 
-NOTE: want a diagram showing this.
 . . .
 
 The test statistic is:
@@ -750,8 +772,6 @@ with $s_1, s_2$ the sample standard deviations.
 ## Student's T-test: paired 
 [*Tests if the difference between paired measurements for a population is zero or not - normally used with longitudinal data.*]{style="color:#49a0c4"} 
 
-NOTE: want a diagram showing this.
-
 . . .
 
 The test statistic is: 
@@ -774,7 +794,7 @@ You need to be able to pair the data - i.e. the same things being observed at ti
 :::
 
 
-## How many tails 
+## How many tails? 
 
 Tests can be one-tailed or two-tailed - which you want is determined when you define the hypothesis.
 

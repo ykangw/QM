@@ -1,6 +1,6 @@
 ---
 title: 'Practical 2: Recognising and plotting probability distributions'
-subtitle: ""
+subtitle: 'Exploring student attainment in schools'
 format:
   html: default
   ipynb: default
@@ -11,18 +11,19 @@ filters:
 
 This week is focussed on using some common functions in Python to plot data and distributions. 
 
-## Learning Outcomes 
+# Learning Outcomes 
 
-- Familiarise yourself with opening data files in Python. 
-- Familiarise yourself with plotting histograms of data in Python. 
+- Familiarise yourself with opening datasets and formatting them in Python. 
+- Practise plotting histograms of data in Python. 
+- Explore different data distributions. 
 
 # Starting the Practical
 
-As per last week, the process for every week will be the same: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. If you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.
+As per last week: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. If you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.
 
-## Loading the data 
+# Loading the data 
 
-We are going to look at schools perfomance data in England. 
+We are going to look at schools performance data in England. 
 
 The data is sourced from []() and is downloadable [here]().
 
@@ -43,57 +44,112 @@ df_ks4 = pd.read_csv(
 info_cols = ['RECTYPE', 'LEA', 'SCHNAME', 'TOTPUPS']
 ebaccs_cols = ['EBACCAPS', 'EBACCAPS_LO', 'EBACCAPS_MID', 'EBACCAPS_HI']
 
-df_ks4 = df_ks4[info_cols + ebaccs_cols]
+df = df_ks4[info_cols + ebaccs_cols]
 
-df_ks4[['TOTPUPS']+ebaccs_cols] = df_ks4[['TOTPUPS']+ebaccs_cols].apply(pd.to_numeric, errors='coerce')
-
-df_ks4.head()
+df.head()
 ```
 
-You might be wondering why I've chosen the columns `info_cols` and `ebaccs_cols`. 
+You might be wondering why I've chosen the columns `info_cols` and `ebaccs_cols`. In open source datasets the column headers might be obscure, or difficult to decipher - but typically metadata will be provided that explains the meaning. 
 
 Looking at the metadata (which you can see in 'L2_data/ks4_meta.xlsx') we can see the full meaning of each column header: 
 
-- 'RECTYPE' = Record type (1=mainstream school; 2=special school; 4=local authority; 5=National (all schools); 7=National (maintained schools))
+| Variable name   | Meaning                                                                                  |
+|-----------------|------------------------------------------------------------------------------------------|
+| RECTYPE         | Record type (1=mainstream school; 2=special school; 4=local authority; 5=National (all schools); 7=National (maintained schools)) |
+| LEA             | Local authority                                                                          |
+| SCHNAME         | School name                                                                              |
+| TOTPUPS         | Number of pupils on roll (all ages)                                                      |
+| EBACCAPS        | Average EBacc APS score per pupil                                                        |
+| EBACCAPS_LO     | Average EBacc APS score per pupil with low prior attainment                              |
+| EBACCAPS_MID    | Average EBacc APS score per pupil with middle prior attainment                           |
+| EBACCAPS_HI     | Average EBacc APS score per pupil with high prior attainment                             |
+
+
+<!-- - 'RECTYPE' = Record type (1=mainstream school; 2=special school; 4=local authority; 5=National (all schools); 7=National (maintained schools))
 - 'LEA' = Local authority 
 - 'SCHNAME' = School name 
 - 'TOTPUPS' = Number of pupils on roll (all ages)
 - 'EBACCAPS' = Average EBacc APS score per pupil
 - 'EBACCAPS_LO' = Average EBacc APS score per pupil with low prior attainment
 - 'EBACCAPS_MID' = Average EBacc APS score per pupil with middle prior attainment
-- 'EBACCAPS_HI' = Average EBacc APS score per pupil with high prior attainment
+- 'EBACCAPS_HI' = Average EBacc APS score per pupil with high prior attainment -->
 
-The EBacc is a measure of students school grades calculated as an avergae score across a set number of subjects. It is used as a performance indicator of English schools. You can read more about it [here](https://en.wikipedia.org/wiki/English_Baccalaureate#:~:text=Added%20together%2C%20this%20gives%20a,for%20girls%202018%20was%204.33.).
+EBacc stands for English Baccalaureate. It is a measure of students school grades calculated as an average score across a set number of subjects. It is used by the government as a performance indicator of English schools. You can read more about it [here](https://en.wikipedia.org/wiki/English_Baccalaureate#:~:text=Added%20together%2C%20this%20gives%20a,for%20girls%202018%20was%204.33.).
 
-## Describing the dataframe 
+The EBacc has a minimum score of 0, which indicates very poor performance, and a maximum score of 9, which indicates very high performance. 
 
-### Check how much data is missing 
+# Describing the dataframe 
+
+The `pandas` library has lots of useful built in functions for analysing dataframes. Let's start by seeing how much data we have. 
+
+```{python}
+rows, cols = df.shape
+print(f"Rows: {rows}, Columns: {cols}")
+```
+
+The function `.shape` returns the number of rows and columns. 
+
+## Checking the data type 
+
+Let's check the data type of each of the columns - based on the metadata I am expecting: 
+
+| Variable name   | Meaning                                                                                  | dtype   |
+|-----------------|------------------------------------------------------------------------------------------|---------|
+| RECTYPE         | Record type (1=mainstream school; 2=special school; 4=local authority; 5=National (all schools); 7=National (maintained schools)) | int     |
+| LEA             | Local authority                                                                          | int     |
+| SCHNAME         | School name                                                                              | string  |
+| TOTPUPS         | Number of pupils on roll (all ages)                                                      | int     |
+| EBACCAPS        | Average EBacc APS score per pupil                                                        | float   |
+| EBACCAPS_LO     | Average EBacc APS score per pupil with low prior attainment                              | float   |
+| EBACCAPS_MID    | Average EBacc APS score per pupil with middle prior attainment                           | float   |
+| EBACCAPS_HI     | Average EBacc APS score per pupil with high prior attainment                             | float   |
+
+```{python}
+df.dtypes
+```
+
+OK, so we can see that not all the data types are quite as expected. Let's reformat them to make it easier later. 
+
+```{python}
+df[['TOTPUPS']+ebaccs_cols] = df[['TOTPUPS']+ebaccs_cols].apply(pd.to_numeric, errors='coerce')
+```
+
+And we can check again: 
+
+```{python}
+df.dtypes
+```
+
+## Check how much data is missing 
+
+Let's check how much data is missing for each column in the dataframe - this will help us understand the completeness of the data. 
 
 ```{python}
 # print how much data is missing for each column
-df_ks4.isna().mean() * 100 
+df.isna().mean() * 100 
 ```
 
-It seems suspiscious that the school names are missing for some of the entries - let's check these. 
+It seems suspicious that the school names are missing for some of the entries - let's check these. 
 
 ```{python}
 # return rows where SCHNAME is missing
-df_ks4[df_ks4['SCHNAME'].isna()]
+df[df['SCHNAME'].isna()]
 ```
 
-So, these are all record type 4, 5, or 7 - i.e. they're not individual schools! Let's limit the selection to only mainstream and special schools. 
+So, these are all record type 4, 5, or 7. Looking back at the metadata I see that record types 4, 5 and 7 refer to aggregated data - i.e. they're not individual schools! Let's limit the selection to only individual schools, that is 1-mainstream schools and 2-special schools. 
 
 ```{python}
 # only keep rows where RECTYPE is 1 or 2 
-df_ks4 = df_ks4[df_ks4['RECTYPE'].isin([1, 2])].copy()
+df = df[df['RECTYPE'].isin([1, 2])].copy()
 ```
 
-Now we can check the data dimensions. 
+Now we can check the data dimensions again. 
 
 ```{python}
-rows, cols = df_ks4.shape
+rows, cols = df.shape
 print(f"Rows: {rows}, Columns: {cols}")
 ```
+
 
 ### Summary statistics 
 
@@ -102,7 +158,7 @@ We can use the `describe` function in pandas to easily get the summary statistic
 ```{python}
 numerical_cols = ['TOTPUPS', 'EBACCAPS', 'EBACCAPS_LO', 'EBACCAPS_MID', 'EBACCAPS_HI']
 
-df_ks4[numerical_cols].describe()
+df[numerical_cols].describe()
 ```
 
 ## Histograms 
@@ -113,7 +169,7 @@ Let's try plotting the Average EBacc APS score per pupil.
 n_bins = 10
 fig, ax = plt.subplots(figsize=(12, 8))
 
-ax.hist(df_ks4['EBACCAPS'].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
+ax.hist(df['EBACCAPS'].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
 ax.set_title('EBacc distribution')
 ax.set_xlabel('EBacc score')
 ax.set_ylabel('Number of schools')  
@@ -131,7 +187,7 @@ What do you observe from this boxplot? Because the bins are quite large it's dif
 n_bins = ??
 fig, ax = plt.subplots(figsize=(12, 8))
 
-ax.hist(df_ks4['EBACCAPS'].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
+ax.hist(df['EBACCAPS'].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
 ax.set_title('EBacc distribution')
 ax.set_xlabel('EBacc score')
 ax.set_ylabel('Number of schools')  
@@ -143,10 +199,10 @@ plt.show()
 #### Answer
 
 ```{python}
-n_bins = 30
+n_bins = 40
 fig, ax = plt.subplots(figsize=(12, 8))
 
-ax.hist(df_ks4['EBACCAPS'].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
+ax.hist(df['EBACCAPS'].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
 ax.set_title('EBacc distribution')
 ax.set_xlabel('EBacc score')
 ax.set_ylabel('Number of schools')  
@@ -179,14 +235,14 @@ We can use the package `scipy.stats` which has functions for generating probabil
 import scipy.stats as sps
 
 # first let's get the mean and stand deviation 
-mu = df_ks4['EBACCAPS'].dropna().mean()
-std = df_ks4['EBACCAPS'].dropna().std()
+mu = df['EBACCAPS'].dropna().mean()
+std = df['EBACCAPS'].dropna().std()
 
 ## Create the plot 
 
 # plot the histogram
 plt.figure(figsize=(12, 8))
-plt.hist(df_ks4['EBACCAPS'], bins=30, density=True, color='#abc766', edgecolor='black')
+plt.hist(df['EBACCAPS'], bins=40, density=True, color='#abc766', edgecolor='black')
 
 # plot the Probability Density Function (PDF)
 xmin = 0 
@@ -205,6 +261,268 @@ plt.show()
 
 Note that this time we plot the histogram with `density=True` - this scales the histogram data. 
 
+Another way to think about whether soemthing is normally distirbuted is to look at the Q-Q plot. 
+
+### Q-Q plot 
+
+A Q-Q plot is used to see if a dataset follows a ceratin distirbution, by comparing the quartiles of the two. You can read a bit more about Q-Q plots [here](https://www.datacamp.com/tutorial/qq-plot).
+
+Q-Q plots are a good way to check if a dataset follows a normal distribution. 
+
+::: qna
+#### Question
+
+Thinking about the characteristics of a normal distribution, what would you expect the Q-Q plot of a normally distributed dataset to look like? 
+
+#### Answer
+
+If the data is normally distributed, the points in the Q-Q plot will lie close to a straight diagonal line. This happens because the quantiles of the sample match the quantiles of the theoretical normal distribution.
+
+:::
+
+The results of the Q-Q plot can help us to understand the dataset: 
+
+- For perfectly normal data: *points fall almost exactly on the diagonal line*
+- Heavy tails (more extreme values than normal): *points curve away at the end*
+- Light tails (fewer extreme values than normal): *points bend inward at the ends*
+- Skewed data: *points systematically deviate above or below the line*
+
+We can plot the Q-Q plot in Python: 
+
+```{python}
+# Drop missing values
+data = df['EBACCAPS'].dropna().values
+n = len(data)
+
+# Sort the sample data
+sample_quantiles = np.sort(data)
+
+# Compute plotting positions (probabilities)
+p = (np.arange(1, n+1) - 0.5) / n
+
+# Compute theoretical quantiles from standard normal
+theoretical_quantiles = sps.norm.ppf(p)
+
+# Plot
+plt.scatter(theoretical_quantiles, sample_quantiles, alpha=0.5, color='#abc766')
+plt.plot(theoretical_quantiles, theoretical_quantiles, color='black', linestyle='--')  # reference line
+plt.title("Q-Q plot for EBacc scores")
+plt.xlabel("Theoretical quantiles (Normal)")
+plt.ylabel("Sample quantiles")
+
+plt.show()
+```
+
+Ok, so in case it wasn't clear from the previous plot we can see that the data definitely isn't normal. 
+
+## What's causing the skew? 
+
+If you remember above this dataset includes schools of two different types, we have mainstream schools and special schools. 'special schools' refers to schools which cater to students with special educational needs. let's see whta happens when we split our historgram according to the type of school. 
+
+```{python}
+# histogram of # plot histogram of EBACCAPS by RECTYPE
+n_bins = {1:40, 2:20}
+fig, ax = plt.subplots(figsize=(12, 8))
+for rectype, color, label in zip([1, 2], ['#abc766', '#66c2ab'], ['Mainstream', 'Special']):
+    ax.hist(df_ks4.loc[df_ks4['RECTYPE'] == rectype, 'EBACCAPS'].dropna(), bins=n_bins[rectype], alpha=0.7, color=color, edgecolor='black', label=label)
+ax.set_title('EBacc distribution by school type')
+ax.set_xlabel('EBacc score')
+ax.set_ylabel('Number of schools')  
+ax.set_xlim(0,9)
+ax.legend()
+
+plt.show()
+```
+
+Note that I've played with the number of total bins for each group so that the histograms look nice. 
+
+Looking now at the histogram it becomes clear that the skewness of the data is caused by the different school types. 
+
+## Another check for normality
+
+Let's try again to see if the data is normal - this time splitting the dataset according to the school type. 
+
+We can start by splitting the dataset according to the school type. 
+
+::: qna
+#### Question
+
+``` python
+# mainstream school
+df1 = df[??]
+
+# special schools 
+df2 = df[??]
+```
+
+#### Answer
+
+```{python}
+# mainstream school
+df1 = df[df['RECTYPE'] == 1]
+
+# special schools 
+df2 = df[df['RECTYPE'] == 2]
+```
+:::
+
+### Q-Q plot for mainstream schools 
+
+::: qna
+#### Question
+
+``` python
+# Drop missing values
+data = df1['EBACCAPS'].dropna().values
+n = len(data)
+
+# Sort the sample data
+sample_quantiles = ??
+
+# Compute plotting positions (probabilities)
+p = ??
+
+# Compute theoretical quantiles from standard normal
+theoretical_quantiles = ??
+
+# Plot
+plt.scatter(theoretical_quantiles, sample_quantiles, alpha=0.5, color='#abc766')
+plt.plot(theoretical_quantiles, theoretical_quantiles, color='black', linestyle='--')  # reference line
+plt.title("Mainstream schools: Q-Q plot for EBacc scores")
+plt.xlabel("Theoretical quantiles (Normal)")
+plt.ylabel("Sample quantiles")
+
+plt.show()
+```
+
+#### Answer
+
+```{python}
+# Drop missing values
+data = df1['EBACCAPS'].dropna().values
+n = len(data)
+
+# Sort the sample data
+sample_quantiles = np.sort(data)
+
+# Compute plotting positions (probabilities)
+p = (np.arange(1, n+1) - 0.5) / n
+
+# Compute theoretical quantiles from standard normal
+theoretical_quantiles = sps.norm.ppf(p)
+
+# Plot
+plt.scatter(theoretical_quantiles, sample_quantiles, alpha=0.5, color='#abc766')
+plt.plot(theoretical_quantiles, theoretical_quantiles, color='black', linestyle='--')  # reference line
+plt.title("Mainstream schools: Q-Q plot for EBacc scores")
+plt.xlabel("Theoretical quantiles (Normal)")
+plt.ylabel("Sample quantiles")
+
+plt.show()
+```
+:::
+
+## Q-Q plot for special schools 
+
+::: qna
+#### Question
+
+``` python
+# Drop missing values
+data = df2['EBACCAPS'].dropna().values
+n = len(data)
+
+# Sort the sample data
+sample_quantiles = ??
+
+# Compute plotting positions (probabilities)
+p = ??
+
+# Compute theoretical quantiles from standard normal
+theoretical_quantiles = ??
+
+# Plot
+plt.scatter(theoretical_quantiles, sample_quantiles, alpha=0.5, color='#abc766')
+plt.plot(theoretical_quantiles, theoretical_quantiles, color='black', linestyle='--')  # reference line
+plt.title("Special schools: Q-Q plot for EBacc scores")
+plt.xlabel("Theoretical quantiles (Normal)")
+plt.ylabel("Sample quantiles")
+
+plt.show()
+```
+
+#### Answer
+
+```{python}
+# Drop missing values
+data = df2['EBACCAPS'].dropna().values
+n = len(data)
+
+# Sort the sample data
+sample_quantiles = np.sort(data)
+
+# Compute plotting positions (probabilities)
+p = (np.arange(1, n+1) - 0.5) / n
+
+# Compute theoretical quantiles from standard normal
+theoretical_quantiles = sps.norm.ppf(p)
+
+# Plot
+plt.scatter(theoretical_quantiles, sample_quantiles, alpha=0.5, color='#abc766')
+plt.plot(theoretical_quantiles, theoretical_quantiles, color='black', linestyle='--')  # reference line
+plt.title("Special schools: Q-Q plot for EBacc scores")
+plt.xlabel("Theoretical quantiles (Normal)")
+plt.ylabel("Sample quantiles")
+
+plt.show()
+```
+:::
+
+Looking at the resultant Q-Q plots what can we say about the data? We see that the mainstream schools is a skewed dataset, whilst the special schools dataset has a heavy tail. 
+
+## Extension 
+
+### EBacc by prior attainment 
+If you've finished looking at the histogram plots of the EBacc data, try plotting the histograms of the columns 'EBACCAPS_LO', 'EBACCAPS_MID', 'EBACCAPS_HI'. What can you say about these data distributions? Does plotting the Q-Q plots help? 
+
+::: qna
+#### Question
+
+``` python
+n_bins = ??
+fig, ax = plt.subplots(3, 1, figsize=(12, 18))
+plot_names = ['EBacc low prior', 'EBacc mid prior', 'EBacc high prior']
+
+for i, col in ??:
+    ax[i].hist(df[col].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
+    ax[i].set_title(plot_names[i])
+    ax[i].set_xlabel('EBacc score')
+    ax[i].set_ylabel('Number of schools')  
+    ax[i].set_xlim(0,9) # the EBacc has a maximum score of 9
+    
+plt.show()
+```
+
+#### Answer
+
+```{python}
+n_bins = 40
+fig, ax = plt.subplots(3, 1, figsize=(12, 18))
+plot_names = ['EBacc low prior', 'EBacc mid prior', 'EBacc high prior']
+
+for i, col in enumerate(['EBACCAPS_LO', 'EBACCAPS_MID', 'EBACCAPS_HI']):
+    ax[i].hist(df[col].dropna(), bins=n_bins, color='#abc766', edgecolor='black')
+    ax[i].set_title(plot_names[i])
+    ax[i].set_xlabel('EBacc score')
+    ax[i].set_ylabel('Number of schools')  
+    ax[i].set_xlim(0,9) # the EBacc has a maximum score of 9
+
+plt.show()
+```
+:::
+
+### EBacc by school size 
+Try plotting the EBacc scores against the total number of pupils ('TOTPUPS') - what can you say about this distribution? 
 
 ## You're Done!
 

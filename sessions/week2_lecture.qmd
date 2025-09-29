@@ -9,8 +9,6 @@ format: revealjs
 jupyter: python3
 ---
 
-
-
 ## Last week 
 **Overview of lecture 1**
 
@@ -34,7 +32,7 @@ different types of data outliers: caused by measurement error, or irregular patt
 ## The scientific method 
 
 <div style="text-align:center;">
-  <img src="L3_images/scientific_method.png" alt="The scientific method" style="max-width:80%">
+  <img src="L3_images/scientific_method.png" alt="The scientific method" style="max-width:60%">
 </div>
 
 ::: {.notes}
@@ -52,7 +50,7 @@ When we're working with large datasets, exploratory data analysis is the first s
 :::
 
 ::: {.notes}
-More modern approach approach devloped by matehmatician John Turkey in the 1970s. 'Father of data science'. rather than being driven by more classical statistical analyses (something we'll look at next week) - the idea was to have a more flexible approach. 
+More modern approach approach devloped by computer scientist John Turkey in the 1970s - whilst at Princeton. 'Father of data science'. rather than being driven by more classical statistical analyses (something we'll look at next week) - the idea was to have a more flexible approach. 
 :::
 
 ## Introducing statistical concepts 
@@ -67,7 +65,7 @@ More modern approach approach devloped by matehmatician John Turkey in the 1970s
 In large datasets its not practical to describe every data point - instead interested in the overall pattern. Moreover maybe that general pattern is more interetsing
 :::
 
-## Learning Objectives
+## Learning objectives
 By the end of this lecture you should be able to:
 
 ::: {.incremental}
@@ -213,6 +211,8 @@ Types of dataset bias include:
 Already talked about the idea of cognitive bias. There are lots and lots of different types of biases - going to talk a little about different ways they can bias the dataset. 
 
 Dataset bias has become a more prevalent topic of concern on the era of large AI models. These models are really good at learnign patterns which aren't obvious to the human eye - but the pattern might reflect a bias. For example generative AI models learn that scientists are white men, even though if I asked you you'd tell me anyone can be a scientist. 
+
+- [Hungry judges](https://daniellakens.blogspot.com/2017/07/impossibly-hungry-judges.html)
 :::
 
 ## Historical bias
@@ -228,10 +228,6 @@ Examples:
 Police profiling models - meant to make easy to spot criminals - but use exisitng crime data - which reflect racist prejudices in society - and the model learns to pick out people of certain ethnic backgrounds. 
 
 Tools also used to help the sentnecing of criminals in courts of law - observe the hungry judges effect, where they sentnece differently based on how hungry they are - tend to be harsher just before lunch and more lenient after lunch. 
-
-- [Hungry judges](https://en.wikipedia.org/wiki/Hungry_judge_effect)
-  - Tools to help sentencing of 'criminals'. 
-  - Patterns in the dataset --- judges are less lenient before lunch. 
 :::
 
 ## Selection bias 
@@ -357,7 +353,7 @@ These all have mean x = 9, variance x = 11. mean y = 7.5, variance y =4.1.
 But we can see from the diagrams that the distribution of the data is very different, some is linear, some is elliptic etc... So we need more advanced ways of describing the data. 
 :::
 
-# Normal Distribution
+# Normal distribution
 The most fundamental distribution
 
 ---
@@ -368,6 +364,9 @@ The most fundamental distribution
 
 
 ::: {.notes}
+Also known as Gaussian distribution after Gauss. 
+The shape is known as the bell curve. 
+
 - Human height
 - Petal size (specifically length of iris petals)
 - blood pressure
@@ -424,6 +423,17 @@ The most fundamental distribution
 \end{align}
 ``` -->
 
+## The distribution of the random variable 
+[*A random variable is a way to map the outcome of a random process to a probability.*]{style="color:#49a0c4"} 
+
+In mathematical notation, a random variable $X$ is approximately normally distributed about a mean of $\mu$ with a standard deviation of $\sigma$:  
+
+```{=tex}
+\begin{align}
+X \sim N(\mu,\sigma)
+\end{align}
+```
+
 ## Sampling distributions 
 
 [The distribution of the random variable when derived from a random sample of size $n$]{style="color:#49a0c4"} 
@@ -438,10 +448,16 @@ In the case of the normal distribution the standard deviation becomes:
 \end{align}
 ```
 
-::: {.notes}
-Need to account for the fact that we don't have all the data. 
+In practise as the sample size increases the sampling distribution becomes more and more centralised. 
 
-As the sample size increases the sampling distribution becomes more and more centralised.  
+- i.e. with more data we have more certainty about the distribution. 
+
+::: {.notes}
+Typically we think of the distribution as describing the entirety of the relevant popualtion - i.e. every relevant example. Link to sampling - normally only have a subset of the data. 
+
+Need to account for the fact that we don't have all the data. So our statistic will vary a bit according to what sample of the data we're looking at. 
+
+In practise - as the sample size increases the sampling distribution of the normal distribution becomes more and more centralised. I.e. we have more certainty about the distribution. 
 :::
 
 ## Calculating probabilities 
@@ -450,7 +466,7 @@ Can use the PDF to evaluate the probability at a specific point.
 
 ```{=tex}
 \begin{align}
-x \sim N(0,1)
+X \sim N(0,1)
 \end{align}
 ```
 
@@ -481,7 +497,11 @@ Many real world datasets are *approximately* normally distributed.
 
 . . .
 
-But not all ---  might not have a characteristic size, or not continuous, or not symmetric. 
+But not all 
+
+- not continuous 
+- no characteristic size 
+- not symmetric  
 
 # More generally, what is a probability distribution? 
 
@@ -679,7 +699,7 @@ P(X = 10) = \frac{2^10 e^{-2}}{10!}
 
 ## Exponentials
 
-If the Poisson measures the probability of x events within a time period, then the Exponential measures how long we are likely to wait between events.
+If the Poisson measures the probability of $x$ events within a time period, then the exponential measures how long we are likely to wait between events.
 
 . . .
 
@@ -700,10 +720,10 @@ He's a bit dramatic
 ::: {.column width="50%"}
 
 ::: {.incremental}
-- You've invented chess. 
-- The emperor is really grateful - and asks what gift you would like in thanks. 
-- You ask for grains of rice.  
-- Specifically, rice to fill the chessboard, such that the number of grains double on each square. 
+- A scholar has invented chess
+- The emperor is really grateful - and asks what gift the scholar would like in thanks
+- The scholar asks for grains of rice  
+- Specifically, rice to fill the chessboard, such that the number of grains double on each square 
 :::
 
 :::
@@ -857,25 +877,69 @@ y=e^x
 \end{align}
 ```
 
+<div style="background-color:#2e6260; color:white; padding:8px; border-radius:5px; margin-top:10px;"> <em>Note</em> 
+
 $e$ here is eulers number - a mathematical constant. 
 ```{=tex}
 \begin{align}
 e \approx 2.718... 
 \end{align}
-```
+``` 
+</div>
 
-:::{.notes}
+::: {.notes}
 Its a mathematical constant similar to pi - it's just a fixed number which we have a name for. 
 Like pi comes from geometry (circles etc), e comes from the limit of the equation of compound interest. 
 :::
 
-## When I can feed my town?
+## The exponential distribution
 
-Allows us to answer questions like: 
+<div style="text-align:center;">
+  <img src="L2_images/exponential_distribution.png" alt="Exponential function" style="max-width:90%;">
+</div>
+
+::: {.notes}
+We've talked about the exp function - but now want to talk about the exp distribution. 
+
+This is a continous probability distribution. 
+:::
+
+## Probability density function 
+
+The PDF of the exponential distribution is: 
+
+```{=tex}
+\begin{align}
+f(x, \lambda) = \lambda e^{-\lambda x}
+\end{align}
+```
+
+where $\lambda$ is the rate parameter. As in the poisson distribution $\lambda$ is the fixed rates of events for a predetermined time interval. 
+
+<div style="background-color:#2e6260; color:white; padding:8px; border-radius:5px; margin-top:10px;"> <em>Note</em> 
+
+This is sometimes referred to as the *negative exponential distribution* - as it's a negative exponent. </div>
+
+## Time between events 
+
+Traditionally used to model time between rare events. 
+
+- time between volcanic eruptions 
+- time between customers entering a shop 
+- time of radioactive decay 
+
+## Important questions 
+
+The exponential allows us to answer questions like: 
 
 ::: {.incremental}
-- "how many grains of rice at t=10?"
-- “when will I have enough rice to feed my entire town?” 
+- What's the probability that it will be ten years until the next volcanic eruption? 
+  - $\lambda=1$ 
+  - $p(10) = 1 \times e^{-1 \times 10}$
+- When will the probability of volcanic eruptions be equal to $p=0.5$?
+  - $\lambda=1$ 
+  - $0.5 = p(x) = 1 \times e^{-1 \times x}$
+  - what is $x$?
 :::
 
 . . . 
@@ -988,7 +1052,6 @@ We've covered:
 - Poisson distribution 
 - Exponentials 
 - Logarithms 
-
 
 # Practical 
 The practical will focus on exploratory data analysis for a variety of different datasets.
