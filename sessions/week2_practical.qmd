@@ -25,9 +25,9 @@ As per last week: download the notebook to your `QM` folder, switch over to `Jup
 
 We are going to look at schools performance data in England. 
 
-The data is sourced from []() and is downloadable [here]().
+The data is sourced from gov.uk and is downloadable [here](https://www.compare-school-performance.service.gov.uk/download-data). In this notebook we're using the performance table for academic year 2022/23: 'Performancetables_130242/2022-2023'.
 
-We have saved a copy of this dataset to the Github repo, in case that the dataset is removed from the website.
+We have saved a copy of this dataset to the Github repo, in case the dataset is removed from the website.
 
 ```{python}
 import pandas as pd
@@ -528,5 +528,5 @@ Try plotting the EBacc scores against the total number of pupils ('TOTPUPS') - w
 
 Congratulations on completing the second QM practical session! If you are still working on it, take your time.
 
-Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.
+Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like plotting histograms of data, and knowing how to debug when it goes wrong. Remember, practice makes perfect.
 
