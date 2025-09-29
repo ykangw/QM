@@ -20,6 +20,7 @@ filters:
 # reticulate::py_install("numpy")
 # reticulate::py_install("pyjanitor")
 # reticulate::py_install("pathlib") 
+# reticulate::py_install("matplotlib") 
 ```
 
 This week's practical is focussed on understanding regression analysis in an applied context. You will essentially re-create some of the analysis you saw in the lecture, but for slightly different variables
@@ -96,7 +97,7 @@ edubase_schools = edubase_schools.clean_names()
 #dtype_df.columns = ["column_name", "dtype"]
 
 # Define base path and common NA values - NOTE YOU WILL NEED TO DOWNLOAD THIS DATA AND PUT INTO YOUR OWN base_path LOCATION ON YOUR MACHINE
-base_path = Path("E:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+base_path = Path("D:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
 na_values_common = ["", "NA", "SUPP", "NP", "NE"]
 na_values_extended = na_values_common + ["SP", "SN"]
 na_values_attainment = na_values_extended + ["LOWCOV", "NEW"]
