@@ -15,19 +15,10 @@ The website is here: https://huanfachen.github.io/QM/.
 
 2. **Updating Documents for Week X**  
    - Go to the `sessions` folder.  
-   - Make a copy of three qmd files, `weekX.qmd`, `weekX_lecture.qmd`, `weekX_practical.qmd`. Rename them by replacing X with the week numbering, like 1/2/10.  
+   - Make a copy of three qmd files, `weekX.qmd`, `weekX_lecture.qmd`, `weekX_practical.qmd`. Rename them by replacing X with the week numbering, like 1, 2, or 10. In these qmd files, if you need to import images, please use relative path, e.g. ![](img/1.1-Repo_Created.png). The advantage of using relative paths is that when Github action builds the qmd files, it will identify these linked images and then automatically synce these images to the *gh-pages* branch.
    - If you need to add images/data, you can create a folder under `sessions` called LX_images and LX_data, and then add image or data in these folder.
    - **Do not** generate or upload HTML files manually.  
    - After editing, run add/commit/push of the three files to the main branch. [A GitHub Action is already set up and will automatically rebuild and update the website after you push changes.]
-   - If you have added data or images to this repo, please add/commit/push these files to the gh-pages branch (please replace YOUR_FOLDER with a specific folder name):
-   ```
-   git checkout gh-pages
-   git checkout main -- sessions/YOUR_FOLDER
-   git add sessions/YOUR_FOLDER
-   git commit -m "Update YOUR_FOLDER folder from main branch"
-   git push origin gh-pages
-   git checkout main
-   ```
 
 ## TODO
 1. Moodle: clean up
@@ -36,6 +27,3 @@ The website is here: https://huanfachen.github.io/QM/.
 1. Moodle: add link to lecture recording video
 1. Quarto: week 1 practical - add standard deviation
 1. Quarto: week 5/9/10
-1. Technical issue: when importing images from a folder to lecture/practical, which method should be used?
-   - ![WHATEVER]({{< var module.web >}}/practicals/img/1.1-Repo_Created.png): **failed** on Github build. Moreover, the symbols of {} and <> are automatically transformed into ASCII in VSCode. Why?
-   - ![WHATEVER](img/1.1-Repo_Created.png): **using relative path** works here.
