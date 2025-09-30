@@ -209,7 +209,14 @@ $$
 - Many events were mapped to this one, including lots on Strava
 - Source: wikipedia.org
 
-![](L1_images/map_null_island.jpg){height=300px} ![](L1_images/image_null_island_2017.jpg){height=300px}
+:::: {.columns}
+::: {.column width="50%"}
+![](L1_images/map_null_island.jpg){height=300px}
+:::
+::: {.column width="50%"}
+![](L1_images/image_null_island_2017.jpg){height=300px}
+:::
+::::
 
 ## Outliers
 - A data point that differs significantly from other observations
