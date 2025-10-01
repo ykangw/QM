@@ -19,13 +19,15 @@ This week is focussed on using some common functions in Python to plot data and 
 
 # Starting the Practical
 
-As per last week: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. If you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.
+As per last week: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. 
+
+*Optionally* if you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.
 
 # Loading the data 
 
 We are going to look at schools performance data in England. 
 
-The data is sourced from gov.uk and is downloadable [here](https://www.compare-school-performance.service.gov.uk/download-data). In this notebook we're using the performance table for academic year 2022/23: 'Performancetables_130242/2022-2023'.
+The data is sourced from gov.uk [here](https://www.compare-school-performance.service.gov.uk/download-data), however I have also saved a copy of the relevant dataset to the Github repo (in case the dataset is removed from the website) which you can load directly in the code below. In this notebook we're using the performance table for academic year 2022/23: 'Performancetables_130242/2022-2023'.
 
 We have saved a copy of this dataset to the Github repo, in case the dataset is removed from the website.
 
@@ -36,8 +38,7 @@ import numpy as np
 
 # Read CSV file, handling common missing value entries
 na_vals = ["", "NA", "SUPP", "NP", "NE", "SP", "SN", "SUPPMAT"]
-df_ks4 = pd.read_csv(
-    'L2_data/england_ks4final.csv',
+df_ks4 = pd.read_csv('https://raw.githubusercontent.com/huanfachen/QM/refs/heads/main/sessions/L2_data/england_ks4final.csv',
     na_values = na_vals
 )
 
