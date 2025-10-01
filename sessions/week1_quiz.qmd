@@ -7,13 +7,25 @@ email: "yikang.wang.21@ucl.ac.uk"
 date-as-string: "1 October 2025"
 from: markdown+emoji
 format: revealjs
-smaller: true
+smaller: false
 
 ---
 
 # Let's Review the Quiz
 
+---
 
+## Recap: Levels of Measurement
+
+|                               |       Nominal        |                Ordinal                 |    Interval     |    Ratio    |
+| ----------------------------- | :------------------: | :------------------------------------: | :-------------: | :---------: |
+| Categorizes and labels        |          ✔           |                   ✔                    |        ✔        |      ✔      |
+| Ranks categories in order     |                      |                   ✔                    |        ✔        |      ✔      |
+| Has known, equal intervals    |                      |                                        |        ✔        |      ✔      |
+| Has a true or meaningful zero |                      |                                        |                 |      ✔      |
+| *Examples*                    | *London, Paris, ...* | *Mega city, Big city, Small city, ...* | *1970, 2025 AD* | *£0, £3.85* |
+
+---
 
 ## Question 1
 
@@ -24,18 +36,15 @@ B.  Median ✅
 C.  Equality; mode ✅
 D.  Standard Deviation
 
-###### Recap: Levels of Measurement
-
-|                               | Nominal | Ordinal | Interval | Ratio |
-| ----------------------------- | :-----: | :-----: | :------: | :---: |
-| Categorizes and labels        |    ✔    |    ✔    |    ✔     |   ✔   |
-| Ranks categories in order     |         |    ✔    |    ✔     |   ✔   |
-| Has known, equal intervals    |         |         |    ✔     |   ✔   |
-| Has a true or meaningful zero |         |         |          |   ✔   |
+::: {.fragment}
 
 **Explanation:** Ordinal data allows for ranking (**Median**) and counting frequency (**Mode**), but because the intervals are not equal, arithmetic operations like mean and standard deviation are not meaningful.
 
+:::
+
 ---
+
+
 
 ## Question 2
 
@@ -46,16 +55,11 @@ B.  Ordinal
 C.  Interval
 D.  Ratio ✅
 
-###### Recap: Levels of Measurement
-
-|                               | Nominal | Ordinal | Interval | Ratio |
-| ----------------------------- | :-----: | :-----: | :------: | :---: |
-| Categorizes and labels        |    ✔    |    ✔    |    ✔     |   ✔   |
-| Ranks categories in order     |         |    ✔    |    ✔     |   ✔   |
-| Has known, equal intervals    |         |         |    ✔     |   ✔   |
-| Has a true or meaningful zero |         |         |          |   ✔   |
+::: {.fragment}
 
 **Explanation:** The true zero is the key feature of the **Ratio** scale. It signifies the complete absence of the measured quantity, which is what allows us to say "twice as much". An Interval scale (like Celsius) has an arbitrary zero.
+
+:::
 
 ---
 
@@ -63,23 +67,16 @@ D.  Ratio ✅
 
 The mean of a variable can be calculated if the variable has a data type of:
 
-A.  Nominal
+A.  Nominal	
 B.  Ordinal
 C.  Interval ✅
 D.  Ratio ✅
 
-###### Recap: Levels of Measurement
-
-|                               | Nominal | Ordinal | Interval | Ratio |
-| ----------------------------- | :-----: | :-----: | :------: | :---: |
-| Categorizes and labels        |    ✔    |    ✔    |    ✔     |   ✔   |
-| Ranks categories in order     |         |    ✔    |    ✔     |   ✔   |
-| Has known, equal intervals    |         |         |    ✔     |   ✔   |
-| Has a true or meaningful zero |         |         |          |   ✔   |
-
-
+::: {.fragment}
 
 **Explanation:** To calculate a mean, we need to be able to add values and divide, which requires data to have **known, equal intervals**. This property begins at the **Interval** level of measurement.
+
+:::
 
 ---
 
@@ -97,11 +94,8 @@ D.  Median
 :::
 
 ::: {.column width="45%" .fragment}
-#### Recap: Describing Data Spread
 
-When describing a dataset, we look at:
-
-
+**Recap:** When describing a dataset, we look at
 
 -   Quantity
 -   **The middle**: mean, **median**, mode
@@ -127,16 +121,13 @@ C.  The mean and median to be approximately equal.
 :::
 
 ::: {.column width="45%" .fragment}
-#### Recap: Mean vs Median
+
+**Recap:** Mean vs Median
 
 -   The **mean** is sensitive to extreme values (outliers).
 -   The **median** is resistant to outliers.
 
 In a right-skewed distribution (like city populations), a few very large cities pull the mean upwards, while the median remains the "true" middle point.
-
-From the lecture:
--   US City Mean: 302,869
--   US City Median: 167,744
 :::
 
 ::::
@@ -157,15 +148,14 @@ D.  They should be replaced with a blank space.
 :::
 
 ::: {.column width="45%" .fragment}
-#### Recap: Null Values
 
-From the lecture:
+**Recap:** Null Values
 
 > -   Representing the absence of data or an unknown value.
 > -   Different from *zero* or *a blank space*.
 > -   **Null values should be excluded before computing mean or std**.
 
-Treating nulls as zero would incorrectly lower the calculated mean and distort the result.
+
 :::
 
 ::::
@@ -186,13 +176,19 @@ D.  A regular data point.
 :::
 
 ::: {.column width="45%" .fragment}
-#### Recap: Types of Outliers
 
-| Type               | Source                                                   |
-| ------------------ | -------------------------------------------------------- |
-| **Error Outliers** | From mistakes in data collection, entry, or measurement. |
+**Recap:** Types of Outliers
 
-A height of 1 metre for a 10-storey building is physically impossible and is almost certainly a data entry or measurement mistake. According to the lecture, these should be corrected or removed.
+::: {style="font-size: 80%;"}
+
+| Type                  | Source                          | Handling                |
+| --------------------- | ------------------------------- | ----------------------- |
+| **Error Outliers**    | Data entry/measurement mistakes | Correct or remove       |
+| **Irregular Pattern** | Genuine but unusual events      | Investigate; may remove |
+| **Influential**       | Extreme but integral to pattern | Keep in analysis        |
+
+:::
+
 :::
 
 ::::
@@ -213,8 +209,8 @@ D.  The range covered by one standard deviation.
 :::
 
 ::: {.column width="45%" .fragment}
-#### Recap: Boxplots
-The boxplot visualises the distribution of a dataset.
+
+**Recap:** Boxplots
 
 ![]({{< var module.web >}}/sessions/L1_images/Boxplot.jpg){width="100%"}
 
@@ -222,7 +218,5 @@ The **box** itself spans from the 1st quartile (Q1) to the 3rd quartile (Q3), re
 :::
 
 ::::
-
-
 
 # Any questions?
