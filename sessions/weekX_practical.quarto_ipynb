@@ -43,7 +43,7 @@
         "\n",
         "## To add and run Python code"
       ],
-      "id": "9ec206e4"
+      "id": "84a258ff"
     },
     {
       "cell_type": "code",
@@ -61,7 +61,7 @@
         "\n",
         "print(df_pop.head())"
       ],
-      "id": "85048ca1",
+      "id": "d6d774fe",
       "execution_count": null,
       "outputs": []
     },
@@ -95,7 +95,7 @@
         "\n",
         "#### Answer"
       ],
-      "id": "5a63eb8a"
+      "id": "61a796cd"
     },
     {
       "cell_type": "code",
@@ -106,7 +106,7 @@
         "else:\n",
         "    print(\"Moscow is not in the cities list.\")"
       ],
-      "id": "99972df4",
+      "id": "1f16f0b5",
       "execution_count": null,
       "outputs": []
     },
@@ -122,7 +122,7 @@
         "\n",
         "Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.\n"
       ],
-      "id": "6148bcfa"
+      "id": "6adb4488"
     }
   ],
   "metadata": {
@@ -130,7 +130,7 @@
       "name": "python3",
       "language": "python",
       "display_name": "Python 3 (ipykernel)",
-      "path": "C:\\Users\\Adam\\OneDrive - University College London\\Documents\\.virtualenvs\\r-reticulate\\share\\jupyter\\kernels\\python3"
+      "path": "C:\\Users\\Adam\\AppData\\Local\\R\\cache\\R\\reticulate\\uv\\cache\\archive-v0\\EiTNi4omakhlev5ckz2WP\\share\\jupyter\\kernels\\python3"
     }
   },
   "nbformat": 4,

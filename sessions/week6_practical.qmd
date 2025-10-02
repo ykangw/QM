@@ -13,31 +13,61 @@ filters:
 #| message: false
 #| warning: false
 #| include: false
-# reticulate::py_install("pyyaml")
-# reticulate::py_install("jupyter")
-# reticulate::py_install("statsmodels")
-# reticulate::py_install("pandas")
-# reticulate::py_install("numpy")
-# reticulate::py_install("pyjanitor")
-# reticulate::py_install("pathlib") 
-# reticulate::py_install("matplotlib") 
+
+## Notes - make sure that reticulate is pointing to a local reticulate install of python or things might go squiffy.
+
+## in terminal type: where python - to find out where reticulate might have stashed a version of the python.exe
+
+## make sure you point to it before installing these packages using:
+## reticulate::use_python("C:/Path/To/Your/Python/python.exe", required = TRUE)
+
+library(reticulate)
+
+#
+#reticulate::virtualenv_remove("r-reticulate")
+# point reticulate to the right python installation - ideally the one reticulate installed. 
+reticulate::use_python("C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe", required = TRUE)
+
+# # Point to Python 3.9
+# use_python("C:/Users/Adam/AppData/Local/Programs/Python/Python39/python.exe", required = TRUE)
+# 
+# virtualenv_create("r-reticulate", python = "C:/Users/Adam/AppData/Local/Programs/Python/Python39/python.exe")
+# reticulate::py_config()
+#virtualenv_install("r-reticulate", packages = c("pyyaml", "jupyter", "statsmodels","pyjanitor","pathlib","matplotlib","pandas", "numpy", "scipy", "seaborn"))
+# use_virtualenv("r-reticulate", required = TRUE)
+
+# reticulate::py_require("pyyaml")
+# reticulate::py_require("jupyter")
+# reticulate::py_require("statsmodels")
+# reticulate::py_require("pandas")
+# reticulate::py_require("numpy")
+# reticulate::py_require("pyjanitor")
+# reticulate::py_require("pathlib") 
+# reticulate::py_require("matplotlib") 
+# reticulate::py_require("seaborn") 
+ 
 ```
 
-This week's practical is focussed on understanding regression analysis in an applied context. You will essentially re-create some of the analysis you saw in the lecture, but for slightly different variables
+This week's practical is focussed on understanding regression analysis in an applied context. You will essentially re-create some of the analysis you saw in the lecture, but for slightly different variables and for different places.
 
 ::: callout-note
-Below you will find code-blocks that will allow you to run your analysis in either R or Python. It's up to you which you decide to use - you might even want to try both to compare.
+Below you will find code-blocks that will allow you to run your analysis in either R or Python. It's up to you which you decide to use - you might even want to try both to compare (Of course, R will be better)!
 :::
 
 ## Tasks
 
-Make sure you complete each of the tasks below, 1-10. All of these will be covered in the code examples below, but this is the full workflow:
+Make sure you complete each of the tasks below, 1-7. All of these will be covered in the code examples below, but this is the full [workflow](https://dictionary.cambridge.org/dictionary/english/workflow):
 
-### Downloading: Download and read into your software environment:
+### Downloading: Download and read data into your software environment:
 
-1.  School locational and attribute information, downloaded from here - <https://get-information-schools.service.gov.uk/Downloads> - or read in using the code supplied below:
+1.  School locational and attribute information, downloaded from here - <https://get-information-schools.service.gov.uk/Downloads> - or read it in using the code supplied below. This will include the following datasets:
+
     a.  **edubase_schools** = this is the 'all establishment' data for every school in England and Wales
-2.  School-level Key Stage 4 (14-16 GCSE level) attainment and other attribute information, downloaded from here - <https://www.compare-school-performance.service.gov.uk/download-data> - or read in using the code supplied below:
+
+2.  School-level Key Stage 4 (14-16 GCSE level) attainment and other attribute information. [I have put this on Moodle here](https://moodle.ucl.ac.uk/mod/folder/view.php?id=8199904), but it can also be downloaded from here - <https://www.compare-school-performance.service.gov.uk/download-data>.
+
+    Download to a local drive on your computer from Moodle, unzip it and then read it in using the code supplied below. The zip folders contain the following data files in one folder and the associated metadata in the other folder:
+
     b.  **england_ks4final** = data on the 2022/23 academic year, school-level, KS4 outcomes and associated statistics
     c.  **england_abs** = data on the 2022/23 academic year, school-level absence rates
     d.  **england_census** = additional school-level pupil information for the 2022/23 academic year
@@ -46,34 +76,44 @@ Make sure you complete each of the tasks below, 1-10. All of these will be cover
 
 ### Data Munging: Join, filter and select:
 
-3.  **england_school_2022_23** = Join together all of the school-level data above into a single file and then reduce it in size using:
+3.  Create a master file for Englandcalled **england_school_2022_23.** This will be made by joining together all of the school-level data above into a single file and then reducing it in size using:
     a.  **filter** - so that it just contains open secondary schools
     b.  **select** - so that only a few key variables relating to attainment, progress, deprivation, absence and school quality remain, alongside key locational and other attributes.
-4.  Create two data subsets:
-    a.  A **subset** containing all of the secondary schools in one of the 32 London Boroughs (not including the City of London)
-    b.  A subset containing all of the secondary schools in another local authority in England. Any local authority you like.
+4.  Create two local authority data **subsets** from this main file:
+    a.  A subset containing all of the secondary schools in one of the 32 London Boroughs (not including the City of London)
+    b.  A subset containing all of the secondary schools in any other local authority in England. Any local authority you like - go wild!
+
+At the end of this you will have **x3 datasets** - one national and two local authority subsets
 
 ### Exploratory Data Analysis
 
-5.  Create a series of graphs and statistical outputs to allow you to understand the structure and composition of your data. You should produce:
-    a.  A histogram for each variable you are analysing for **both your two subsets** and the **national dataset**, perhaps including
+5.  Choose:
+    a.  one attainment related dependent variable from your set
+    b.  one possible explanatory variable which you think might help explain levels of attainment in schools
+6.  Create a series of graphs and statistical outputs to allow you to understand the structure and composition of your data. You should produce:
+    a.  A histogram for the dependent and independent variables you are analysing for **both your two subsets** and the **national dataset** (x6 histograms in total). Also include:
         i.  mean and median lines
         ii. lines for the upper and lower quartiles
         iii. indications of outliners
         iv. a kernel density smoothing
     b.  Alternative plots such as violin plots or box plots to compare with the histogram
-    c.  A Map of the location of your schools in your two subsets
-    d.  A scatter plot of your dependent (attainment) and independent (disadvantage) variable
+    c.  Point Maps of the locations of your schools in your two subsets - points sized by either of your variables
+    d.  A scatter plot of your dependent (attainment) and independent (disadvantage) variables (national and two local subsets)
         i.  include a regression line of best fit
         ii. include the R-squared, slope and intercept parameters
 
-### Explanatory Data Analysis - Attainment and Disadvantage in Different Parts of England
+### Explanatory Data Analysis - Attainment and Factors Affecting it in Different Parts of England
 
-6.  Carry out You will choose two different
+7.  Carry out a bi-variate regression analysis to explore the relationship between your chosen attainment dependent variable and your single explanatory independent variable, for your two subsets and the national dataset. **Questions to Answer**:
+    a.  After visualising the relationships using scatter plots, do you think you need to transform your variables (e.g. using a log transformation) before putting into a regression model? Maybe plot scatter plots of your logged variables too!
+    b.  What are the slope and intercept coefficients in each model? Are they statistically significant and how do vary between your two subsets? How do they compare with the national picture?
+    c.  How do the R-squared values differ and how reliable do you think they are (what do the degrees of freedom tell you)?
+    d.  What observations can you make about your two local authority study areas relative to the national picture?
 
 ## Task 1 - Download your data and read into your software environment
 
 -   I've made this task easy for you by giving you the code to download all of this data. You'll need to download - click on either tab to see the code for each.
+-   You should first [download and unzip the data from Moodle](https://moodle.ucl.ac.uk/mod/folder/view.php?id=8199904), before editing the code below so that you can read the data from a local folder on your computer:
 
 ::: qna
 #### ![](L6_images/python-logo-only.png){width="30"}
@@ -96,8 +136,10 @@ edubase_schools = edubase_schools.clean_names()
 #dtype_df = py_edubase_schools.dtypes.reset_index()
 #dtype_df.columns = ["column_name", "dtype"]
 
-# Define base path and common NA values - NOTE YOU WILL NEED TO DOWNLOAD THIS DATA AND PUT INTO YOUR OWN base_path LOCATION ON YOUR MACHINE
-base_path = Path("D:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+########################################
+# Define base path and common NA values - NOTE YOU WILL NEED TO DOWNLOAD THIS DATA AND PUT INTO YOUR OWN base_path LOCATION ON YOUR MACHINE - not this one as this is my path!!!
+base_path = Path("E:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+##################################################
 na_values_common = ["", "NA", "SUPP", "NP", "NE"]
 na_values_extended = na_values_common + ["SP", "SN"]
 na_values_attainment = na_values_extended + ["LOWCOV", "NEW"]
@@ -222,7 +264,8 @@ england_school_information <- read_csv(
 
 ## Task 2 - Data Munging
 
--   Use Python or R to join all of the datasets you loaded in the previous step into a single file that we will called `england_school_2022_23` using the unique school reference number (URN) as the key
+-   Use Python or R to join all of the datasets you loaded in the previous step into a single master file that we will called `england_school_2022_23` using the unique school reference number (URN) as the key.
+-   Create the master file:
 
 ::: qna
 #### ![](L6_images/python-logo-only.png){width="30"}
@@ -234,9 +277,9 @@ england_school_2022_23 = (
     .merge(england_abs, on="URN", how="left")
     .merge(england_census, on="URN", how="left")
     .merge(england_school_information, on="URN", how="left")
+    .merge(edubase_schools, left_on="URN", right_on="urn", how="left")
 )
 ```
-
 
 #### ![](L6_images/Rlogo.png){width="41" height="30"}
 
@@ -246,15 +289,204 @@ england_school_2022_23 = (
 england_school_2022_23 <- england_ks4final %>%
   left_join(england_abs, by = "URN") %>%
   left_join(england_census, by = "URN") %>%
-  left_join(england_school_information, by = "URN")
+  left_join(england_school_information, by = "URN") %>%
+  left_join(edubase_schools, by = c("URN" = "urn"))
 ```
 :::
 
--   Once you have joined all of these data frames into a single master dataframe for the whole of England you need to filter out some of the  
+```{python}
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set up the figure
+plt.figure(figsize=(12, 6))
+
+# Boxplot grouped by MINORGROUP
+sns.boxplot(
+    x='ATT8SCR',
+    data=england_school_2022_23,
+    color="#EDD971",
+    fliersize=0,
+    linewidth=1
+)
+
+# Jittered points
+sns.stripplot(
+    x='ATT8SCR',
+    data=england_school_2022_23,
+    hue='MINORGROUP',
+    dodge=False,
+    jitter=True,
+    alpha=0.8,
+    size=3,
+    palette='viridis'
+)
+
+# Customize the plot
+plt.title("Attainment 8 - All Schools 2022/23 Academic Year")
+plt.xlabel("Attainment 8 Score")
+plt.ylabel("")
+plt.legend(title="School Type", loc='lower center', bbox_to_anchor=(0.5, -0.25), ncol=2)
+sns.despine()
+plt.tight_layout()
+
+# Show the plot
+plt.show()
+
+```
 
 
 
+```{r}
+ggplot(england_school_2022_23, aes(x = ATT8SCR, y = "")) +
+  geom_boxplot(fill = "#EDD971", alpha = 0.1, outlier.shape = NA) +    
+  geom_jitter(aes(colour = MINORGROUP), height = 0.2, alpha = 0.8, size = 1) + 
+  scale_colour_viridis_d() +  # applies the default casaviz discrete palette
+  labs(
+    title = "Attainment 8 - All Schools 2022/23 Academic Year",
+    x = "Attainment 8 Score",
+    y = NULL,
+    colour = "School Type"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.key.size = unit(10, "mm"),   # increase dot space
+    legend.text = element_text(size = 10)  # optional: larger legend labels
+  ) + guides(colour = guide_legend(override.aes = list(size = 4)))
+```
 
-Congratulations on completing the first QM practical session! If you are still working on it, take you time.
 
-Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.
+
+-   Now have joined all of these data frames into a single master dataframe for the whole of England we will need to filter out some of the rows we don't want and the columns that we don't need for our analysis at this stage
+-   In the two folders you downloaded from Moodle, one contains all of the data we need, the other contains all of the metadata which tells us what the variables are
+-   If you open up, for example `ks4_meta.xlsx` these are the variables related to attainment for each school.
+-   Similarly `abbreviations.xlsx` attaches some meaning to some of the codes associated with some of these variables, with other metadata files containing other info. Take some time to look at these so you understand the range of variables we'll be exploring.
+
+**NB** - One of the key filtering asks carried out in the code below is to 
+
+```{r}
+#| eval: false
+#| include: false
+#str(england_school_2022_23)
+```
+
+::: qna
+#### ![](L6_images/python-logo-only.png){width="30"}
+
+```{python}
+import pandas as pd
+
+## check all of your variable names first as R and python will call them something different
+column_df = pd.DataFrame({'Column Names': england_school_2022_23.columns.tolist()})
+
+# Define excluded MINORGROUP values
+excluded_groups = ["Special school", "Independent school", "College", None]
+
+# Filter and select columns
+england_filtered = (
+    england_school_2022_23[
+        ~england_school_2022_23["MINORGROUP"].isin(excluded_groups) &
+        (england_school_2022_23["phaseofeducation_name_"] == "Secondary") &
+        (england_school_2022_23["establishmentstatus_name_"] == "Open")
+    ][["URN", "SCHNAME_x", "LEA", "TOWN_x", "TOTPUPS", "ATT8SCR", "OFSTEDRATING", "MINORGROUP", "PTFSM6CLA1A"]]
+)
+```
+
+
+```{python}
+#| include: false
+import pandas as pd
+
+## check all of your variable names first as R and python will call them something different
+column_df = pd.DataFrame({'Column Names': england_school_2022_23.columns.tolist()})
+
+# Define excluded MINORGROUP values
+excluded_groups = ["Special school", "Independent school", "College", None]
+
+# Filter and select columns
+england_filtered = (
+    england_school_2022_23[
+        ~england_school_2022_23["MINORGROUP"].isin(excluded_groups) &
+        (england_school_2022_23["phaseofeducation_name_"] == "Secondary") &
+        (england_school_2022_23["establishmentstatus_name_"] == "Open")
+    ][["URN", "SCHNAME_x", "LEA", "LANAME", "TOWN_x", "gor_name_", "TOTPUPS", "ATT8SCR", "ATT8SCRENG", "ATT8SCRMAT", "ATT8SCR_FSM6CLA1A", "ATT8SCR_NFSM6CLA1A", "ATT8SCR_BOYS", "ATT8SCR_GIRLS", "P8MEA", "P8MEA_FSM6CLA1A", "P8MEA_NFSM6CLA1A", "PTFSM6CLA1A", "PTNOTFSM6CLA1A", "PNUMEAL", "PNUMENGFL", "PTPRIORLO", "PTPRIORHI", "NORB", "NORG", "PNUMFSMEVER", "PERCTOT", "PPERSABS10", "SCHOOLTYPE_x", "RELCHAR", "ADMPOL_y", "gender_name_", "OFSTEDRATING", "MINORGROUP"]]
+)
+```
+
+
+#### ![](L6_images/Rlogo.png){width="41" height="30"}
+```{r}
+# Filter data
+england_filtered <- england_school_2022_23 %>%
+  filter(!MINORGROUP %in% c("Special school", "Independent school", "College", NA)) %>% 
+  filter(phase_of_education_name == "Secondary") %>% 
+  filter(establishment_status_name == "Open") %>% 
+  select(URN, SCHNAME.x, TOWN.x, TOTPUPS, ATT8SCR, OFSTEDRATING, MINORGROUP, PTFSM6CLA1A)
+```
+
+```{r}
+#| include: false
+# Filter data
+england_filtered <- england_school_2022_23 %>%
+  filter(!MINORGROUP %in% c("Special school", "Independent school", "College", NA)) %>% 
+  filter(phase_of_education_name == "Secondary") %>% 
+  filter(establishment_status_name == "Open") %>% 
+  select(URN, SCHNAME.x, LEA, LANAME, TOWN.x,gor_name, TOTPUPS, ATT8SCR, ATT8SCRENG, ATT8SCRMAT,ATT8SCRMAT,ATT8SCR_FSM6CLA1A,ATT8SCR_FSM6CLA1A,ATT8SCR_NFSM6CLA1A,ATT8SCR_BOYS,ATT8SCR_GIRLS,P8MEA,P8MEA_FSM6CLA1A,P8MEA_NFSM6CLA1A,PTFSM6CLA1A,PTNOTFSM6CLA1A,PNUMEAL,PNUMENGFL,PTPRIORLO,PTPRIORHI,NORB,NORG,PNUMFSMEVER,PERCTOT,PPERSABS10,SCHOOLTYPE.x,RELCHAR,ADMPOL.y,gender_name,OFSTEDRATING, MINORGROUP)
+```
+:::
+
+
+Other variables to include in your reduced dataset:
+
+1.  Local Authority (LEA) Code and Name - **LEA** and **LANAME**
+2.  Total Number of Pupils on Roll (all ages) - **TOTPUPS**
+3.  Average Attainment 8 score per pupil for English element - **ATT8SCRENG**
+4.  Average Attainment 8 score per pupil for mathematics element - **ATT8SCRMAT**
+5.  Average Attainment 8 score per disadvantaged pupil - **ATT8SCR_FSM6CLA1A**
+6.  Average Attainment 8 score per non-disadvantaged pupil - **ATT8SCR_NFSM6CLA1A**
+7.  Average Attainment 8 score per boy - **ATT8SCR_BOYS**
+8.  Average Attainment 8 score per girl - **ATT8SCR_GIRLS**
+9.  Progress 8 measure after adjustment for extreme scores - **P8MEA**
+10. Adjusted Progress 8 measure - disadvantaged pupils - **P8MEA_FSM6CLA1A**
+11. Adjusted Progress 8 measure - non-disadvantaged pupils - **P8MEA_NFSM6CLA1A**
+12. \% of pupils at the end of key stage 4 who are disadvantaged - **PTFSM6CLA1A**
+13. \% of pupils at the end of key stage 4 who are not disadvantaged - **PTNOTFSM6CLA1A**
+14. \% pupils where English not first language - **PNUMEAL**
+15. \% pupils with English first language - **PNUMENGFL**
+16. \% of pupils at the end of key stage 4 with low prior attainment at the end of key stage 2 - **PTPRIORLO**
+17. \% of pupils at the end of key stage 4 with high prior attainment at the end of key stage 2 - **PTPRIORHI**
+18. Total boys on roll (including part-time pupils) - **NORB**
+19. Total girls on roll (including part-time pupils) - **NORG**
+20. Percentage of pupils eligible for FSM at any time during the past 6 years - **PNUMFSMEVER**
+21. Percentage of overall absence - **PERCTOT**
+22. Percentage of enrolments who are persistent absentees - **PPERSABS10**
+23. School Type e.g. Voluntary Aided school - **SCHOOLTYPE**
+24. Religious character - **RELCHAR**
+25. Admissions Policy - **ADMPOL**
+26. Government Office Region Name - **gor_name**
+27. Mixed of Single Sex - **gender_name**
+
+**NB** - When you joined your datasets earlier, you will find that some variables appear in more than one of the datasets. This may cause a problem now as R and Python will try and distinguish them in the join by appending a `.x` or `.y` (R) or `_x` or `_y` (Python) so you may get an error when joining, particularly with the **SCHOOLTYPE** and **ADMPOL** variables. For these try **SCHOOLTYPE.x** and **ADMPOL.y** (underscore for Python) instead.
+
+Subsetting
+
+Now you have created your main analysis file, you could create two Local Authority Subsets to analyse:
+
+1. A Local Authority (Borough) of your choice from London
+2. A LOcal Authorit of your choice from anywhere else in England
+
+::: qna
+#### ![](L6_images/python-logo-only.png){width="30"}
+
+```{python}
+
+```
+
+#### ![](L6_images/Rlogo.png){width="41" height="30"}
+
+```{r}
+
+```
+
+:::
