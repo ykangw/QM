@@ -23,19 +23,16 @@ filters:
 
 library(reticulate)
 
-#
 #reticulate::virtualenv_remove("r-reticulate")
 # point reticulate to the right python installation - ideally the one reticulate installed. 
-reticulate::use_python("C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe", required = TRUE)
+#reticulate::use_python("C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe", required = TRUE)
 
-# # Point to Python 3.9
-# use_python("C:/Users/Adam/AppData/Local/Programs/Python/Python39/python.exe", required = TRUE)
-# 
-# virtualenv_create("r-reticulate", python = "C:/Users/Adam/AppData/Local/Programs/Python/Python39/python.exe")
-# reticulate::py_config()
+#virtualenv_create("r-reticulate", python = "C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe")
+
 #virtualenv_install("r-reticulate", packages = c("pyyaml", "jupyter", "statsmodels","pyjanitor","pathlib","matplotlib","pandas", "numpy", "scipy", "seaborn"))
-# use_virtualenv("r-reticulate", required = TRUE)
+#use_virtualenv("r-reticulate", required = TRUE)
 
+# reticulate::py_config()
 # reticulate::py_require("pyyaml")
 # reticulate::py_require("jupyter")
 # reticulate::py_require("statsmodels")
@@ -45,7 +42,7 @@ reticulate::use_python("C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cach
 # reticulate::py_require("pathlib") 
 # reticulate::py_require("matplotlib") 
 # reticulate::py_require("seaborn") 
- 
+
 ```
 
 This week's practical is focussed on understanding regression analysis in an applied context. You will essentially re-create some of the analysis you saw in the lecture, but for slightly different variables and for different places.
@@ -61,22 +58,20 @@ Make sure you complete each of the tasks below, 1-7. All of these will be covere
 ### Downloading: Download and read data into your software environment:
 
 1.  School locational and attribute information, downloaded from here - <https://get-information-schools.service.gov.uk/Downloads> - or read it in using the code supplied below. This will include the following datasets:
-
     a.  **edubase_schools** = this is the 'all establishment' data for every school in England and Wales
 
 2.  School-level Key Stage 4 (14-16 GCSE level) attainment and other attribute information. [I have put this on Moodle here](https://moodle.ucl.ac.uk/mod/folder/view.php?id=8199904), but it can also be downloaded from here - <https://www.compare-school-performance.service.gov.uk/download-data>.
 
     Download to a local drive on your computer from Moodle, unzip it and then read it in using the code supplied below. The zip folders contain the following data files in one folder and the associated metadata in the other folder:
-
     b.  **england_ks4final** = data on the 2022/23 academic year, school-level, KS4 outcomes and associated statistics
     c.  **england_abs** = data on the 2022/23 academic year, school-level absence rates
     d.  **england_census** = additional school-level pupil information for the 2022/23 academic year
     e.  **england_school_information** = additional school-level institution information such as Ofsted rating etc. for the 2022/23 academic year
     f.  **england_ks4_pupdest** = pupil destination data (where students go once they leave school at 16)
 
-### Data Munging: Join, filter and select:
+### Data Munging: Join, filter, select and subset:
 
-3.  Create a master file for Englandcalled **england_school_2022_23.** This will be made by joining together all of the school-level data above into a single file and then reducing it in size using:
+3.  Create a master file for England called **england_school_2022_23.** This will be made by joining together all of the school-level data above into a single file and then reducing it in size using:
     a.  **filter** - so that it just contains open secondary schools
     b.  **select** - so that only a few key variables relating to attainment, progress, deprivation, absence and school quality remain, alongside key locational and other attributes.
 4.  Create two local authority data **subsets** from this main file:
@@ -144,16 +139,17 @@ na_values_common = ["", "NA", "SUPP", "NP", "NE"]
 na_values_extended = na_values_common + ["SP", "SN"]
 na_values_attainment = na_values_extended + ["LOWCOV", "NEW"]
 na_values_mats = na_values_common + ["SUPPMAT"]
+na_all = ["", "NA", "SUPP", "NP", "NE", "SP", "SN", "LOWCOV", "NEW", "SUPPMAT", "NaN"]
 
 # Absence data
-england_abs = pd.read_csv(base_path / "england_abs.csv", na_values=na_values_common, dtype={"URN": str})
+england_abs = pd.read_csv(base_path / "england_abs.csv", na_values=na_all, dtype={"URN": str})
 
 # Census data
-england_census = pd.read_csv(base_path / "england_census.csv", na_values=na_values_common, dtype={"URN": str})
-england_census.iloc[:, 4:23] = england_census.iloc[:, 4:23].apply(lambda col: pd.to_numeric(col.astype(str), errors="coerce"))
+england_census = pd.read_csv(base_path / "england_census.csv", na_values=na_all, dtype={"URN": str})
+england_census.iloc[:, 4:23] = england_census.iloc[:, 4:23].apply(lambda col: pd.to_numeric(col.astype(str).str.replace('%', '', regex=False), errors="coerce"))
 
 # KS4 MATs performance data
-england_ks4_mats_performance = pd.read_csv(base_path / "england_ks4-mats-performance.csv", na_values=na_values_mats, encoding="cp1252", low_memory=False, dtype={"URN": str})
+england_ks4_mats_performance = pd.read_csv(base_path / "england_ks4-mats-performance.csv", na_values=na_all, encoding="cp1252", low_memory=False, dtype={"URN": str})
 england_ks4_mats_performance["TRUST_UID"] = england_ks4_mats_performance["TRUST_UID"].astype(str)
 england_ks4_mats_performance["P8_BANDING"] = england_ks4_mats_performance["P8_BANDING"].astype(str)
 england_ks4_mats_performance["INSTITUTIONS_INMAT"] = england_ks4_mats_performance["INSTITUTIONS_INMAT"].astype(str)
@@ -161,23 +157,26 @@ england_ks4_mats_performance["INSTITUTIONS_INMAT"] = england_ks4_mats_performanc
 cols_to_convert = england_ks4_mats_performance.columns[10:]
 exclude = ["P8_BANDING", "INSTITUTIONS_INMAT"]
 cols_to_convert = [col for col in cols_to_convert if col not in exclude]
-england_ks4_mats_performance[cols_to_convert] = england_ks4_mats_performance[cols_to_convert].apply(lambda col: pd.to_numeric(col.astype(str), errors="coerce"))
+england_ks4_mats_performance[cols_to_convert] = england_ks4_mats_performance[cols_to_convert].apply(lambda col: pd.to_numeric(col.astype(str).str.replace('%', '', regex=False), errors="coerce"))
 
 # KS4 pupil destination data
-england_ks4_pupdest = pd.read_csv(base_path / "england_ks4-pupdest.csv", na_values=na_values_extended, dtype={"URN": str})
-england_ks4_pupdest.iloc[:, 7:82] = england_ks4_pupdest.iloc[:, 7:82].apply(lambda col: pd.to_numeric(col.astype(str), errors="coerce"))
+england_ks4_pupdest = pd.read_csv(base_path / "england_ks4-pupdest.csv", na_values=na_all, dtype={"URN": str})
+england_ks4_pupdest.iloc[:, 7:82] = england_ks4_pupdest.iloc[:, 7:82].apply(lambda col: pd.to_numeric(col.astype(str).str.replace('%', '', regex=False), errors="coerce"))
 
 # KS4 final attainment data
-england_ks4final = pd.read_csv(base_path / "england_ks4final.csv", na_values=na_values_attainment, dtype={"URN": str})
+england_ks4final = pd.read_csv(base_path / "england_ks4final.csv", na_values=na_all, dtype={"URN": str})
 start_col = "TOTPUPS"
 end_col = "PTOTENT_E_COVID_IMPACTED_PTQ_EE"
 cols_range = england_ks4final.loc[:, start_col:end_col].columns
-england_ks4final[cols_range] = england_ks4final[cols_range].apply(lambda col: pd.to_numeric(col.astype(str), errors="coerce"))
+# Strip % signs and convert to numeric
+england_ks4final[cols_range] = england_ks4final[cols_range].apply(
+    lambda col: pd.to_numeric(col.astype(str).str.replace('%', '', regex=False), errors="coerce")
+)
 
 # School information data
 england_school_information = pd.read_csv(
     base_path / "england_school_information.csv",
-    na_values=na_values_extended,
+    na_values=na_all,
     dtype={"URN": str},
     parse_dates=["OFSTEDLASTINSP"],
     dayfirst=True  # Adjust if needed
@@ -208,13 +207,14 @@ na_common <- c("", "NA", "SUPP", "NP", "NE")
 na_extended <- c(na_common, "SP", "SN")
 na_attainment <- c(na_extended, "LOWCOV", "NEW")
 na_mats <- c(na_common, "SUPPMAT")
+na_all <- c("", "NA", "SUPP", "NP", "NE", "SP", "SN", "LOWCOV", "NEW", "SUPPMAT")
 
 # Absence data
-england_abs <- read_csv(file.path(base_path, "england_abs.csv"), na = na_common) |>
+england_abs <- read_csv(file.path(base_path, "england_abs.csv"), na = na_all) |>
   mutate(URN = as.character(URN))
 
 # Other School Census data
-england_census <- read_csv(file.path(base_path, "england_census.csv"), na = na_common) |>
+england_census <- read_csv(file.path(base_path, "england_census.csv"), na = na_all) |>
   mutate(URN = as.character(URN)) |>
   mutate(across(5:23, ~ parse_number(as.character(.))))
 
@@ -222,7 +222,7 @@ england_census <- read_csv(file.path(base_path, "england_census.csv"), na = na_c
 #First read
 england_ks4_mats_performance <- read_csv(
   file.path(base_path, "england_ks4-mats-performance.csv"),
-  na = na_mats
+  na = na_all
 ) |>
   mutate(
     TRUST_UID = as.character(TRUST_UID),
@@ -241,19 +241,19 @@ england_ks4_mats_performance <- england_ks4_mats_performance |>
 
 
 # KS4 pupil destination data
-england_ks4_pupdest <- read_csv(file.path(base_path, "england_ks4-pupdest.csv"), na = na_extended) |>
+england_ks4_pupdest <- read_csv(file.path(base_path, "england_ks4-pupdest.csv"), na = na_all) |>
   mutate(URN = as.character(URN)) |>
   mutate(across(8:82, ~ parse_number(as.character(.))))
 
 # KS4 final attainment data
-england_ks4final <- read_csv(file.path(base_path, "england_ks4final.csv"), na = na_attainment) |>
+england_ks4final <- read_csv(file.path(base_path, "england_ks4final.csv"), na = na_all) |>
   mutate(URN = as.character(URN)) |>
   mutate(across(TOTPUPS:PTOTENT_E_COVID_IMPACTED_PTQ_EE, ~ parse_number(as.character(.))))
 
 # School information data
 england_school_information <- read_csv(
   file.path(base_path, "england_school_information.csv"),
-  na = na_extended,
+  na = na_all,
   col_types = cols(
     URN = col_character(),
     OFSTEDLASTINSP = col_date(format = "%d-%m-%Y")
@@ -294,6 +294,111 @@ england_school_2022_23 <- england_ks4final %>%
 ```
 :::
 
+#### Iterative Checking and initial exploratory analysis
+
+-   It's never too soon to start exploring your data - even (or indeed especially) in the data 'munging' (processing, cleaning etc.) stage.
+-   You will probably find yourself iteratively plotting, filtering, plotting again, switching variables, plotting again, over and over again until you are happy with the data you have. This is all part of the Exploratory Data Analysis Process and vital before applying any other methods to your data!
+-   If you recall from the lecture, the histogram of attainment 8 in the whole of England dataset looked a bit odd:
+
+::: qna
+#### ![](L6_images/python-logo-only.png){width="30"}
+
+```{python}
+#| echo: true
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# Compute statistics
+median_value = england_school_2022_23["ATT8SCR"].median(skipna=True)
+mean_value = england_school_2022_23["ATT8SCR"].mean(skipna=True)
+sd_value = england_school_2022_23["ATT8SCR"].std(skipna=True)
+
+# Set up the figure
+plt.figure(figsize=(10, 6))
+
+# Histogram with density
+sns.histplot(
+    data=england_school_2022_23,
+    x="ATT8SCR",
+    stat="density",
+    binwidth=1,
+    color="#4E3C56",
+    alpha=0.4,
+    linewidth=0.5,
+    edgecolor="white"
+)
+
+# Overlay normal distribution curve
+x_vals = np.linspace(
+    england_school_2022_23["ATT8SCR"].min(),
+    england_school_2022_23["ATT8SCR"].max(),
+    500
+)
+normal_density = (
+    1 / (sd_value * np.sqrt(2 * np.pi))
+) * np.exp(-0.5 * ((x_vals - mean_value) / sd_value) ** 2)
+plt.plot(x_vals, normal_density, color="#2E6260", linewidth=1)
+
+# Add vertical lines for median and mean
+plt.axvline(median_value, color="black", linestyle="dotted", linewidth=1)
+plt.axvline(mean_value, color="#F9DD73", linestyle="solid", linewidth=1)
+
+# Annotate median and mean
+plt.text(median_value, plt.gca().get_ylim()[1]*0.95, f"Median = {median_value:.1f}",
+         color="black", ha="center", va="top", fontsize=10)
+plt.text(mean_value, plt.gca().get_ylim()[1]*0.85, f"Mean = {mean_value:.1f}",
+         color="#F9DD73", ha="center", va="top", fontsize=10)
+
+# Customize labels and theme
+plt.title("Attainment 8 - All Schools England and Wales, 2022/23 Academic Year")
+plt.xlabel("Attainment 8 Score")
+plt.ylabel("Density")
+sns.despine()
+plt.tight_layout()
+
+# Show the plot
+# plt.show()
+```
+
+
+#### ![](L6_images/Rlogo.png){width="41" height="30"}
+```{r}
+#| echo: true
+#| warning: false
+median_value <- median(england_school_2022_23$ATT8SCR, na.rm = TRUE)
+mean_value   <- mean(england_school_2022_23$ATT8SCR, na.rm = TRUE)
+sd_value   <- sd(england_school_2022_23$ATT8SCR, na.rm = TRUE)
+
+ggplot(england_school_2022_23, aes(x = ATT8SCR)) +
+  geom_histogram(aes(y = ..density..), binwidth = 1, fill = "#4E3C56", alpha = 0.4) +
+  stat_function(fun = dnorm, args = list(mean = mean_value, sd = sd_value), color = "#2E6260", linewidth = 1) +
+  geom_vline(xintercept = median_value, color = "black", linetype = "dotted", size = 1) +
+  geom_vline(xintercept = mean_value, color = "#F9DD73", linetype = "solid", size = 1) +
+  annotate("text",
+           x = median_value, y = Inf,
+           label = paste0("Median = ", round(median_value, 1)),
+           vjust = 1.3, color = "black", size = 3.5) +
+  annotate("text",
+           x = mean_value, y = Inf,
+           label = paste0("Mean = ", round(mean_value, 1)),
+           vjust = 30.5, color = "#F9DD73", size = 3.5) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08))) +
+  labs(
+    title = "Attainment 8 - All Schools England and Wales, 2022/23 Academic Year",
+    x = "Attainment 8 Score",
+    y = "Density"
+  ) +
+  theme_minimal()
+```
+
+:::
+
+
+-   You may also recall from the lecture that this odd distribution was related to different types of school in the system. We can create a similar visualisation here:
+
+::: qna
+#### ![](L6_images/python-logo-only.png){width="30"}
 ```{python}
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -317,9 +422,9 @@ sns.stripplot(
     hue='MINORGROUP',
     dodge=False,
     jitter=True,
-    alpha=0.8,
-    size=3,
-    palette='viridis'
+    alpha=0.5,
+    size=4,
+    palette='turbo'
 )
 
 # Customize the plot
@@ -336,12 +441,13 @@ plt.show()
 ```
 
 
-
+#### ![](L6_images/Rlogo.png){width="41" height="30"}
 ```{r}
+#| warning: false
 ggplot(england_school_2022_23, aes(x = ATT8SCR, y = "")) +
-  geom_boxplot(fill = "#EDD971", alpha = 0.1, outlier.shape = NA) +    
-  geom_jitter(aes(colour = MINORGROUP), height = 0.2, alpha = 0.8, size = 1) + 
-  scale_colour_viridis_d() +  # applies the default casaviz discrete palette
+  geom_boxplot(fill = "#EDD971", alpha = 0.3, outlier.shape = NA) +    
+  geom_jitter(aes(colour = MINORGROUP), height = 0.2, alpha = 0.3, size = 1) + 
+  scale_colour_viridis_d(option = "turbo") +  # applies the default casaviz discrete palette
   labs(
     title = "Attainment 8 - All Schools 2022/23 Academic Year",
     x = "Attainment 8 Score",
@@ -355,15 +461,31 @@ ggplot(england_school_2022_23, aes(x = ATT8SCR, y = "")) +
     legend.text = element_text(size = 10)  # optional: larger legend labels
   ) + guides(colour = guide_legend(override.aes = list(size = 4)))
 ```
+:::
 
+#### Further filtering and subsetting
 
-
--   Now have joined all of these data frames into a single master dataframe for the whole of England we will need to filter out some of the rows we don't want and the columns that we don't need for our analysis at this stage
+-   Having joined all of these data frames into a single master dataframe for the whole of England and observed some issues, we will need to filter out some of the rows we don't want and the columns that we don't need
 -   In the two folders you downloaded from Moodle, one contains all of the data we need, the other contains all of the metadata which tells us what the variables are
 -   If you open up, for example `ks4_meta.xlsx` these are the variables related to attainment for each school.
 -   Similarly `abbreviations.xlsx` attaches some meaning to some of the codes associated with some of these variables, with other metadata files containing other info. Take some time to look at these so you understand the range of variables we'll be exploring.
 
-**NB** - One of the key filtering asks carried out in the code below is to 
+**NB** - One of the key filtering asks carried out in the code below is to filter the schools so that we only retain the maintained schools and the academies in the dataset
+
+## Task 3 - Filtering, Selecting and Subsetting
+
+The Code Below already has the syntax to allow you to filter your dataset and drop special schools, independent schools and colleges. 
+
+It also contains the start of some code to allow you to select a smaller set of variables from the 700-odd in the main file. 
+
+1.  Adapt this Python or R code so that it contains these variables plus the additional variables listed below (see the note about how you may need to adjust the names depending on whether using Python or R). - You should end up with 34 in total
+2.  Once you have created this filtered and reduced file called `england_filtered` use this code below as the template for creating two new data subsets:
+    a.   london_borough_sub
+    b.   england_lad_sub
+These two new files should create a subset which has filtered on the name or code of a London borough and another local authority in England
+
+**NB** If you are unsure of the names of the local authorities in England, use the `la_and_region_codes_meta.csv` file in your metadata folder to help you. You might want to name your "sub" files according to the names of the local authorities you choose. 
+
 
 ```{r}
 #| eval: false
@@ -469,24 +591,85 @@ Other variables to include in your reduced dataset:
 
 **NB** - When you joined your datasets earlier, you will find that some variables appear in more than one of the datasets. This may cause a problem now as R and Python will try and distinguish them in the join by appending a `.x` or `.y` (R) or `_x` or `_y` (Python) so you may get an error when joining, particularly with the **SCHOOLTYPE** and **ADMPOL** variables. For these try **SCHOOLTYPE.x** and **ADMPOL.y** (underscore for Python) instead.
 
-Subsetting
+## Task 4 - Further Exploratory Analysis and Visual Modelling
 
-Now you have created your main analysis file, you could create two Local Authority Subsets to analyse:
+-   Using the example code below as a guide, select your own $Y$ variable related to attainment from your smaller filtered dataset. You have a range of attainment or progress related variables in there
+-   Select your own $X$ variable that might help explain attainment, this might relate to disadvantage, prior attainment, absence or anything else that is a **continuous** variable (DO NOT SELECT A CATEGORICAL VARIABLE AT THIS TIME).
+-   Once you have selected your two variables, plot them against each other on a scatter plot to see if there is an obvious relationship - again, use the code below as a guide.
 
-1. A Local Authority (Borough) of your choice from London
-2. A LOcal Authorit of your choice from anywhere else in England
+```{python}
+#| include: false
+camden_sub = england_filtered[england_filtered['LANAME'] == 'Camden']
+leeds_sub = england_filtered[england_filtered['LANAME'] == 'Leeds']
+```
+
+```{r}
+#| include: false
+camden_sub <- england_filtered %>% 
+  filter(LANAME == "Camden")
+leeds_sub <- england_filtered %>% 
+  filter(LANAME == "Leeds")
+```
+
 
 ::: qna
 #### ![](L6_images/python-logo-only.png){width="30"}
 
 ```{python}
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Combine the datasets
+combined_data = pd.concat([camden_sub, leeds_sub])
+
+# Create a function to make and customize the plot
+def make_plot():
+    g = sns.FacetGrid(combined_data, col="LANAME", height=5, aspect=1)
+    g.map_dataframe(
+        sns.scatterplot,
+        x="PTFSM6CLA1A",
+        y="ATT8SCR",
+        color="steelblue",
+        alpha=0.7,
+        s=60
+    )
+    g.set_axis_labels("% KS4 Pupils Disadvantaged (PTFSM6CLA1A)", "Attainment 8 Score (ATT8SCR)")
+    g.fig.suptitle("ATT8SCR vs PTFSM6CLA1A by Local Authority", fontsize=16)
+    g.fig.tight_layout()
+    g.fig.subplots_adjust(top=0.85)
+    plt.show()
+
+# Call the function once
+make_plot()
+
 
 ```
+
 
 #### ![](L6_images/Rlogo.png){width="41" height="30"}
 
 ```{r}
+#| warning: false
+library(ggplot2)
+library(dplyr)
 
+# Combine the datasets and label them
+combined_data <- bind_rows(
+  camden_sub %>% mutate(Area = "Camden"),
+  leeds_sub %>% mutate(Area = "Leeds")
+)
+
+# Create faceted scatter plot
+ggplot(combined_data, aes(x = PTFSM6CLA1A, y = ATT8SCR)) +
+  geom_point(alpha = 0.7, size = 3, color = "steelblue") +
+  facet_wrap(~ Area) +
+  labs(
+    title = "ATT8SCR vs PTFSM6CLA1A by Local Authority",
+    x = "% KS4 Pupils Disadvantaged (PTFSM6CLA1A)",
+    y = "Attainment 8 Score (ATT8SCR)"
+  ) +
+  theme_minimal()
 ```
 
 :::
