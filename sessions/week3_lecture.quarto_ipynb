@@ -890,7 +890,7 @@
         "\n",
         "It's easy to fit a KDE to data in Python:"
       ],
-      "id": "2abe1ecd"
+      "id": "fc431668"
     },
     {
       "cell_type": "code",
@@ -911,7 +911,7 @@
         "x_vals = np.linspace(100, 200, 100)\n",
         "y_vals = kde(x_vals)"
       ],
-      "id": "2dd3fc7d",
+      "id": "747aeceb",
       "execution_count": null,
       "outputs": []
     },
@@ -1004,7 +1004,7 @@
         "```\n",
         "Then use Python to calculate the two-tailed critical t-value at $\\alpha = 0.05$."
       ],
-      "id": "83516c6c"
+      "id": "653eedd7"
     },
     {
       "cell_type": "code",
@@ -1021,7 +1021,7 @@
         "t_crit = t.ppf(1 - alpha/2, df)\n",
         "print(\"Critical t-value:\", t_crit.round(2))"
       ],
-      "id": "1a39faa5",
+      "id": "be46eddc",
       "execution_count": null,
       "outputs": []
     },
@@ -1064,7 +1064,7 @@
         "\n",
         "Have questions prepared!"
       ],
-      "id": "76ae5038"
+      "id": "91889233"
     }
   ],
   "metadata": {
