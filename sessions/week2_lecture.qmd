@@ -690,7 +690,7 @@ Where $\lambda$ is the expected number of events in a given interval.
 
 ```{=tex}
 \begin{align}
-P(X = 10) = \frac{2^10 e^{-2}}{10!}
+P(X = 10) = \frac{2^{10} e^{-2}}{10!}
 \\ = 0.000038
 \end{align}
 ```
@@ -765,13 +765,7 @@ Image is of Chatarunga - which is the earliest known form of chess dating to 6th
 
 ::: {.column width="20%"}
 
-. . . 
-
-10^18
-
-. . . 
-
-Which is more than the global production of rice.  
+10^18 - which is more than the global production of rice.  
 
 :::
 
@@ -910,7 +904,7 @@ The PDF of the exponential distribution is:
 
 ```{=tex}
 \begin{align}
-f(x, \lambda) = \lambda e^{-\lambda x}
+P(x) = \lambda e^{-\lambda x}
 \end{align}
 ```
 

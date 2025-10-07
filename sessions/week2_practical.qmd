@@ -27,9 +27,9 @@ As per last week: download the notebook to your `QM` folder, switch over to `Jup
 
 We are going to look at schools performance data in England. 
 
-The data is sourced from gov.uk [here](https://www.compare-school-performance.service.gov.uk/download-data), however I have also saved a copy of the relevant dataset to the Github repo (in case the dataset is removed from the website) which you can load directly in the code below. In this notebook we're using the performance table for academic year 2022/23: 'Performancetables_130242/2022-2023'.
+The data is sourced from gov.uk [here](https://www.compare-school-performance.service.gov.uk/download-data) - HOWEVER I have also saved a copy of the relevant dataset to the Github repo (in case the dataset is removed from the website) which you can load directly in the code below. In this notebook we're using the performance table for academic year 2022/23: 'Performancetables_130242/2022-2023'.
 
-We have saved a copy of this dataset to the Github repo, in case the dataset is removed from the website.
+If you do want to download the data directly from the gov.uk website then you need to choose the academic year '2022 to 2023', then 'All of England', then 'Key stage 4 results (final)'. Then you'll want to download the 'Data in CSV format' and also 'Explanation of terminology used in the data files'.
 
 ```{python}
 import pandas as pd
@@ -262,11 +262,11 @@ plt.show()
 
 Note that this time we plot the histogram with `density=True` - this scales the histogram data. 
 
-Another way to think about whether soemthing is normally distirbuted is to look at the Q-Q plot. 
+Another way to think about whether something is normally distirbuted is to look at the Q-Q plot. 
 
 ### Q-Q plot 
 
-A Q-Q plot is used to see if a dataset follows a ceratin distirbution, by comparing the quartiles of the two. You can read a bit more about Q-Q plots [here](https://www.datacamp.com/tutorial/qq-plot).
+A Q-Q plot is used to see if a dataset follows a certain distribution, by comparing the quartiles of the two. You can read a bit more about Q-Q plots [here](https://www.datacamp.com/tutorial/qq-plot).
 
 Q-Q plots are a good way to check if a dataset follows a normal distribution. 
 
@@ -318,7 +318,7 @@ Ok, so in case it wasn't clear from the previous plot we can see that the data d
 
 ## What's causing the skew? 
 
-If you remember above this dataset includes schools of two different types, we have mainstream schools and special schools. 'special schools' refers to schools which cater to students with special educational needs. let's see whta happens when we split our historgram according to the type of school. 
+If you remember above this dataset includes schools of two different types, we have mainstream schools and special schools. 'special schools' refers to schools which cater to students with special educational needs. Let's see what happens when we split our histogram according to the type of school. 
 
 ```{python}
 # histogram of # plot histogram of EBACCAPS by RECTYPE
