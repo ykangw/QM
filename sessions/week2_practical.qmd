@@ -113,7 +113,7 @@ OK, so we can see that not all the data types are quite as expected. Let's refor
 
 ```{python}
 df.loc[:, ebaccs_cols] = df.loc[:, ebaccs_cols].apply(pd.to_numeric, errors='coerce')
-df.loc[:, 'TOTPUPS'] = pd.to_numeric(df['TOTPUPS'], errors='coerce').astype('Int64')
+df['TOTPUPS'] = pd.to_numeric(df['TOTPUPS'], errors='coerce').fillna(0).astype('int64')
 ```
 
 And we can check again: 
