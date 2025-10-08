@@ -47,6 +47,9 @@ ebaccs_cols = ['EBACCAPS', 'EBACCAPS_LO', 'EBACCAPS_MID', 'EBACCAPS_HI']
 
 df = df_ks4[info_cols + ebaccs_cols]
 
+# work on a copy of the dataframe to avoid SettingWithCopyWarning
+df = df.copy()
+
 df.head()
 ```
 
@@ -113,7 +116,7 @@ OK, so we can see that not all the data types are quite as expected. Let's refor
 
 ```{python}
 df.loc[:, ebaccs_cols] = df.loc[:, ebaccs_cols].apply(pd.to_numeric, errors='coerce')
-df.loc[:, 'TOTPUPS'] = pd.to_numeric(df['TOTPUPS'], errors='coerce').fillna(0).astype('int64')
+df['TOTPUPS'] = pd.to_numeric(df['TOTPUPS'], errors='coerce').fillna(0).astype('int64')
 ```
 
 And we can check again: 
@@ -289,7 +292,7 @@ The results of the Q-Q plot can help us to understand the dataset:
 - Light tails (fewer extreme values than normal): *points bend inward at the ends*
 - Skewed data: *points systematically deviate above or below the line*
 
-We can plot the Q-Q plot in Python: 
+We can plot the Q-Q plot in Python. Note that before we Q-Q plot the sample data we will need to normalise it - this accounts for the fact that our data is not centred around 0. 
 
 ```{python}
 # Drop missing values
