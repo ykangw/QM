@@ -113,7 +113,7 @@ OK, so we can see that not all the data types are quite as expected. Let's refor
 
 ```{python}
 df.loc[:, ebaccs_cols] = df.loc[:, ebaccs_cols].apply(pd.to_numeric, errors='coerce')
-df['TOTPUPS'] = pd.to_numeric(df['TOTPUPS'], errors='coerce').fillna(0).astype('int64')
+df.loc[:, 'TOTPUPS'] = pd.to_numeric(df['TOTPUPS'], errors='coerce').fillna(0).astype('int64')
 ```
 
 And we can check again: 
@@ -251,9 +251,9 @@ xmin = 0
 xmax = 9
 x = np.linspace(xmin, xmax, 100)
 p = sps.norm.pdf(x, mu, std)
-plt.plot(x, p, 'k', linewidth=2, color="#e16fca")
+plt.plot(x, p, linewidth=2, color="#e16fca")
 
-plt.title(f"Fit results: $\mu$ = {mu:.2f},  $\sigma$ = {std:.2f}")
+plt.title(f"Fit results: $\\mu$ = {mu:.2f},  $\\sigma$ = {std:.2f}")
 plt.xlim(0, 9)
 plt.xlabel("EBacc score")
 plt.ylabel("Density")
@@ -539,9 +539,8 @@ plt.show()
 :::
 
 ### EBacc by school size 
-Try plotting the EBacc scores against the total number of pupils ('TOTPUPS') - what can you say about this distribution? 
 
-*Note* this is no longer a histogram - rather we're starting to explore the relationship between different random variables!
+If you've finished everything else, then you might like to look at some of the other variables in the dataset. Try plotting the EBacc scores against the total number of pupils ('TOTPUPS') - for example using a scatter plot - what can you say about this distribution? 
 
 ## You're Done!
 
