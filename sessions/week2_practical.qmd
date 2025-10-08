@@ -112,7 +112,8 @@ df.dtypes
 OK, so we can see that not all the data types are quite as expected. Let's reformat them to make it easier later. 
 
 ```{python}
-df[['TOTPUPS']+ebaccs_cols] = df[['TOTPUPS']+ebaccs_cols].apply(pd.to_numeric, errors='coerce')
+df.loc[:, ebaccs_cols] = df.loc[:, ebaccs_cols].apply(pd.to_numeric, errors='coerce')
+df.loc[:, 'TOTPUPS'] = pd.to_numeric(df['TOTPUPS'], errors='coerce').astype('Int64')
 ```
 
 And we can check again: 
@@ -295,6 +296,9 @@ We can plot the Q-Q plot in Python:
 data = df['EBACCAPS'].dropna().values
 n = len(data)
 
+# normalise the data
+data = (data - np.mean(data)) / np.std(data)
+
 # Sort the sample data
 sample_quantiles = np.sort(data)
 
@@ -314,7 +318,7 @@ plt.ylabel("Sample quantiles")
 plt.show()
 ```
 
-Ok, so in case it wasn't clear from the previous plot we can see that the data definitely isn't normal. 
+Ok, so in case it wasn't clear from the previous plot we can see that the data definitely isn't perfectly normal. 
 
 ## What's causing the skew? 
 
@@ -377,6 +381,9 @@ df2 = df[df['RECTYPE'] == 2]
 data = df1['EBACCAPS'].dropna().values
 n = len(data)
 
+# normalise the data
+data = (data - np.mean(data)) / np.std(data)
+
 # Sort the sample data
 sample_quantiles = ??
 
@@ -402,6 +409,9 @@ plt.show()
 # Drop missing values
 data = df1['EBACCAPS'].dropna().values
 n = len(data)
+
+# normalise the data
+data = (data - np.mean(data)) / np.std(data)
 
 # Sort the sample data
 sample_quantiles = np.sort(data)
@@ -433,6 +443,9 @@ plt.show()
 data = df2['EBACCAPS'].dropna().values
 n = len(data)
 
+# normalise the data
+data = (data - np.mean(data)) / np.std(data)
+
 # Sort the sample data
 sample_quantiles = ??
 
@@ -458,6 +471,9 @@ plt.show()
 # Drop missing values
 data = df2['EBACCAPS'].dropna().values
 n = len(data)
+
+# normalise the data
+data = (data - np.mean(data)) / np.std(data)
 
 # Sort the sample data
 sample_quantiles = np.sort(data)
@@ -524,6 +540,8 @@ plt.show()
 
 ### EBacc by school size 
 Try plotting the EBacc scores against the total number of pupils ('TOTPUPS') - what can you say about this distribution? 
+
+*Note* this is no longer a histogram - rather we're starting to explore the relationship between different random variables!
 
 ## You're Done!
 
