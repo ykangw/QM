@@ -1166,23 +1166,23 @@ You might notice that R is a bit better at things like manipulating model output
 
 ```{python}
 import pandas as pd
+import statsmodels.api as sm
+from statsmodels.iolib.summary2 import summary_col 
 
-# def extract_model_summary(model, model_name):
-#     return pd.DataFrame({
-#         'Model': model_name,
-#         'Variable': model.params.index,
-#         'Coefficient': model.params.values,
-#         'Std. Error': model.bse.values
-#     })
-# 
-# # Combine into one DataFrame
-# combined_summary = pd.concat([camden_summary, leeds_summary, england_summary])
-# 
-# # Pivot for side-by-side comparison
-# summary_table = combined_summary.pivot_table(index='Variable', columns='Model', values=['Coefficient', 'Std. Error'])
+results_table = summary_col(
+    results=[camden_model1, leeds_model1, england_model1],
+    model_names=['Camden Model', 'Leeds Model', 'England Model'],
+    stars=True,
+    float_format="%0.3f",
+    # You can customize what model statistics show up here (like R2, N, F-stat)
+    info_dict={'N':lambda x: "{0:d}".format(int(x.nobs)),
+               'R-squared':lambda x: "{:.3f}".format(x.rsquared),
+               'Adj. R-squared':lambda x: "{:.3f}".format(x.rsquared_adj)}
+)
+
 # 
 # # Round for readability
-# print(summary_table.round(3))
+print(results_table)
 
 ```
 
