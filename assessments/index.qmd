@@ -87,7 +87,7 @@ library(tidyverse)
 library(kableExtra)
 library(here)
 
-assessment <- read_csv(here("data", "assessment.csv"), locale = locale(encoding = "ISO-8859-1"))
+assessment <- read_csv(here("data", "assessment.csv"))
 
 kable(assessment)
 ```
