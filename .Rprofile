@@ -1,2 +1,3 @@
 source("renv/activate.R")
-Sys.setenv(RETICULATE_PYTHON = "C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe")
+Sys.setenv(RETICULATE_PYTHON = "C:/Users/adam_/anaconda3/envs/qmEnv/python.exe")
+Sys.setenv(PROJ_LIB = "C:/Users/adam_/anaconda3/envs/qmEnv/Library/share/proj")

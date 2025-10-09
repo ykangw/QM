@@ -26,6 +26,9 @@ library(reticulate)
 #reticulate::virtualenv_remove("r-reticulate")
 # point reticulate to the right python installation - ideally the one reticulate installed. 
 #reticulate::use_python("C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe", required = TRUE)
+#use_condaenv("qmEnv", conda = "C:/Users/adam_/anaconda3/Scripts/conda.exe", required = TRUE)
+#use_python("C:/Users/adam_/anaconda3/envs/qmEnv/python.exe", required = TRUE)
+#py_run_string("import pyproj; print(pyproj.CRS.from_epsg(27700))")
 
 #virtualenv_create("r-reticulate", python = "C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe")
 
@@ -147,7 +150,8 @@ edubase_schools = edubase_schools.clean_names()
 
 ########################################
 # Define base path and common NA values - NOTE YOU WILL NEED TO DOWNLOAD THIS DATA AND PUT INTO YOUR OWN base_path LOCATION ON YOUR MACHINE - not this one as this is my path!!!
-base_path = Path("E:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+#base_path = Path("E:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+base_path = Path("C:/GitHubRepos/QM/sessions/L6_data/Performancetables_130242/2022-2023")
 ##################################################
 na_values_common = ["", "NA", "SUPP", "NP", "NE"]
 na_values_extended = na_values_common + ["SP", "SN"]

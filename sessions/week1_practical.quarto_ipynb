@@ -69,7 +69,7 @@
         "\n",
         "We have saved a copy of this dataset to the Github repo, in case that the dataset is removed from the website."
       ],
-      "id": "e792920d"
+      "id": "04c04c45"
     },
     {
       "cell_type": "code",
@@ -87,7 +87,7 @@
         "\n",
         "print(df_pop.head())"
       ],
-      "id": "0c2a57a6",
+      "id": "2f4f2b6a",
       "execution_count": null,
       "outputs": []
     },
@@ -107,7 +107,7 @@
         "\n",
         "### Which columns are included?"
       ],
-      "id": "8d279e25"
+      "id": "62653ac1"
     },
     {
       "cell_type": "code",
@@ -115,7 +115,7 @@
       "source": [
         "list(df_pop.columns)"
       ],
-      "id": "ab623a97",
+      "id": "1525537d",
       "execution_count": null,
       "outputs": []
     },
@@ -125,7 +125,7 @@
       "source": [
         "It is a pain to deal with whitespaces in a column, so good practice is to replace the whitespaces (eg tabs, multiple spaces) within column names with *underscore*."
       ],
-      "id": "20dddab9"
+      "id": "f420e461"
     },
     {
       "cell_type": "code",
@@ -134,7 +134,7 @@
         "df_pop.columns = df_pop.columns.str.replace(r'\\s+', '_', regex=True)\n",
         "print(list(df_pop.columns)) # check again"
       ],
-      "id": "b1740183",
+      "id": "7dfa8c1a",
       "execution_count": null,
       "outputs": []
     },
@@ -144,7 +144,7 @@
       "source": [
         "### How many rows & cols are included?"
       ],
-      "id": "8203a25e"
+      "id": "dbf972b7"
     },
     {
       "cell_type": "code",
@@ -153,7 +153,7 @@
         "rows, cols = df_pop.shape\n",
         "print(f\"Rows: {rows}, Columns: {cols}\")"
       ],
-      "id": "99bd0839",
+      "id": "a67ed906",
       "execution_count": null,
       "outputs": []
     },
@@ -165,7 +165,7 @@
         "\n",
         "This dataset contains multiple geographies of UK and different geographies are incomparable. We can check the *Area_type* column:"
       ],
-      "id": "32b14377"
+      "id": "b3eee295"
     },
     {
       "cell_type": "code",
@@ -173,7 +173,7 @@
       "source": [
         "print(df_pop.Area_type.value_counts())"
       ],
-      "id": "a8ec64d7",
+      "id": "d3cb1a16",
       "execution_count": null,
       "outputs": []
     },
@@ -185,7 +185,7 @@
         "\n",
         "We will focus on the local authorities, so we apply a filter:"
       ],
-      "id": "4979d67e"
+      "id": "34432064"
     },
     {
       "cell_type": "code",
@@ -193,7 +193,7 @@
       "source": [
         "df_pop_la = df_pop[df_pop['Area_type'] == 'Local Authority']"
       ],
-      "id": "807f2a01",
+      "id": "3d93b105",
       "execution_count": null,
       "outputs": []
     },
@@ -205,7 +205,7 @@
         "\n",
         "There are two pandas functions that give overview of a dataframe. - `info()`: shows column data types, non‑null counts, and memory usage. - `describe()`: shows summary statistics for numeric data (count, mean, std, min, quartiles, max) - `describe(include='all')`: for both numeric data and non‑numeric data (count, unique, top value, frequency)."
       ],
-      "id": "121c7444"
+      "id": "149bed15"
     },
     {
       "cell_type": "code",
@@ -214,7 +214,7 @@
         "print(df_pop_la.info())\n",
         "print(df_pop_la.describe())"
       ],
-      "id": "d1ee9562",
+      "id": "85113836",
       "execution_count": null,
       "outputs": []
     },
@@ -242,7 +242,7 @@
         "\n",
         "Which LAs have the maximum population size? *The code below is a bit complicated*."
       ],
-      "id": "30ab7edc"
+      "id": "7d744885"
     },
     {
       "cell_type": "code",
@@ -253,7 +253,7 @@
         "    df_pop_la['Population_2021'].max(skipna=True))\n",
         "    )"
       ],
-      "id": "f84618ff",
+      "id": "4397d26a",
       "execution_count": null,
       "outputs": []
     },
@@ -275,7 +275,7 @@
         "\n",
         "Which LAs have the minimum population?"
       ],
-      "id": "18af8444"
+      "id": "bb6aa8f7"
     },
     {
       "cell_type": "code",
@@ -286,7 +286,7 @@
         "    df_pop_la['Population_2021'].min(skipna=True))\n",
         "    )"
       ],
-      "id": "76d07488",
+      "id": "50e41be0",
       "execution_count": null,
       "outputs": []
     },
@@ -300,7 +300,7 @@
         "\n",
         "Another way to calculate this standard deviation and to reformat it is:"
       ],
-      "id": "8929cbb0"
+      "id": "6cc58a09"
     },
     {
       "cell_type": "code",
@@ -314,7 +314,7 @@
         "# thousands separator notation + 2 decimal places\n",
         "print(\"Using thousands separator notation: {:,.2f}\".format(std_dev))"
       ],
-      "id": "a43a8edd",
+      "id": "8b3eda80",
       "execution_count": null,
       "outputs": []
     },
@@ -332,7 +332,7 @@
         "\n",
         "To detect outliers, we will implement the Tukey Fences method using pandas function, as pandas does not provide a built-in function for this method."
       ],
-      "id": "f3a956c2"
+      "id": "08093cfe"
     },
     {
       "cell_type": "code",
@@ -358,7 +358,7 @@
         "print(\"How many outliers?\", outliers.shape[0])\n",
         "print(\"Outliers:\\n\", outliers)"
       ],
-      "id": "c37a4618",
+      "id": "59df4191",
       "execution_count": null,
       "outputs": []
     },
@@ -376,7 +376,7 @@
         "\n",
         "To create a boxplot of this variable:"
       ],
-      "id": "8efb67da"
+      "id": "7a810185"
     },
     {
       "cell_type": "code",
@@ -391,7 +391,7 @@
         "plt.grid(axis='y', linestyle='--', alpha=0.6)\n",
         "plt.show()"
       ],
-      "id": "2793a59a",
+      "id": "de70932b",
       "execution_count": null,
       "outputs": []
     },
@@ -421,7 +421,7 @@
         "\n",
         "#### Answer"
       ],
-      "id": "e0b5c77d"
+      "id": "8cc49324"
     },
     {
       "cell_type": "code",
@@ -432,7 +432,7 @@
         "    df_pop_la['Percentage_change'].max(skipna=True))\n",
         "    )"
       ],
-      "id": "d11fba76",
+      "id": "9d4e5a8a",
       "execution_count": null,
       "outputs": []
     },
@@ -456,7 +456,7 @@
         "\n",
         "#### Answer"
       ],
-      "id": "ad55f7bb"
+      "id": "dc4f8736"
     },
     {
       "cell_type": "code",
@@ -467,7 +467,7 @@
         "    df_pop_la['Percentage_change'].min(skipna=True))\n",
         "    )"
       ],
-      "id": "01f38386",
+      "id": "75c1655d",
       "execution_count": null,
       "outputs": []
     },
@@ -495,7 +495,7 @@
         "\n",
         "#### Answer"
       ],
-      "id": "27efb943"
+      "id": "bad0f2b5"
     },
     {
       "cell_type": "code",
@@ -510,7 +510,7 @@
         "plt.grid(axis='y', linestyle='--', alpha=0.6)\n",
         "plt.show()"
       ],
-      "id": "f52e0221",
+      "id": "94eafb04",
       "execution_count": null,
       "outputs": []
     },
@@ -526,7 +526,7 @@
         "\n",
         "Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect."
       ],
-      "id": "d7da6864"
+      "id": "4fa9fa4e"
     }
   ],
   "metadata": {
@@ -534,7 +534,7 @@
       "name": "python3",
       "language": "python",
       "display_name": "Python 3 (ipykernel)",
-      "path": "C:\\Users\\Adam\\AppData\\Local\\R\\cache\\R\\reticulate\\uv\\cache\\archive-v0\\EiTNi4omakhlev5ckz2WP\\share\\jupyter\\kernels\\python3"
+      "path": "C:\\Users\\adam_\\anaconda3\\envs\\qmEnv\\share\\jupyter\\kernels\\python3"
     }
   },
   "nbformat": 4,

@@ -890,7 +890,7 @@
         "\n",
         "It's easy to fit a KDE to data in Python:"
       ],
-      "id": "bf2515dd"
+      "id": "c33041a3"
     },
     {
       "cell_type": "code",
@@ -911,7 +911,7 @@
         "x_vals = np.linspace(100, 200, 100)\n",
         "y_vals = kde(x_vals)"
       ],
-      "id": "3e746b6a",
+      "id": "93ba9531",
       "execution_count": null,
       "outputs": []
     },
@@ -1004,7 +1004,7 @@
         "```\n",
         "Then use Python to calculate the two-tailed critical t-value at $\\alpha = 0.05$."
       ],
-      "id": "9e289234"
+      "id": "aff2b52a"
     },
     {
       "cell_type": "code",
@@ -1021,7 +1021,7 @@
         "t_crit = t.ppf(1 - alpha/2, df)\n",
         "print(\"Critical t-value:\", t_crit.round(2))"
       ],
-      "id": "f6492997",
+      "id": "f98a63c4",
       "execution_count": null,
       "outputs": []
     },
@@ -1064,7 +1064,7 @@
         "\n",
         "Have questions prepared!"
       ],
-      "id": "affd5dc2"
+      "id": "131b23a4"
     }
   ],
   "metadata": {
@@ -1072,7 +1072,7 @@
       "name": "python3",
       "language": "python",
       "display_name": "Python 3 (ipykernel)",
-      "path": "C:\\Users\\Adam\\AppData\\Local\\R\\cache\\R\\reticulate\\uv\\cache\\archive-v0\\EiTNi4omakhlev5ckz2WP\\share\\jupyter\\kernels\\python3"
+      "path": "C:\\Users\\adam_\\anaconda3\\envs\\qmEnv\\share\\jupyter\\kernels\\python3"
     }
   },
   "nbformat": 4,
