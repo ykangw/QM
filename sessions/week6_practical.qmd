@@ -1,6 +1,6 @@
 ---
-title: 'Practical 6: Applied Linear Regression Basics'
-subtitle: "Because you're worth it!"
+title: 'Practical 6: Applied Linear Regression - Vol 1'
+subtitle: "AKA Prof D's Regression Sessions"
 format:
   html: default
   ipynb: default
@@ -21,14 +21,22 @@ filters:
 ## make sure you point to it before installing these packages using:
 ## reticulate::use_python("C:/Path/To/Your/Python/python.exe", required = TRUE)
 
+#renv::install("C:/GitHubRepos/casaviz.zip")
+# Get all packages from the lockfile
+#lockfile <- renv::load("renv.lock")
+#packages <- setdiff(names(lockfile$Packages), "casaviz")
+
+# Restore only the selected packages
+#renv::restore(packages = packages)
+
 library(reticulate)
 
 #reticulate::virtualenv_remove("r-reticulate")
 # point reticulate to the right python installation - ideally the one reticulate installed. 
 #reticulate::use_python("C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe", required = TRUE)
 #use_condaenv("qmEnv", conda = "C:/Users/adam_/anaconda3/Scripts/conda.exe", required = TRUE)
-#use_python("C:/Users/adam_/anaconda3/envs/qmEnv/python.exe", required = TRUE)
-#py_run_string("import pyproj; print(pyproj.CRS.from_epsg(27700))")
+use_python("C:/Users/adam_/anaconda3/envs/qmEnv/python.exe", required = TRUE)
+py_run_string("import pyproj; print(pyproj.CRS.from_epsg(27700))")
 
 #virtualenv_create("r-reticulate", python = "C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe")
 
@@ -54,9 +62,19 @@ library(reticulate)
 
 ```
 
-This week's practical is focussed on understanding regression analysis in an applied context. You will essentially re-create some of the analysis you saw in the lecture, but for slightly different variables and for different places.
+```{=html}
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/1f2SbTAoE90QelFZlrpzxT?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+```
 
-You will notice that most of what you will be doing won't actually be regression analysis, but getting to know your data. This is how it should be!! Most of a good model
+## Preamble
+
+Over the next 3 weeks we are going **DEEP** into linear regression. The QM Regression Sessions will be tough, but we will be eased through the journey in the company of LTJ Bukem, Blame, Conrad and others. Plug into the Progression Sessions, let them sooth your mind and allow you to get fully into the Regression Sessions!
+
+## Introduction
+
+This week's practical is focused on understanding the most basic form of regression analysis, but in an applied context discovering what these models help you understand about your data in great detail. You will essentially re-create some of the analysis you saw in the lecture, but for slightly different variables and for different places.
+
+Most of what you will be doing in this practical won't actually be modelling - although this will come at the end - but you will be getting to know your data so that your final models make sense. This is how it should be!! Going back to our bake-off analogy, the modelling is really just the final bake after hours of preparation.
 
 ::: callout-note
 Below you will find code-blocks that will allow you to run your analysis in either R or Python. It's up to you which you decide to use - you might even want to try both to compare (Of course, R will be better)!
@@ -164,8 +182,8 @@ edubase_schools = edubase_schools.clean_names()
 
 ########################################
 # Define base path and common NA values - NOTE YOU WILL NEED TO DOWNLOAD THIS DATA AND PUT INTO YOUR OWN base_path LOCATION ON YOUR MACHINE - not this one as this is my path!!!
-base_path = Path("E:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
-#base_path = Path("C:/GitHubRepos/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+#base_path = Path("E:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+base_path = Path("C:/GitHubRepos/QM/sessions/L6_data/Performancetables_130242/2022-2023")
 ##################################################
 na_values_common = ["", "NA", "SUPP", "NP", "NE"]
 na_values_extended = na_values_common + ["SP", "SN"]

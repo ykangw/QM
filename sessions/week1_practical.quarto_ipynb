@@ -1,0 +1,542 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: 'Practical 1: describing and representing data'\n",
+        "subtitle: \"Starting with the 'Basics'\"\n",
+        "format:\n",
+        "  html: default\n",
+        "  ipynb: default\n",
+        "filters:\n",
+        "  - qna\n",
+        "  - quarto\n",
+        "---\n",
+        "\n",
+        "This week is focussed on ensuring that you're able to access the teaching materials and to run Jupyter notebooks locally, as well as describing a dataset in Python.\n",
+        "\n",
+        "## Learning Outcomes\n",
+        "\n",
+        "-   You have familiarised yourself with how to access the lecture notes and Python notebook of this module.\n",
+        "-   You have familiarised yourself with running the Python notebooks locally.\n",
+        "-   You have familiarised yourself with describing a dataset in Python.\n",
+        "\n",
+        "# Starting the Practical\n",
+        "\n",
+        "The process for every week will be the same: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. If you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.\n",
+        "\n",
+        "::: callout-note\n",
+        "Suggestions for a Better Learning Experience:\n",
+        "\n",
+        "-   **Set your operating system and software language to English**: this will make it easier to follow tutorials, search for solutions online, and understand error messages.\n",
+        "\n",
+        "-   **Save all files to a cloud storage service**: use platforms like Google Drive, OneDrive, Dropbox, or Git to ensure your work is backed up and can be restored easily when the laptop gets stolen or broken.\n",
+        "\n",
+        "-   **Avoid whitespace in file names and column names in datasets**\n",
+        ":::\n",
+        "\n",
+        "## Set up the tools\n",
+        "\n",
+        "Please follow [the Setup page of CASA0013](https://jreades.github.io/fsds/setup/) to install and configure the computing platform, and [this page](https://jreades.github.io/fsds/sessions/week1.html) to get started on using the container & JupyterLab.\n",
+        "\n",
+        "## Download the Notebook\n",
+        "\n",
+        "So for this week, visit the [Week 1 of QM page](https://huanfachen.github.io/QM/sessions/week1.html#practical), you'll see that there is a 'preview' link and a a 'download' link. If you click the `preview` link you will be taken to the GitHub page for the notebook where it has been 'rendered' as a web page, which is not editable. To make the notebook useable on *your* computer, you need to `download` the IPYNB file.\n",
+        "\n",
+        "So now:\n",
+        "\n",
+        "1.  Click on the `Download` link.\n",
+        "2.  The file should download automatically, but *if* you see a page of raw code, select `File` then `Save Page As...`.\n",
+        "3.  Make sure you know where to find the file (e.g. Downloads or Desktop).\n",
+        "4.  Move the file to your Git repository folder (e.g. `~/Documents/CASA/QM/`)\n",
+        "5.  Check to see if your browser has added `.txt` to the file name:\n",
+        "    -   If no, then you can move to adding the file.\n",
+        "    -   If yes, then you can either fix the name in the Finder/Windows Explore, or you can do this in the Terminal using `mv <name_of_practical>.ipynb.txt <name_of_practical>.ipynb` (you can even do this in JupyterLab's terminal if it's already running).\n",
+        "\n",
+        "## Running notebooks on JupyterLab\n",
+        "\n",
+        "I am assuming that most of you are already running JupyterLab via Podman using the command.\n",
+        "\n",
+        "If you are a bit confused with *container*, *JupyterLab*, *terminal*, or *Git*, please feel free to ask any questions.\n",
+        "\n",
+        "## Loading data\n",
+        "\n",
+        "We are going to describe the population of local authorities in the UK.\n",
+        "\n",
+        "The data is sourced from [Office for National Statistics](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/howyourareahaschangedin10yearscensus2021/2022-11-08) and is donwloadable [here](https://www.ons.gov.uk/visualisations/censusareachanges/data/mapdatadownload.csv).\n",
+        "\n",
+        "We have saved a copy of this dataset to the Github repo, in case that the dataset is removed from the website."
+      ],
+      "id": "7ad88475"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Read CSV file, skipping first 5 rows, using row 6 as header, and handling comma as thousands separator\n",
+        "df_pop = pd.read_csv(\n",
+        "    'L1_data/UK_census_population.csv',\n",
+        "    skiprows=5,        # Skip first 5 rows. Wnhy?\n",
+        "    thousands=',',     # Interpret commas as thousands separators\n",
+        "    header=0           # After skipping, the first row becomes the header\n",
+        ")\n",
+        "\n",
+        "print(df_pop.head())"
+      ],
+      "id": "98a07931",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "You might wonder why skipping the first 5 rows and setting *thousands=','*. I knew about this after opening this csv file in a text editor and lots of trial-and-errors.\n",
+        "\n",
+        "<!-- ![](%7B%7B%3C%20var%20module.web%20%3E%7D%7D/sessions/L1_images/uk_pop_csv_screenshot.jpg){width=\"600\"} -->\n",
+        "\n",
+        "![](L1_images/uk_pop_csv_screenshot.jpg){width=\"600\"}\n",
+        "\n",
+        "Then, we check the first few rows of this dataset using *df_pop.head()*.\n",
+        "\n",
+        "## Describing the dataframe\n",
+        "\n",
+        "### Which columns are included?"
+      ],
+      "id": "3d08a959"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "list(df_pop.columns)"
+      ],
+      "id": "eacdce4c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "It is a pain to deal with whitespaces in a column, so good practice is to replace the whitespaces (eg tabs, multiple spaces) within column names with *underscore*."
+      ],
+      "id": "4d1cb8ca"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df_pop.columns = df_pop.columns.str.replace(r'\\s+', '_', regex=True)\n",
+        "print(list(df_pop.columns)) # check again"
+      ],
+      "id": "90d9ffdb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### How many rows & cols are included?"
+      ],
+      "id": "d3dc16a3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "rows, cols = df_pop.shape\n",
+        "print(f\"Rows: {rows}, Columns: {cols}\")"
+      ],
+      "id": "00030a1d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Geography matters\n",
+        "\n",
+        "This dataset contains multiple geographies of UK and different geographies are incomparable. We can check the *Area_type* column:"
+      ],
+      "id": "84246aa8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(df_pop.Area_type.value_counts())"
+      ],
+      "id": "1b947186",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "So there are 355 records of *Local Authority*， 9 records of *Region*, 2 of *Country*, and 1 of 'National'. For an introduction to these terms, see [this article on ONS](https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography/england).\n",
+        "\n",
+        "We will focus on the local authorities, so we apply a filter:"
+      ],
+      "id": "b5e66e2e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df_pop_la = df_pop[df_pop['Area_type'] == 'Local Authority']"
+      ],
+      "id": "2c2d356e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Overview of the columns\n",
+        "\n",
+        "There are two pandas functions that give overview of a dataframe. - `info()`: shows column data types, non‑null counts, and memory usage. - `describe()`: shows summary statistics for numeric data (count, mean, std, min, quartiles, max) - `describe(include='all')`: for both numeric data and non‑numeric data (count, unique, top value, frequency)."
+      ],
+      "id": "b905d1f1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(df_pop_la.info())\n",
+        "print(df_pop_la.describe())"
+      ],
+      "id": "189493be",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Describing census 2021 population\n",
+        "\n",
+        "Now, we focus on describing the local authority population from census 2021. The first question is, what data type is this variable - *nominal*, *ordinal*, *interval*, or *ratio*？\n",
+        "\n",
+        "::: callout-note\n",
+        "The *data type* of a variable is different from *how it’s stored in a computer*. For example, the *Area_type* variable can be encoded for convenience as 0 (“national”), 1 (“country”), and 2 (“local authority”). Although these are stored as numbers, Area_type is not truly numeric data — it’s an *nominal* variable.\n",
+        ":::\n",
+        "\n",
+        "Does it make sense to say 'the population of LA AAA is twice of LA BBB'? Yes. So, this variable is of *ratio* type.\n",
+        "\n",
+        "### max and min\n",
+        "\n",
+        "What is the maximum population size in census 2021?\n",
+        "\n",
+        "```{Python}\n",
+        "print(\"Max population: \", df_pop_la['Population_2021'].max(skipna=True))\n",
+        "```\n",
+        "\n",
+        "Which LAs have the maximum population size? *The code below is a bit complicated*."
+      ],
+      "id": "96b6e27b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(\"{} have the maximum population of {}\".format(\n",
+        "    \", \".join(df_pop_la.loc[df_pop_la['Population_2021'] == df_pop_la['Population_2021'].max(skipna=True), 'Area_name']), \n",
+        "    df_pop_la['Population_2021'].max(skipna=True))\n",
+        "    )"
+      ],
+      "id": "676aef64",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "What it does:\n",
+        "\n",
+        "-   Finds the *max* population while ignoring NaNs. *It is always safe to use skipna=True, even though there is no NA values.*\n",
+        "-   Selects all rows with that population.\n",
+        "-   Joins their Area_name values into a comma-separated string.\n",
+        "\n",
+        "Two new Python functions here:\n",
+        "\n",
+        "-   *format()*: Inserts variables into a string by replacing {} placeholders in order with provided arguments.\n",
+        "\n",
+        "-   *join()*: Combines the elements of an iterable into one string using the given separator before .join().\n",
+        "\n",
+        "Which LAs have the minimum population?"
+      ],
+      "id": "bad87e82"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(\"{} have the minimum population of {}\".format(\n",
+        "    \", \".join(df_pop_la.loc[df_pop_la['Population_2021'] == df_pop_la['Population_2021'].min(skipna=True), 'Area_name']), \n",
+        "    df_pop_la['Population_2021'].min(skipna=True))\n",
+        "    )"
+      ],
+      "id": "8cd1b03f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Standard deviation\n",
+        "\n",
+        "The result from `df_pop_la.describe()` indicates that the standard deviation of Population_2021 is `2.245442e+05`.\n",
+        "\n",
+        "Another way to calculate this standard deviation and to reformat it is:"
+      ],
+      "id": "ade2661f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "std_dev = df_pop_la['Population_2021'].std()\n",
+        "# plain notation\n",
+        "print(\"The standard deviation of Population_2021 is: {}\".format(std_dev)) \n",
+        "# scientific notation\n",
+        "print(\"Using scientific notation: {:.3e}\".format(std_dev)) \n",
+        "# thousands separator notation + 2 decimal places\n",
+        "print(\"Using thousands separator notation: {:,.2f}\".format(std_dev))"
+      ],
+      "id": "12c490b8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "There are several ways to represent numbers, and which one you choose depends on the situation.\n",
+        "\n",
+        "Equally important is to ensure the numbers are meaningful, or to use proper **significant figures**. For example, reporting a population’s standard deviation with 10 decimal places does not make sense.\n",
+        "\n",
+        "### Null value and outliers?\n",
+        "\n",
+        "Are there Null values or outliers in this variable? From results of `info()`, there are no NA values.\n",
+        "\n",
+        "To detect outliers, we will implement the Tukey Fences method using pandas function, as pandas does not provide a built-in function for this method."
+      ],
+      "id": "4a080dfe"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Calculate Q1, Q3, and IQR\n",
+        "Q1 = df_pop_la['Population_2021'].quantile(0.25)\n",
+        "Q3 = df_pop_la['Population_2021'].quantile(0.75)\n",
+        "IQR = Q3 - Q1\n",
+        "\n",
+        "# Tukey's fences\n",
+        "lower_bound = Q1 - 1.5 * IQR\n",
+        "upper_bound = Q3 + 1.5 * IQR\n",
+        "\n",
+        "# Detect outliers\n",
+        "outliers = df_pop_la[\n",
+        "    (df_pop_la['Population_2021'] < lower_bound) |\n",
+        "    (df_pop_la['Population_2021'] > upper_bound)\n",
+        "]\n",
+        "\n",
+        "print(\"Lower bound:\", lower_bound)\n",
+        "print(\"Upper bound:\", upper_bound)\n",
+        "print(\"How many outliers?\", outliers.shape[0])\n",
+        "print(\"Outliers:\\n\", outliers)"
+      ],
+      "id": "c52b0da5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "There are 33 outliers in this dataset. Think about the three types of outliers that we discussed. Which type do these 33 outliers beloong to?\n",
+        "\n",
+        "-   **Error Outlier**\n",
+        "-   **Irregular Pattern Outlier**\n",
+        "-   **Influential Outlier**\n",
+        "\n",
+        "### Boxplot\n",
+        "\n",
+        "To create a boxplot of this variable:"
+      ],
+      "id": "867f4e30"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import matplotlib.pyplot as plt\n",
+        "\n",
+        "# Create boxplot\n",
+        "df_pop_la['Population_2021'].plot(kind='box', title='LA Population 2021 Boxplot')\n",
+        "\n",
+        "plt.ylabel('Population')\n",
+        "plt.grid(axis='y', linestyle='--', alpha=0.6)\n",
+        "plt.show()"
+      ],
+      "id": "ffa9cf1c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "What do you observe from this boxplot? There are lots of values above the\n",
+        "\n",
+        "## Exploring Percentage_change\n",
+        "\n",
+        "*Now*, we turn to explore the variable *Percentage_change*, which represents the relative change from the 2011 census to 2021 census.\n",
+        "\n",
+        "Try completing the code below on your own. Practice makes perfect!\n",
+        "\n",
+        "### Which LAs experienced the largest population percentage change? To what extent?\n",
+        "\n",
+        "::: qna\n",
+        "#### Question\n",
+        "\n",
+        "``` python\n",
+        "print(\"{} have the largest population percentage change of {}%\".format(\n",
+        "    \", \".join(df_pop_la.loc[??['??'] == ??['??'].max(skipna=True), 'Area_name']), \n",
+        "    df_pop_la['Population_2021'].??(skipna=True))\n",
+        "    )\n",
+        "```\n",
+        "\n",
+        "#### Answer"
+      ],
+      "id": "b390b641"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(\"{} have the largest population percentage change of {}%\".format(\n",
+        "    \", \".join(df_pop_la.loc[df_pop_la['Percentage_change'] == df_pop_la['Percentage_change'].max(skipna=True), 'Area_name']), \n",
+        "    df_pop_la['Percentage_change'].max(skipna=True))\n",
+        "    )"
+      ],
+      "id": "e0be3587",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "### Which LAs experienced the smallest population percentage change? To what extent?\n",
+        "\n",
+        "::: qna\n",
+        "#### Question\n",
+        "\n",
+        "``` python\n",
+        "print(\"{} have the smallest population percentage change of {}%\".format(\n",
+        "    \", \".??(df_pop_la.loc[df_pop_la[??] == ??['Percentage_change'].??(skipna=True), 'Area_name']), \n",
+        "    df_pop_la['Percentage_change'].??(skipna=True))\n",
+        "    )\n",
+        "```\n",
+        "\n",
+        "#### Answer"
+      ],
+      "id": "495f3882"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(\"{} have the smallest population percentage change of {}%\".format(\n",
+        "    \", \".join(df_pop_la.loc[df_pop_la['Percentage_change'] == df_pop_la['Percentage_change'].min(skipna=True), 'Area_name']), \n",
+        "    df_pop_la['Percentage_change'].min(skipna=True))\n",
+        "    )"
+      ],
+      "id": "e383b14f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "### Making a boxplot of Percentage_change\n",
+        "\n",
+        "::: qna\n",
+        "#### Question\n",
+        "\n",
+        "``` python\n",
+        "import matplotlib.pyplot as plt\n",
+        "\n",
+        "# Create boxplot\n",
+        "df_pop_la[??].plot(kind=??, title='LA Population Percentage Change Boxplot')\n",
+        "\n",
+        "plt.??('Percentage change')\n",
+        "plt.grid(axis='y', linestyle='--', alpha=0.6)\n",
+        "plt.show()\n",
+        "```\n",
+        "\n",
+        "#### Answer"
+      ],
+      "id": "8c8df9a8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import matplotlib.pyplot as plt\n",
+        "\n",
+        "# Create boxplot\n",
+        "df_pop_la['Percentage_change'].plot(kind='box', title='LA Population Percentage Change Boxplot')\n",
+        "\n",
+        "plt.ylabel('Percentage change')\n",
+        "plt.grid(axis='y', linestyle='--', alpha=0.6)\n",
+        "plt.show()"
+      ],
+      "id": "5d282a6c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "## You're Done!\n",
+        "\n",
+        "Congratulations on completing the first QM practical session! If you are still working on it, take you time.\n",
+        "\n",
+        "Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect."
+      ],
+      "id": "d0b832ef"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "C:\\Users\\adam_\\anaconda3\\envs\\qmEnv\\share\\jupyter\\kernels\\python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

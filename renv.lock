@@ -904,47 +904,6 @@
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
       "Repository": "CRAN"
     },
-    "casaviz": {
-      "Package": "casaviz",
-      "Version": "0.1.0",
-      "Source": "GitHub",
-      "Type": "Package",
-      "Title": "Applying the CASA branding to plots, tables and slides",
-      "Authors@R": "person(\"Cara\", \"Thompson\", , \"packages@cararthompson\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"https://orcid.org/0000-0002-6472-5073\"))",
-      "Description": "This package was built by Cara Thompson for CASA researchers and associates to streamline the production of high quality on-brand data visualisations, maps, tables and slides.",
-      "License": "CC BY 4.0",
-      "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.2",
-      "Imports": [
-        "magrittr",
-        "dplyr",
-        "flextable",
-        "ggplot2",
-        "ggtext",
-        "here",
-        "marquee",
-        "monochromeR",
-        "officer",
-        "reactable",
-        "servr",
-        "webshot2",
-        "cowplot",
-        "htmlwidgets",
-        "Cairo"
-      ],
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "casaviz",
-      "RemoteUsername": "cararthompson",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "55c113f7e7a2a1d240ffc7f7f0082c50e3854542",
-      "NeedsCompilation": "no",
-      "Author": "Cara Thompson [aut, cre] (ORCID: <https://orcid.org/0000-0002-6472-5073>)",
-      "Maintainer": "Cara Thompson <packages@cararthompson>",
-      "Depends": [
-        "R (>= 4.1.0)"
-      ]
-    },
     "cellranger": {
       "Package": "cellranger",
       "Version": "1.1.0",

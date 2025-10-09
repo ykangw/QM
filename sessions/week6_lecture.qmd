@@ -9,19 +9,19 @@ other: "CASA0007 Quantitative Methods"
 from: markdown+emoji
 format:
   revealjs: 
-    logo: "images/CASA_logo.svg"
+    logo: "L6_images/CASA_logo.svg"
     template-partials: 
       - title-slide.html
     transition: none
     slide-number: TRUE
     preview-links: auto
-    theme: casa-slides.scss
+    theme: casa-slides
     
 filters:
  - code-visibility
 lightbox: auto
 title-slide-attributes:
-    data-background-image: "images/title-slide.png"
+    data-background-image: "L6_images/title-slide.png"
     data-background-size: stretch
     data-background-opacity: "0.08"
     data-background-color: "#4e3c56"
@@ -180,9 +180,9 @@ knitr::opts_chunk$set(dev = "ragg_png")
 ```
 
 ```{css}
-/* This sits here, because it allows us to use images from within the images/ folder. Otherwise, the file structure gets a lot more involved! */
+/* This sits here, because it allows us to use images from within the L6_images/ folder. Otherwise, the file structure gets a lot more involved! */
 .reveal::after {
-  background-image: url('images/light-background.png');
+  background-image: url('L6_images/light-background.png');
 }
 ```
 
@@ -240,7 +240,7 @@ knitr::opts_chunk$set(dev = "ragg_png")
 :::
 
 ::: {.column width="40%"}
-![](images/BHCC_Engagement_PPT.png)
+![](L6_images/BHCC_Engagement_PPT.png)
 :::
 :::::
 
@@ -257,7 +257,7 @@ knitr::opts_chunk$set(dev = "ragg_png")
 :::
 
 ::: {.column width="40%"}
-![](images/gorard_conversation.png)
+![](L6_images/gorard_conversation.png)
 :::
 :::::
 
@@ -319,7 +319,7 @@ The Conversation: <https://theconversation.com/poorer-pupils-do-worse-at-school-
 :::
 
 ::: {.column width="40%"}
-![](images/gov_school_data.png)
+![](L6_images/gov_school_data.png)
 :::
 :::::
 
@@ -616,8 +616,8 @@ ggplot(england_filtered, aes(x = PTFSM6CLA1A)) +
 ::: {.column width="50%"}
 ```{mermaid}
 flowchart TD
-    A["<img src='images/Data.png'>"] --> B[<img src='images/Book.png'>]
-    B[<img src='images/Book.png'>] --> A["<img src='images/Data.png'>"]
+    A["<img src='L6_images/Data.png'>"] --> B[<img src='L6_images/Book.png'>]
+    B[<img src='L6_images/Book.png'>] --> A["<img src='L6_images/Data.png'>"]
     
 ```
 :::
@@ -635,7 +635,7 @@ flowchart TD
 :::
 
 ::: {.column width="50%"}
-[![](images/being_interdisciplinary.jpg){width="50%"}](https://uclpress.co.uk/book/being-interdisciplinary/)
+[![](L6_images/being_interdisciplinary.jpg){width="50%"}](https://uclpress.co.uk/book/being-interdisciplinary/)
 :::
 :::::
 
@@ -662,7 +662,7 @@ flowchart TD
 :::
 
 ::: {.column width="40%"}
-![](images/gorard_disad_paper.png)
+![](L6_images/gorard_disad_paper.png)
 :::
 :::::
 
@@ -682,7 +682,7 @@ flowchart TD
 :::
 
 ::: {.column width="40%"}
-![](images/nfer.png)
+![](L6_images/nfer.png)
 :::
 :::::
 
@@ -923,7 +923,7 @@ ggplot(btn_sub, aes(x = PTFSM6CLA1A, y = ATT8SCR)) +
 
 ## Linear Regression - R-Squared
 
-![](images/Correlation_examples2.png)
+![](L6_images/Correlation_examples2.png)
 
 -   It's easy to visually estimate your $R^2$ value from looking at how well correlated the points are. *NB as squared, always +*
 
@@ -1045,7 +1045,7 @@ $$Y = \beta_0 + \beta_1X_1 + \epsilon$$ $$\hat{Y} = 62.35 + (-0.63 \times X) + \
 :::
 
 ::: {.column width="50%"}
-![](images/Python-logo-notext.svg.png){width="20%"} ![](images/R_logo.svg.png){width="20%"} ![](images/Stata_logo_med_blue.png){width="20%"} ![](images/spss-1-logo-png-transparent.png){width="20%"} ![](images/statsmodels-logo-v2-horizontal.svg){width="20%"} ![](images/tidy_models.png){width="20%"}
+![](L6_images/Python-logo-notext.svg.png){width="20%"} ![](L6_images/R_logo.svg.png){width="20%"} ![](L6_images/Stata_logo_med_blue.png){width="20%"} ![](L6_images/spss-1-logo-png-transparent.png){width="20%"} ![](L6_images/statsmodels-logo-v2-horizontal.svg){width="20%"} ![](L6_images/tidy_models.png){width="20%"}
 :::
 :::::
 
@@ -1062,7 +1062,7 @@ summary(lm_fit)
 
 ## Linear Regression - Running the Model
 
-![](images/the_Call.png)
+![](L6_images/the_Call.png)
 
 -   This is the code representation of the model equation we saw earlier:
     -   `lm()` is the function that fits a linear model
@@ -1073,7 +1073,7 @@ summary(lm_fit)
 
 ## Linear Regression - Residuals and Error
 
-![](images/the_resids.png) ![](images/the_error.png)
+![](L6_images/the_resids.png) ![](L6_images/the_error.png)
 
 -   The residual errors range from -8.3 (Longhill) to + 4.7 (Varndean)
 -   The residual standard error of 4.087 = predictions for School's Attainment 8 score are off by about 4.1 points
@@ -1082,7 +1082,7 @@ summary(lm_fit)
 
 ## Linear Regression - Degrees of Freedom
 
-![](images/the_error.png)
+![](L6_images/the_error.png)
 
 -   DF are the ***Degrees of Freedom*** in the model. DF ***very*** important for understanding how reliable your $R^2$ value might be
     -   The first number (1) relates to the number of variables
@@ -1263,7 +1263,7 @@ ggplot(btn_sub1) +
 
 ## Linear Regression - Coefficients 1
 
-![](images/the_coefs.png)
+![](L6_images/the_coefs.png)
 
 -   The Estimates ($\beta$)
     -   **Intercept** $\beta_0$ - estimated Attainment 8 value when % Disadvantaged Children in a school is **zero**
@@ -1271,7 +1271,7 @@ ggplot(btn_sub1) +
 
 ## Linear Regression - Coefficients 2
 
-![](images/the_coefs.png)
+![](L6_images/the_coefs.png)
 
 -   The Standard Error (SE) - measure of the uncertainty or precision of the estimate (coefficient) - how much it might vary
     -   **Large SE relative to the Estimate = estimate unreliable / uncertain**
@@ -1279,7 +1279,7 @@ ggplot(btn_sub1) +
 
 ## Linear Regression - Coefficients 3
 
-![](images/the_coefs.png)
+![](L6_images/the_coefs.png)
 
 -   The t-value - ratio of the $\frac{Estimate}{SE}$
     -   a large standard error will make the t-value small (close to zero)
@@ -1288,7 +1288,7 @@ ggplot(btn_sub1) +
 
 ## Linear Regression - Coefficients 4
 
-![](images/the_coefs.png)
+![](L6_images/the_coefs.png)
 
 -   The p-value - **p**robability of observing a t-value as extreme as the one calculated if there were ***no relationship*** between the independent and the dependent variable
 -   A small p-value (typically $p$ \< 0.05) indicates \<5% chance that $X$ is not really explaining variation in $Y$
@@ -1297,7 +1297,7 @@ ggplot(btn_sub1) +
 
 ## Linear Regression - Coefficients 4
 
-![](images/the_coefs.png)
+![](L6_images/the_coefs.png)
 
 -   The p-values relate to the ***null hypotheses*** that:
     1.  true value of the intercept is **zero** when the independent variable is **zero**. P \<0.001 = \<0.1% probability that 62.3 occured by random chance - It doesn't tell us that when % Disadvantaged is zero, 62.3 will be a correct Attainment 8 score, just real value is unlikely to be zero
