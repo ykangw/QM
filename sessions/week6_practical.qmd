@@ -70,39 +70,43 @@ The Juypter notebook attached to this practical *might* work, but you might be b
 Make sure you complete each of the tasks below, 1-7. All of these will be covered in the code examples as you work your way down the page, but this is the full [workflow](https://dictionary.cambridge.org/dictionary/english/workflow):
 :::
 
-### Downloading: Download and read data into your software environment:
+### 1. Downloading: Download and read data into your software environment:
 
-1.  School locational and attribute information, downloaded from here - <https://get-information-schools.service.gov.uk/Downloads> - or read it in using the code supplied below. This will include the following datasets:
+-   School locational and attribute information, downloaded from here - <https://get-information-schools.service.gov.uk/Downloads> - or read it in using the code supplied below. This will include the following datasets:
 
-    a.  **edubase_schools** = this is the 'all establishment' data for every school in England and Wales
+-   **edubase_schools** = this is the 'all establishment' data for every school in England and Wales
 
-2.  School-level Key Stage 4 (14-16 GCSE level) attainment and other attribute information. [I have put this on Moodle here](https://moodle.ucl.ac.uk/mod/folder/view.php?id=8199904), but it can also be downloaded from here - <https://www.compare-school-performance.service.gov.uk/download-data>.
+-   School-level Key Stage 4 (14-16 GCSE level) attainment and other attribute information. [I have put this on Moodle here](https://moodle.ucl.ac.uk/mod/folder/view.php?id=8199904), but it can also be downloaded from here - <https://www.compare-school-performance.service.gov.uk/download-data>.
 
     Download to a local drive on your computer from Moodle, unzip it and then read it in using the code supplied below. The zip folders contain the following data files in one folder and the associated metadata in the other folder:
 
-    b.  **england_ks4final** = data on the 2022/23 academic year, school-level, KS4 outcomes and associated statistics
-    c.  **england_abs** = data on the 2022/23 academic year, school-level absence rates
-    d.  **england_census** = additional school-level pupil information for the 2022/23 academic year
-    e.  **england_school_information** = additional school-level institution information such as Ofsted rating etc. for the 2022/23 academic year
-    f.  **england_ks4_pupdest** = pupil destination data (where students go once they leave school at 16)
+    a.  **england_ks4final** = data on the 2022/23 academic year, school-level, KS4 outcomes and associated statistics
 
-### Data Munging: Join, filter, select and subset:
+    b.  **england_abs** = data on the 2022/23 academic year, school-level absence rates
 
-3.  Create a master file for England called **england_school_2022_23.** This will be made by joining together all of the school-level data above into a single file and then reducing it in size using:
+    c.  **england_census** = additional school-level pupil information for the 2022/23 academic year
+
+    d.  **england_school_information** = additional school-level institution information such as Ofsted rating etc. for the 2022/23 academic year
+
+    e.  **england_ks4_pupdest** = pupil destination data (where students go once they leave school at 16)
+
+### 2. Data Munging: Join, filter, select and subset:
+
+-   Create a master file for England called **england_school_2022_23.** This will be made by joining together all of the school-level data above into a single file and then reducing it in size using:
     a.  **filter** - so that it just contains open secondary schools
     b.  **select** - so that only a few key variables relating to attainment, progress, deprivation, absence and school quality remain, alongside key locational and other attributes.
-4.  Create two local authority data **subsets** from this main file:
+-   Create two local authority data **subsets** from this main file:
     a.  A subset containing all of the secondary schools in one of the 32 London Boroughs (not including the City of London)
     b.  A subset containing all of the secondary schools in any other local authority in England. Any local authority you like - go wild!
 
 At the end of this you will have **x3 datasets** - one national and two local authority subsets
 
-### Exploratory Data Analysis
+### 3. Exploratory Data Analysis
 
-5.  Choose:
+-   Choose:
     a.  one attainment related dependent variable from your set
     b.  one possible explanatory variable which you think might help explain levels of attainment in schools
-6.  Create a series of graphs and statistical outputs to allow you to understand the structure and composition of your data. You should produce:
+-   Create a series of graphs and statistical outputs to allow you to understand the structure and composition of your data. You should produce:
     a.  A histogram for the dependent and independent variables you are analysing for **both your two subsets** and the **national dataset** (x6 histograms in total). Also include:
         i.  mean and median lines
         ii. lines for the upper and lower quartiles
@@ -114,9 +118,9 @@ At the end of this you will have **x3 datasets** - one national and two local au
         i.  include a regression line of best fit
         ii. include the R-squared, slope and intercept parameters
 
-### Explanatory Data Analysis - Attainment and Factors Affecting it in Different Parts of England
+### 4. Explanatory Data Analysis - Attainment and Factors Affecting it in Different Parts of England
 
-7.  Carry out a bi-variate regression analysis to explore the relationship between your chosen attainment dependent variable and your single explanatory independent variable, for your two subsets and the national dataset. **Questions to Answer**:
+-   Carry out a bi-variate regression analysis to explore the relationship between your chosen attainment dependent variable and your single explanatory independent variable, for your two subsets and the national dataset. **Questions to Answer**:
     a.  After visualising the relationships using scatter plots, do you think you need to transform your variables (e.g. using a log transformation) before putting into a regression model? Maybe plot scatter plots of your logged variables too!
     b.  What are the slope and intercept coefficients in each model? Are they statistically significant and how do vary between your two subsets? How do they compare with the national picture?
     c.  How do the R-squared values differ and how reliable do you think they are (what do the degrees of freedom tell you)?
@@ -124,8 +128,18 @@ At the end of this you will have **x3 datasets** - one national and two local au
 
 ## Task 1 - Download your data and read into your software environment
 
--   I've made this task easy for you by giving you the code to download all of this data. You'll need to download - click on either tab to see the code for each.
--   You should first [download and unzip the data from Moodle](https://moodle.ucl.ac.uk/mod/folder/view.php?id=8199904), before editing the code below so that you can read the data from a local folder on your computer:
+-   I've made this task easy for you by giving you the code to download all of this data. You'll need to download a selection of files - click on either tab to see the code for each.
+-   In order to run this code, you should first [download and unzip the data from Moodle](https://moodle.ucl.ac.uk/mod/folder/view.php?id=8199904), before editing the code below so that you can read the data from a local folder on your computer:
+
+::: callout-note
+I would encourage you **NOT** to just copy and paste this code blindly, but try to understand what it is doing at each stage.
+
+You may notice that there are some bits that are redundant (some of the NA code that I was messing with before deciding on a single way of removing NAs).
+
+What am I doing to the URN field? Why might I be doing that?
+
+What is the regex function doing and why might I be searching out those characters? What might happen to the data if I didn't handle those first?
+:::
 
 ::: qna
 #### ![](L6_images/python-logo-only.png){width="30"}
@@ -150,8 +164,8 @@ edubase_schools = edubase_schools.clean_names()
 
 ########################################
 # Define base path and common NA values - NOTE YOU WILL NEED TO DOWNLOAD THIS DATA AND PUT INTO YOUR OWN base_path LOCATION ON YOUR MACHINE - not this one as this is my path!!!
-#base_path = Path("E:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
-base_path = Path("C:/GitHubRepos/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+base_path = Path("E:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+#base_path = Path("C:/GitHubRepos/QM/sessions/L6_data/Performancetables_130242/2022-2023")
 ##################################################
 na_values_common = ["", "NA", "SUPP", "NP", "NE"]
 na_values_extended = na_values_common + ["SP", "SN"]
@@ -491,7 +505,7 @@ ggplot(england_school_2022_23, aes(x = ATT8SCR, y = "")) +
 One of the key filtering asks carried out in the code below is to filter the schools so that we only retain the maintained schools and the academies in the dataset
 :::
 
-## Task 3 - Filtering, Selecting and Subsetting
+## Task 2 (continued) - Filtering, Selecting and Subsetting
 
 The Code Below already has the syntax to allow you to filter your dataset and drop special schools, independent schools and colleges.
 
@@ -612,7 +626,7 @@ Other variables to include in your reduced dataset:
 When you joined your datasets earlier, you will find that some variables appear in more than one of the datasets. This may cause a problem now as R and Python will try and distinguish them in the join by appending a `.x` or `.y` (R) or `_x` or `_y` (Python) so you may get an error when joining, particularly with the **SCHOOLTYPE** and **ADMPOL** variables. For these try **SCHOOLTYPE.x** and **ADMPOL.y** (underscore for Python) instead.
 :::
 
-## Task 4 - Further Exploratory Analysis and Visual Modelling
+## Task 3 - Further Exploratory Analysis and Visual Modelling
 
 -   Using the example code below as a guide, select your own $Y$ variable related to attainment from your smaller filtered dataset. You have a range of attainment or progress related variables in there
 -   Select your own $X$ variable that might help explain attainment, this might relate to disadvantage, prior attainment, absence or anything else that is a **continuous** variable (DO NOT SELECT A CATEGORICAL VARIABLE AT THIS TIME).
@@ -637,6 +651,10 @@ camden_sub <- england_filtered %>%
 leeds_sub <- england_filtered %>% 
   filter(LANAME == "Leeds")
 ```
+
+::: {.callout-tip title="Questions to Answer"}
+Just from looking at your plots: - How do you expect the intercepts (baseline Y) to differ between your London and non-London local authority (if at all)? Which is higher and which is lower? - How do you think the slope values (influence of X on Y) are different (if at all)?
+:::
 
 ::: qna
 #### ![](L6_images/python-logo-only.png){width="30"}
@@ -1029,11 +1047,11 @@ ggplot(england_filtered, aes(x = PTFSM6CLA1A, y = gor_name, fill = gor_name)) +
 
 ```
 
-## Task 5 - Running Your Regression Model
+## Task 3 - Explanatory Analysis - Running Your Regression Model
 
 -   Now you have carried out some appropriate exploratory data analysis, you should run a simple bi-variate regression model for your two local authority areas and compare it with a similar analysis run on the national dataset
 
-::: callout-note
+::: callout-tip
 -   Depending on your variables and whether or not there appears to be a linear relationship or a log-log or level-log relationship, if you transform a variable for the national data or one of your subsets, you could also transform it for the others, otherwise it will be impossible to compare
 :::
 
@@ -1157,11 +1175,448 @@ england_model1 <- lm(log(ATT8SCR) ~ log(PTFSM6CLA1A), data = england_filtered_cl
 summary(england_model1)
 ```
 :::
+#### Combining your outputs for comparison
 
+Don't forget to run some basic regression modelling checks on all of your models:
+
+:::callout-note
+If you are doing this in Python, it appears there isn't a nice little package with the code for diagnostic plots already created. However, the statsmodels pages do have some code we can borrow - https://www.statsmodels.org/dev/examples/notebooks/generated/linear_regression_diagnostics_plots.html - run this first before using the functions below
+:::
+
+```{python}
+#| include: false
+# base code
+import numpy as np
+import seaborn as sns
+import statsmodels as statsmodels
+from statsmodels.tools.tools import maybe_unwrap_results
+from statsmodels.graphics.gofplots import ProbPlot
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+import matplotlib.pyplot as plt
+from typing import Type
+
+style_talk = "seaborn-talk"  # refer to plt.style.available
+
+
+class LinearRegDiagnostic:
+    """
+    Diagnostic plots to identify potential problems in a linear regression fit.
+    Mainly,
+        a. non-linearity of data
+        b. Correlation of error terms
+        c. non-constant variance
+        d. outliers
+        e. high-leverage points
+        f. collinearity
+
+    Authors:
+        Prajwal Kafle (p33ajkafle@gmail.com, where 3 = r)
+        Does not come with any sort of warranty.
+        Please test the code one your end before using.
+
+        Matt Spinelli (m3spinelli@gmail.com, where 3 = r)
+        (1) Fixed incorrect annotation of the top most extreme residuals in
+            the Residuals vs Fitted and, especially, the Normal Q-Q plots.
+        (2) Changed Residuals vs Leverage plot to match closer the y-axis
+            range shown in the equivalent plot in the R package ggfortify.
+        (3) Added horizontal line at y=0 in Residuals vs Leverage plot to
+            match the plots in R package ggfortify and base R.
+        (4) Added option for placing a vertical guideline on the Residuals
+            vs Leverage plot using the rule of thumb of h = 2p/n to denote
+            high leverage (high_leverage_threshold=True).
+        (5) Added two more ways to compute the Cook's Distance (D) threshold:
+            * 'baseR': D > 1 and D > 0.5 (default)
+            * 'convention': D > 4/n
+            * 'dof': D > 4 / (n - k - 1)
+        (6) Fixed class name to conform to Pascal casing convention
+        (7) Fixed Residuals vs Leverage legend to work with loc='best'
+    """
+
+    def __init__(
+        self,
+        results: Type[statsmodels.regression.linear_model.RegressionResultsWrapper],
+    ) -> None:
+        """
+        For a linear regression model, generates following diagnostic plots:
+
+        a. residual
+        b. qq
+        c. scale location and
+        d. leverage
+
+        and a table
+
+        e. vif
+
+        Args:
+            results (Type[statsmodels.regression.linear_model.RegressionResultsWrapper]):
+                must be instance of statsmodels.regression.linear_model object
+
+        Raises:
+            TypeError: if instance does not belong to above object
+
+        Example:
+        >>> import numpy as np
+        >>> import pandas as pd
+        >>> import statsmodels.formula.api as smf
+        >>> x = np.linspace(-np.pi, np.pi, 100)
+        >>> y = 3*x + 8 + np.random.normal(0,1, 100)
+        >>> df = pd.DataFrame({'x':x, 'y':y})
+        >>> res = smf.ols(formula= "y ~ x", data=df).fit()
+        >>> cls = Linear_Reg_Diagnostic(res)
+        >>> cls(plot_context="seaborn-v0_8-paper")
+
+        In case you do not need all plots you can also independently make an individual plot/table
+        in following ways
+
+        >>> cls = Linear_Reg_Diagnostic(res)
+        >>> cls.residual_plot()
+        >>> cls.qq_plot()
+        >>> cls.scale_location_plot()
+        >>> cls.leverage_plot()
+        >>> cls.vif_table()
+        """
+
+        if (
+            isinstance(
+                results, statsmodels.regression.linear_model.RegressionResultsWrapper
+            )
+            is False
+        ):
+            raise TypeError(
+                "result must be instance of statsmodels.regression.linear_model.RegressionResultsWrapper object"
+            )
+
+        self.results = maybe_unwrap_results(results)
+
+        self.y_true = self.results.model.endog
+        self.y_predict = self.results.fittedvalues
+        self.xvar = self.results.model.exog
+        self.xvar_names = self.results.model.exog_names
+
+        self.residual = np.array(self.results.resid)
+        influence = self.results.get_influence()
+        self.residual_norm = influence.resid_studentized_internal
+        self.leverage = influence.hat_matrix_diag
+        self.cooks_distance = influence.cooks_distance[0]
+        self.nparams = len(self.results.params)
+        self.nresids = len(self.residual_norm)
+
+    def __call__(self, plot_context="seaborn-v0_8-paper", **kwargs):
+        # print(plt.style.available)
+        # GH#9157
+        if plot_context not in plt.style.available:
+            plot_context = "default"
+        with plt.style.context(plot_context):
+            fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(10, 10))
+            self.residual_plot(ax=ax[0, 0])
+            self.qq_plot(ax=ax[0, 1])
+            self.scale_location_plot(ax=ax[1, 0])
+            self.leverage_plot(
+                ax=ax[1, 1],
+                high_leverage_threshold=kwargs.get("high_leverage_threshold"),
+                cooks_threshold=kwargs.get("cooks_threshold"),
+            )
+            plt.show()
+
+        return (
+            self.vif_table(),
+            fig,
+            ax,
+        )
+
+    def residual_plot(self, ax=None):
+        """
+        Residual vs Fitted Plot
+
+        Graphical tool to identify non-linearity.
+        (Roughly) Horizontal red line is an indicator that the residual has a linear pattern
+        """
+        if ax is None:
+            fig, ax = plt.subplots()
+
+        sns.residplot(
+            x=self.y_predict,
+            y=self.residual,
+            lowess=True,
+            scatter_kws={"alpha": 0.5},
+            line_kws={"color": "red", "lw": 1, "alpha": 0.8},
+            ax=ax,
+        )
+
+        # annotations
+        residual_abs = np.abs(self.residual)
+        abs_resid = np.flip(np.argsort(residual_abs), 0)
+        abs_resid_top_3 = abs_resid[:3]
+        for i in abs_resid_top_3:
+            ax.annotate(i, xy=(self.y_predict[i], self.residual[i]), color="C3")
+
+        ax.set_title("Residuals vs Fitted", fontweight="bold")
+        ax.set_xlabel("Fitted values")
+        ax.set_ylabel("Residuals")
+        return ax
+
+    def qq_plot(self, ax=None):
+        """
+        Standarized Residual vs Theoretical Quantile plot
+
+        Used to visually check if residuals are normally distributed.
+        Points spread along the diagonal line will suggest so.
+        """
+        if ax is None:
+            fig, ax = plt.subplots()
+
+        QQ = ProbPlot(self.residual_norm)
+        fig = QQ.qqplot(line="45", alpha=0.5, lw=1, ax=ax)
+
+        # annotations
+        abs_norm_resid = np.flip(np.argsort(np.abs(self.residual_norm)), 0)
+        abs_norm_resid_top_3 = abs_norm_resid[:3]
+        for i, x, y in self.__qq_top_resid(
+            QQ.theoretical_quantiles, abs_norm_resid_top_3
+        ):
+            ax.annotate(i, xy=(x, y), ha="right", color="C3")
+
+        ax.set_title("Normal Q-Q", fontweight="bold")
+        ax.set_xlabel("Theoretical Quantiles")
+        ax.set_ylabel("Standardized Residuals")
+        return ax
+
+    def scale_location_plot(self, ax=None):
+        """
+        Sqrt(Standarized Residual) vs Fitted values plot
+
+        Used to check homoscedasticity of the residuals.
+        Horizontal line will suggest so.
+        """
+        if ax is None:
+            fig, ax = plt.subplots()
+
+        residual_norm_abs_sqrt = np.sqrt(np.abs(self.residual_norm))
+
+        ax.scatter(self.y_predict, residual_norm_abs_sqrt, alpha=0.5)
+        sns.regplot(
+            x=self.y_predict,
+            y=residual_norm_abs_sqrt,
+            scatter=False,
+            ci=False,
+            lowess=True,
+            line_kws={"color": "red", "lw": 1, "alpha": 0.8},
+            ax=ax,
+        )
+
+        # annotations
+        abs_sq_norm_resid = np.flip(np.argsort(residual_norm_abs_sqrt), 0)
+        abs_sq_norm_resid_top_3 = abs_sq_norm_resid[:3]
+        for i in abs_sq_norm_resid_top_3:
+            ax.annotate(
+                i, xy=(self.y_predict[i], residual_norm_abs_sqrt[i]), color="C3"
+            )
+
+        ax.set_title("Scale-Location", fontweight="bold")
+        ax.set_xlabel("Fitted values")
+        ax.set_ylabel(r"$\sqrt{|\mathrm{Standardized\ Residuals}|}$")
+        return ax
+
+    def leverage_plot(
+        self, ax=None, high_leverage_threshold=False, cooks_threshold="baseR"
+    ):
+        """
+        Residual vs Leverage plot
+
+        Points falling outside Cook's distance curves are considered observation that can sway the fit
+        aka are influential.
+        Good to have none outside the curves.
+        """
+        if ax is None:
+            fig, ax = plt.subplots()
+
+        ax.scatter(self.leverage, self.residual_norm, alpha=0.5)
+
+        sns.regplot(
+            x=self.leverage,
+            y=self.residual_norm,
+            scatter=False,
+            ci=False,
+            lowess=True,
+            line_kws={"color": "red", "lw": 1, "alpha": 0.8},
+            ax=ax,
+        )
+
+        # annotations
+        leverage_top_3 = np.flip(np.argsort(self.cooks_distance), 0)[:3]
+        for i in leverage_top_3:
+            ax.annotate(i, xy=(self.leverage[i], self.residual_norm[i]), color="C3")
+
+        factors = []
+        if cooks_threshold == "baseR" or cooks_threshold is None:
+            factors = [1, 0.5]
+        elif cooks_threshold == "convention":
+            factors = [4 / self.nresids]
+        elif cooks_threshold == "dof":
+            factors = [4 / (self.nresids - self.nparams)]
+        else:
+            raise ValueError(
+                "threshold_method must be one of the following: 'convention', 'dof', or 'baseR' (default)"
+            )
+        for i, factor in enumerate(factors):
+            label = "Cook's distance" if i == 0 else None
+            xtemp, ytemp = self.__cooks_dist_line(factor)
+            ax.plot(xtemp, ytemp, label=label, lw=1.25, ls="--", color="red")
+            ax.plot(xtemp, np.negative(ytemp), lw=1.25, ls="--", color="red")
+
+        if high_leverage_threshold:
+            high_leverage = 2 * self.nparams / self.nresids
+            if max(self.leverage) > high_leverage:
+                ax.axvline(
+                    high_leverage, label="High leverage", ls="-.", color="purple", lw=1
+                )
+
+        ax.axhline(0, ls="dotted", color="black", lw=1.25)
+        ax.set_xlim(0, max(self.leverage) + 0.01)
+        ax.set_ylim(min(self.residual_norm) - 0.1, max(self.residual_norm) + 0.1)
+        ax.set_title("Residuals vs Leverage", fontweight="bold")
+        ax.set_xlabel("Leverage")
+        ax.set_ylabel("Standardized Residuals")
+        plt.legend(loc="best")
+        return ax
+
+    def vif_table(self):
+        """
+        VIF table
+
+        VIF, the variance inflation factor, is a measure of multicollinearity.
+        VIF > 5 for a variable indicates that it is highly collinear with the
+        other input variables.
+        """
+        vif_df = pd.DataFrame()
+        vif_df["Features"] = self.xvar_names
+        vif_df["VIF Factor"] = [
+            variance_inflation_factor(self.xvar, i) for i in range(self.xvar.shape[1])
+        ]
+
+        return vif_df.sort_values("VIF Factor").round(2)
+
+    def __cooks_dist_line(self, factor):
+        """
+        Helper function for plotting Cook's distance curves
+        """
+        p = self.nparams
+        formula = lambda x: np.sqrt((factor * p * (1 - x)) / x)
+        x = np.linspace(0.001, max(self.leverage), 50)
+        y = formula(x)
+        return x, y
+
+    def __qq_top_resid(self, quantiles, top_residual_indices):
+        """
+        Helper generator function yielding the index and coordinates
+        """
+        offset = 0
+        quant_index = 0
+        previous_is_negative = None
+        for resid_index in top_residual_indices:
+            y = self.residual_norm[resid_index]
+            is_negative = y < 0
+            if previous_is_negative == None or previous_is_negative == is_negative:
+                offset += 1
+            else:
+                quant_index -= offset
+            x = (
+                quantiles[quant_index]
+                if is_negative
+                else np.flip(quantiles, 0)[quant_index]
+            )
+            quant_index += 1
+            previous_is_negative = is_negative
+            yield resid_index, x, y
+```
+
+
+### Linearity
+
+::: qna
+#### ![](L6_images/python-logo-only.png){width="30"}
+
+```{python}
+cls = LinearRegDiagnostic(england_model1)
+
+cls.residual_plot();
+plt.show()
+```
+
+
+#### ![](L6_images/Rlogo.png){width="41" height="30"}
+
+```{r}
+library(performance)
+
+check_model(england_model1, 
+            check = c("linearity"))
+```
+:::
+
+### Homoscedasticity (Constant variance)?
+
+::: qna
+#### ![](L6_images/python-logo-only.png){width="30"}
+
+```{python}
+cls.scale_location_plot();
+plt.show()
+```
+
+
+#### ![](L6_images/Rlogo.png){width="41" height="30"}
+
+```{r}
+check_model(england_model1, 
+            check = c("homogeneity"))
+```
+
+:::
+
+### Normality of Residuals
+
+::: qna
+#### ![](L6_images/python-logo-only.png){width="30"}
+
+```{python}
+cls.qq_plot()
+plt.show()
+```
+
+
+#### ![](L6_images/Rlogo.png){width="41" height="30"}
+
+```{r}
+check_model(england_model1, 
+            check = c("qq"))
+```
+:::
+
+### Influence of Outliers
+
+::: qna
+#### ![](L6_images/python-logo-only.png){width="30"}
+
+```{python}
+cls.leverage_plot(high_leverage_threshold=True, cooks_threshold="dof")
+plt.show()
+```
+
+
+#### ![](L6_images/Rlogo.png){width="41" height="30"}
+
+```{r}
+check_model(england_model1, 
+            check = c("outliers"))
+```
+
+:::
 
 #### Combining your outputs for comparison
 
-:::callout-note
+::: callout-note
 You might notice that R is a bit better at things like manipulating model outputs than Python!
 :::
 
@@ -1179,9 +1634,7 @@ results_table = summary_col(
     stars=True,
     float_format="%0.3f",
     # You can customize what model statistics show up here (like R2, N, F-stat)
-    info_dict={'N':lambda x: "{0:d}".format(int(x.nobs)),
-               'R-squared':lambda x: "{:.3f}".format(x.rsquared),
-               'Adj. R-squared':lambda x: "{:.3f}".format(x.rsquared_adj)}
+    info_dict={'N':lambda x: "{0:d}".format(int(x.nobs))}
 )
 
 # 
@@ -1197,3 +1650,49 @@ library(jtools)
 export_summs(camden_model1, leeds_model1, england_model1, error_format = "", error_pos = "same", model.names = c("Camden Model", "Leeds Model", "England Model"))
 ```
 :::
+
+::: {.callout-tip title="Questions to Answer"}
+Comparing your three regression models:
+
+1\. How do the intercept (baseline) attainment values differ between your three models? **remember, if you (natural)logged your variables, you will need to take the exponential of the coefficient to interpret it back on the original scale.**
+
+2\. What do the differences in the slope values tell you?
+
+3\. Are your intercept and slope values statistically significant? If so, at what level?
+
+4\. How do the R-squared values differ between your models?
+
+5\. What can you say about your degrees of freedom and the reliability of your R-squared and other coefficients between your models?
+
+6\. What is the overall story of the relationship between your attainment variable and your explanatory variable considering both your local examples and comparison with schools across the rest of England?
+:::
+
+### What does my model show?
+
+1.  Baseline attainment (intercept) is much higher in Camden than in Leeds or the whole of England. Exp(6.12) = 455.32. So the Attainment 8 Score in Camden would be 455 (an impossible score) when % of disadvantaged children in a school are 0. This compares to exp(4.547) = 94.35 in Leeds and exp(4.478) = 88.06 in England as a whole. All of these intercepts are statistically significant (i.e. observed values not a chance relationship). While unrealistic (potentially due to the low degrees of freedom), the Camden intercept shows us that after controlling for disadvantage, baseline attainment in Camden is better than in Leeds or the rest of England. 
+
+2.  The slope value of -0.207 for England shows that across the country. As this is a log-log model, it is an **Elasticity**: A 1% increase in % of disadvantaged students in a school is associated with a 0.21% decrease in attainment. HOWEVER, as this is a log-log model, the effect is far stronger at one end of the distribution than the other. 
+    -   What this means is that a change from 1% to 10% of disadvantaged students in a school there is a 37.9% decrease in attainment, however, change from 21% to 30% leads to just a 7.1% decrease in attainment. 
+
+::: {.callout-tip title="AI can help here!"}
+One of the things that large language models are quite good at is interpreting regression coefficients in the context of real data. 
+
+They don't always get it right, so **USE WITH EXTREME CAUTION AND ALWAYS DOUBLE CHECK WITH YOUR OWN UNDERSTANDING**, however, they *can* help explain what YOUR model coefficients mean in relation to YOUR data in an incredibly helpful way. If you get stuck, try feeding an LLM (ChatGTP, Gemini etc.) with your regression outputs and a description of your data and see what it can tell you
+:::
+
+This effect is similar for Leeds, but apparently far more severe in Camden where the slope is much steeper. However, Camden doesn't experience very low levels of disadvantage in its schools (unlike in Leeds and the rest of the county), with the lowest level around 35%. With low numbers of schools in the Borough, this observation is potentially unreliable.
+
+3.  The slopes and intercept coefficients in all models are all apparently statistically significant - but as we have seen with Camden, this does not necessarily mean our observations are generalisable! This is a good lesson in the difference between statistical significance (p-values are not a panacea!) and why you should always interrogate your model fully when interpreting outputs. 
+
+4. Again, R-squared values might fool you into thinking the Camden model is 'better' than the other models, however, the R-squared is partially an artefact of the low degrees of freedom in the model. 
+
+5. See above. 
+
+6. Overall, we can make some crucial observations that encourage further research. While the model for England suggests a moderately strong log-log relationship between levels of disadvantage in a school and attainment, looking at this relationship for a London Borough (Camden) - and another Local Authority in England (Leeds) it's the case that this is unlikely to be a universal relationship. 
+
+The baseline of attainment in Camden, controlling for disadvantage, is much higher than in the rest of the country. Students get higher levels of attainment, even when controlling for disadvantage. The log log relationship is crucial as it shows that on average, at low levels of disadvantage small increases have a more severe impact on attainment level, whereas at higher levels, similar changes have much reduced effects. 
+
+### Your Turn
+
+To finish off the practical, see if you can answer the questions above for your example. 
+
