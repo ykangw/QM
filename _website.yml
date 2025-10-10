@@ -1,7 +1,7 @@
 website:
   title: "Quantitative Methods"
   image: "img/logo/full_sm.png"
-  repo-url: https://github.com/huanfachen/CASA0007/
+  repo-url: https://github.com/huanfachen/QM/
   repo-actions: [issue]
   favicon: "/img/favicon.ico"
   open-graph: 
@@ -15,7 +15,7 @@ website:
     center: "![](/img/logo/logo_only_sm.png){height=25} Quantitative Methods"
     right: 
       - icon: github
-        href: https://github.com/huanfachen/CASA0007
+        href: https://github.com/huanfachen/QM
       - icon: LinkedIn 
         href: https://www.linkedin.com/in/huanfa-chen/
   navbar:

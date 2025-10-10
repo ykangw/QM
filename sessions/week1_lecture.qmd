@@ -179,16 +179,16 @@ $$
 ::::
 
 # Visualising data
-![]({{< var module.web >}}/sessions/L1_images/picture_worth_thousand_words.jpg){style="max-width:70%; max-height:70%; margin:auto;"}
+![](L1_images/picture_worth_thousand_words.jpg){style="max-width:70%; max-height:70%; margin:auto;"}
 
 ## FT visual vocabulary
 - https://ft-interactive.github.io/visual-vocabulary/
-![]({{< var module.web >}}/sessions/L1_images/FT_visual_vocabulary.jpg){style="max-width:90%; max-height:90%; margin:auto;"}
+![](L1_images/FT_visual_vocabulary.jpg){style="max-width:90%; max-height:90%; margin:auto;"}
 
 ## Boxplot for a dataset
 - Showing distribution of a dataset
 
-![]({{< var module.web >}}/sessions/L1_images/Boxplot.jpg){style="width:70%; height:70%;"}
+![](L1_images/Boxplot.jpg){style="width:70%; height:70%;"}
 
 ## Boxplot for comparing multiple datasets
 
@@ -209,7 +209,14 @@ $$
 - Many events were mapped to this one, including lots on Strava
 - Source: wikipedia.org
 
-![]({{< var module.web >}}/sessions/L1_images/map_null_island.jpg){height=300px} ![](images/image_null_island_2017.jpg){height=300px}
+:::: {.columns}
+::: {.column width="50%"}
+![](L1_images/map_null_island.jpg){height=300px}
+:::
+::: {.column width="50%"}
+![](L1_images/image_null_island_2017.jpg){height=300px}
+:::
+::::
 
 ## Outliers
 - A data point that differs significantly from other observations
@@ -240,7 +247,7 @@ $$
 | **Influential Outliers**       | Appear extreme but are integral to the underlying pattern or model, e.g. NYC in US city population data | Should keep them, as removing them could distort the analysis or overlook important features of the data |
 
 ## Detecting outlier: interquartile range (IQR)
-![]({{< var module.web >}}/sessions/L1_images/outlier_detection_Tukey_Fences.jpg)
+![](L1_images/outlier_detection_Tukey_Fences.jpg)
 
 ## Quiz: which type of outliers?
 - error vs. irregular pattern vs. influential

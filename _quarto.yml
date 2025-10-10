@@ -9,6 +9,7 @@ project:
     - "img"
     - "images"
     - "bib/"
+    - "sessions/L1_images"
 
 execute:
   freeze: auto

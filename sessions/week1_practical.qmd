@@ -68,7 +68,7 @@ import pandas as pd
 
 # Read CSV file, skipping first 5 rows, using row 6 as header, and handling comma as thousands separator
 df_pop = pd.read_csv(
-    'L1_data/UK_census_population.csv',
+    'https://raw.githubusercontent.com/huanfachen/QM/refs/heads/main/sessions/L1_data/UK_census_population.csv',
     skiprows=5,        # Skip first 5 rows. Wnhy?
     thousands=',',     # Interpret commas as thousands separators
     header=0           # After skipping, the first row becomes the header
@@ -81,7 +81,7 @@ You might wonder why skipping the first 5 rows and setting *thousands=','*. I kn
 
 <!-- ![](%7B%7B%3C%20var%20module.web%20%3E%7D%7D/sessions/L1_images/uk_pop_csv_screenshot.jpg){width="600"} -->
 
-![](L1_images/uk_pop_csv_screenshot.jpg){width="600"}
+![](https://raw.githubusercontent.com/huanfachen/QM/refs/heads/main/sessions/L1_images/uk_pop_csv_screenshot.jpg){width="600"}
 
 Then, we check the first few rows of this dataset using *df_pop.head()*.
 

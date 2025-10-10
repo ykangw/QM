@@ -9,55 +9,63 @@ format: revealjs
 jupyter: python3
 ---
 
-# Last week
+## Last week 
+**Overview of lecture 1**
 
-## Overview of lecture 1
+- Different data types 
+- Key data metrics
+  - the middle and the spread 
+- Visualising the data 
+- Data outliers 
 
-Need to fill this in. 
+::: {.notes}
+4 data types: nominal, ordinal, interval, ratio 
+Numerical vs categorical 
+
+Key data metrics - the middle: mean, median, mode and the spread: variance and standard deviation
+
+different types of data outliers: caused by measurement error, or irregular pattern or influential outliers 
+:::
 
 # This week 
 
-## First things first
-
-:::: {.columns}
-
-::: {.column width="60%"}
+## The scientific method 
 
 <div style="text-align:center;">
-  <img src="L3_images/scientific_method.png" alt="The scientific method" style="max-width:100%">
+  <img src="L3_images/scientific_method.png" alt="The scientific method" style="max-width:60%">
 </div>
 
-
+::: {.notes}
+A specific research model - quite formal - been around from the 19th century. Typifies how scientific research is done in the classical sciences like biology. Link to scientific process and how we test and then iterate over ideas and concepts. Something we will talk about more next lecture. 
 :::
 
-::: {.column width="40%"}
+## Exploratory data analysis 
 
-<br>
+When we're working with large datasets, exploratory data analysis is the first step in the scientific method. 
 
-Exploratory data analysis is the first step of any data science project. 
-
+::: {.incremental}
+- How to understand the dataset 
+- What do the variables represent 
+- What statistical techniques should be used
 :::
-
-::::
 
 ::: {.notes}
-link to scientific process and how we test and then iterate over ideas and concepts. Something we will talk about more next lecture. 
+More modern approach approach devloped by computer scientist John Turkey in the 1970s - whilst at Princeton. 'Father of data science'. rather than being driven by more classical statistical analyses (something we'll look at next week) - the idea was to have a more flexible approach. 
 :::
 
 ## Introducing statistical concepts 
 
 ::: {.incremental}
-- This lecture is focussed on statistical concepts
 - Data science is about using ideas from statistics to describe large datasets 
-- Here looking to describe numerical data
-- Focus on probability distributions 
+- Focus on numerical data
+- Using probability distributions to characterise them 
 :::
 
 ::: {.notes}
 In large datasets its not practical to describe every data point - instead interested in the overall pattern. Moreover maybe that general pattern is more interetsing
 :::
 
-## Learning Objectives
+## Learning objectives
 By the end of this lecture you should be able to:
 
 ::: {.incremental}
@@ -66,17 +74,16 @@ By the end of this lecture you should be able to:
 3. Evaluate whether a dataset is representative. 
 :::
 
-# Motivation 
+# Motivation
+**How do we understand how likely events are to occur?** 
 
-## What is the likelihood of events occuring? 
-
-**Question**
+*Question*
 
 What is the probability of someone at UCL being over 190cm? 
 
 . . . 
 
-**How can we try to answer this?**
+*How can we try to answer this?*
 
 . . .
 
@@ -86,7 +93,7 @@ We could try and find someone on campus who is over 190cm.
 
 . . .
 
-Better to try and understand the distribution of heights. 
+Better idea is to try and understand the distribution of heights. 
 
 ::: {.notes}
 This week thinking about the distribution of data. 
@@ -95,7 +102,8 @@ How do we understand the spread of height data, how to we calculate important fe
 Next week, thinking about formulating and answering the research question. 
 :::
 
-# Random Sampling 
+# Representative data
+**Before we try to describe the data, it's important to know where the data came from.**
 
 ## The dream vs reality 
 Ideally, we would like all the relevant data.
@@ -114,26 +122,20 @@ It would be great if I knew the height of everyone at UCL, but unrealistic to co
 
 ## Approximating 
 Hence, we sample a subset of the data. 
+We need to choose our sample carefully - we want what happens in the sample to approximate what happens in the whole population. 
 
 . . .
 
-We need to choose our sample carefully. We want what happens in the sample to approximate what happens in the whole population. 
-
-. . .
-
-**In practise**
+**In practise** we might try different sampling approaches such as:
 
 ::: {.incremental}
-- different sampling approaches
-  - random sampling 
-  - systematic sampling 
+- random sampling 
+- systematic sampling 
 :::
 
 ::: {.notes}
 I might assign everyone a number and then choose 100 random numbers and measure them. Or I might choose a specific subset, for exampel just everyone in this lecture theatre. 
 :::
-
-# Is the data representative? 
 
 ## Bias
 It's important to understand if your dataset is unrepresentative or biased. 
@@ -146,7 +148,6 @@ It's important to understand if your dataset is unrepresentative or biased.
 Bias is the idea that there is an unrepresentative pattern in your data.
 :::
 
-
 ## Cognitive bias 
 [*Systematic patterns in how we think about, and perceive, the world.*]{style="color:#49a0c4"} 
 
@@ -154,9 +155,7 @@ Bias is the idea that there is an unrepresentative pattern in your data.
 
 ::: {.column width="50%"}
 
-We all have cognitive biases. 
-
-These can impact our research:
+Our cognitive biases can impact:
 
 ::: {.incremental}
 - data collection 
@@ -170,7 +169,6 @@ These can impact our research:
 ::: {.column width="50%"}
 
 <br>
-<br>
 
 <div style="text-align:center;">
   <img src="L2_images/human_brain_2.png" alt="Human Brain" style="max-width:60%">
@@ -181,6 +179,8 @@ These can impact our research:
 ::::
 
 ::: {.notes}
+
+We all have our own cognitive biases - shaped around our values and our backgrounds. 
 Example of cognitive bias - confirmation bias, whereby I favour information that agrees with my existing beliefs. I'm writing a report on the spatial impact of a new railway line. Suppose I hate the idea of a new railway line, and then I see some data, fact a: 60% of residents living near the railline don't want it due to noise. fact b: 75% of residents in the UK do want the railway line. i might only include fact a in my report as it confirms my existing beliefs. 
 :::
 
@@ -196,13 +196,12 @@ This can lead to incorrect conclusions.
 As scientists we should try and present an accurate and fair balance of information. If we're more aware of our biases it can be easier to try and actively avoid them. 
 :::
 
-## Types of bias 
+## Dataset bias
 
-- Research bias
-Cognitive bias is a specific type of research bias. 
+- Particularly important when thinking about analysing large datasets as there could be non-obvious patterns reflecting biases. 
+- More important in the era of large AI models 
 
-- Dataset bias 
-Particularly important when thinking about analysing large datasets, as there could be non-obvious patterns reflecting biases. 
+. . .
 
 Types of dataset bias include: 
   - Historical bias 
@@ -212,6 +211,8 @@ Types of dataset bias include:
 Already talked about the idea of cognitive bias. There are lots and lots of different types of biases - going to talk a little about different ways they can bias the dataset. 
 
 Dataset bias has become a more prevalent topic of concern on the era of large AI models. These models are really good at learnign patterns which aren't obvious to the human eye - but the pattern might reflect a bias. For example generative AI models learn that scientists are white men, even though if I asked you you'd tell me anyone can be a scientist. 
+
+- [Hungry judges](https://daniellakens.blogspot.com/2017/07/impossibly-hungry-judges.html)
 :::
 
 ## Historical bias
@@ -222,9 +223,6 @@ Examples:
 - [Police profiling](https://www.amnesty.org.uk/press-releases/uk-police-forces-supercharging-racism-crime-predicting-tech-new-report) 
   - Automated tools to detect 'criminals'. 
   - Trained on datasets which reflect current racist practises. 
-- [Hungry judges](https://en.wikipedia.org/wiki/Hungry_judge_effect)
-  - Tools to help sentencing of 'criminals'. 
-  - Patterns in the dataset --- judges are less lenient before lunch. 
 
 ::: {.notes}
 Police profiling models - meant to make easy to spot criminals - but use exisitng crime data - which reflect racist prejudices in society - and the model learns to pick out people of certain ethnic backgrounds. 
@@ -274,7 +272,7 @@ Not necessarilly a bad thing, but important to keep in mind. And if the bias is 
   </div>
 </div>
 
-# Descriptive Statistics 
+# Exploring the data - descriptive statistics 
 
 ## What to declare 
 
@@ -355,10 +353,10 @@ These all have mean x = 9, variance x = 11. mean y = 7.5, variance y =4.1.
 But we can see from the diagrams that the distribution of the data is very different, some is linear, some is elliptic etc... So we need more advanced ways of describing the data. 
 :::
 
-# Normal Distribution
+# Normal distribution
 The most fundamental distribution
 
-## Everywhere you look
+---
 
 <div style="text-align:center;">
   <img src="L2_images/normal_distribution.png" alt="Normal distribution" style="max-width:90%">
@@ -366,6 +364,9 @@ The most fundamental distribution
 
 
 ::: {.notes}
+Also known as Gaussian distribution after Gauss. 
+The shape is known as the bell curve. 
+
 - Human height
 - Petal size (specifically length of iris petals)
 - blood pressure
@@ -373,22 +374,27 @@ The most fundamental distribution
 - measurement errors in science experiments 
 :::
 
-## You've seen it all before  
+## Key features
+**You've seen it all before**  
 
 ::: {.incremental}
-- Symmetrical
-- Single peak 
-- Smooth tails on both sides
+- Data is continuous 
+  - it is something you measure not something you count
+- Data is equally likely to be larger or smaller than average 
+  - symmetric
+- Characteristic size, all data points are close to the mean 
+  - single peak
+- There is less data further away from the mean 
+  - smooth tails on both sides
 :::
 
-
-## Naturally occurring 
+---
 
 <div style="text-align:center;">
   <img src="L2_images/height_histogram.png" alt="Normal distribution" style="max-width:90%">
 </div>
 
-## Naturally occurring 
+---
 
 <div style="text-align:center;">
   <img src="L2_images/height_histogram_pdf.png" alt="Normal distribution" style="max-width:90%">
@@ -417,18 +423,16 @@ The most fundamental distribution
 \end{align}
 ``` -->
 
-## Key features 
+## The distribution of the random variable 
+[*A random variable is a way to map the outcome of a random process to a probability.*]{style="color:#49a0c4"} 
 
-::: {.incremental}
-- Data is continuous 
-  - it is something you measure not something you count
-- Data is equally likely to be larger or smaller than average 
-  - symmetric
-- Characteristic size, all data points are close to the mean 
-  - single peak
-- There is less data further away from the mean 
-  - smooth tails on both sides
-:::
+In mathematical notation, a random variable $X$ is approximately normally distributed about a mean of $\mu$ with a standard deviation of $\sigma$:  
+
+```{=tex}
+\begin{align}
+X \sim N(\mu,\sigma)
+\end{align}
+```
 
 ## Sampling distributions 
 
@@ -436,7 +440,7 @@ The most fundamental distribution
 
 . . .
 
-In the case of the normal distribution - standard deviation becomes: 
+In the case of the normal distribution the standard deviation becomes: 
 
 ```{=tex}
 \begin{align}
@@ -444,13 +448,25 @@ In the case of the normal distribution - standard deviation becomes:
 \end{align}
 ```
 
+In practise as the sample size increases the sampling distribution becomes more and more centralised. 
+
+- i.e. with more data we have more certainty about the distribution. 
+
+::: {.notes}
+Typically we think of the distribution as describing the entirety of the relevant popualtion - i.e. every relevant example. Link to sampling - normally only have a subset of the data. 
+
+Need to account for the fact that we don't have all the data. So our statistic will vary a bit according to what sample of the data we're looking at. 
+
+In practise - as the sample size increases the sampling distribution of the normal distribution becomes more and more centralised. I.e. we have more certainty about the distribution. 
+:::
+
 ## Calculating probabilities 
 
 Can use the PDF to evaluate the probability at a specific point. 
 
 ```{=tex}
 \begin{align}
-x \sim N(0,1)
+X \sim N(0,1)
 \end{align}
 ```
 
@@ -481,7 +497,11 @@ Many real world datasets are *approximately* normally distributed.
 
 . . .
 
-But not all ---  might not have a characteristic size, or not continuous, or not symmetric. 
+But not all 
+
+- not continuous 
+- no characteristic size 
+- not symmetric  
 
 # More generally, what is a probability distribution? 
 
@@ -670,7 +690,7 @@ Where $\lambda$ is the expected number of events in a given interval.
 
 ```{=tex}
 \begin{align}
-P(X = 10) = \frac{2^10 e^{-2}}{10!}
+P(X = 10) = \frac{2^{10} e^{-2}}{10!}
 \\ = 0.000038
 \end{align}
 ```
@@ -679,7 +699,7 @@ P(X = 10) = \frac{2^10 e^{-2}}{10!}
 
 ## Exponentials
 
-If the Poisson measures the probability of x events within a time period, then the Exponential measures how long we are likely to wait between events.
+If the Poisson measures the probability of $x$ events within a time period, then the exponential measures how long we are likely to wait between events.
 
 . . .
 
@@ -700,10 +720,10 @@ He's a bit dramatic
 ::: {.column width="50%"}
 
 ::: {.incremental}
-- You've invented chess. 
-- The emperor is really grateful - and asks what gift you would like in thanks. 
-- You ask for grains of rice.  
-- Specifically, rice to fill the chessboard, such that the number of grains double on each square. 
+- A scholar has invented chess
+- The emperor is really grateful - and asks what gift the scholar would like in thanks
+- The scholar asks for grains of rice  
+- Specifically, rice to fill the chessboard, such that the number of grains double on each square 
 :::
 
 :::
@@ -745,13 +765,7 @@ Image is of Chatarunga - which is the earliest known form of chess dating to 6th
 
 ::: {.column width="20%"}
 
-. . . 
-
-10^18
-
-. . . 
-
-Which is more than the global production of rice.  
+10^18 - which is more than the global production of rice.  
 
 :::
 
@@ -857,25 +871,69 @@ y=e^x
 \end{align}
 ```
 
+<div style="background-color:#2e6260; color:white; padding:8px; border-radius:5px; margin-top:10px;"> <em>Note</em> 
+
 $e$ here is eulers number - a mathematical constant. 
 ```{=tex}
 \begin{align}
 e \approx 2.718... 
 \end{align}
-```
+``` 
+</div>
 
-:::{.notes}
+::: {.notes}
 Its a mathematical constant similar to pi - it's just a fixed number which we have a name for. 
 Like pi comes from geometry (circles etc), e comes from the limit of the equation of compound interest. 
 :::
 
-## When I can feed my town?
+## The exponential distribution
 
-Allows us to answer questions like: 
+<div style="text-align:center;">
+  <img src="L2_images/exponential_distribution.png" alt="Exponential function" style="max-width:90%;">
+</div>
+
+::: {.notes}
+We've talked about the exp function - but now want to talk about the exp distribution. 
+
+This is a continous probability distribution. 
+:::
+
+## Probability density function 
+
+The PDF of the exponential distribution is: 
+
+```{=tex}
+\begin{align}
+P(x) = \lambda e^{-\lambda x}
+\end{align}
+```
+
+where $\lambda$ is the rate parameter. As in the poisson distribution $\lambda$ is the fixed rates of events for a predetermined time interval. 
+
+<div style="background-color:#2e6260; color:white; padding:8px; border-radius:5px; margin-top:10px;"> <em>Note</em> 
+
+This is sometimes referred to as the *negative exponential distribution* - as it's a negative exponent. </div>
+
+## Time between events 
+
+Traditionally used to model time between rare events. 
+
+- time between volcanic eruptions 
+- time between customers entering a shop 
+- time of radioactive decay 
+
+## Important questions 
+
+The exponential allows us to answer questions like: 
 
 ::: {.incremental}
-- "how many grains of rice at t=10?"
-- “when will I have enough rice to feed my entire town?” 
+- What's the probability that it will be ten years until the next volcanic eruption? 
+  - $\lambda=1$ 
+  - $p(10) = 1 \times e^{-1 \times 10}$
+- When will the probability of volcanic eruptions be equal to $p=0.5$?
+  - $\lambda=1$ 
+  - $0.5 = p(x) = 1 \times e^{-1 \times x}$
+  - what is $x$?
 :::
 
 . . . 
@@ -988,7 +1046,6 @@ We've covered:
 - Poisson distribution 
 - Exponentials 
 - Logarithms 
-
 
 # Practical 
 The practical will focus on exploratory data analysis for a variety of different datasets.
