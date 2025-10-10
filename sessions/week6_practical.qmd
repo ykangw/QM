@@ -1,6 +1,7 @@
 ---
-title: 'Practical 6: Applied Linear Regression - Vol 1'
-subtitle: "AKA Prof D's Regression Sessions"
+title: "Prof D's Regression Sessions - Vol 1"
+subtitle: "AKA - Applied Linear Regression - Basics"
+title-block-banner: L6_images/regression2.png
 format:
   html: default
   ipynb: default
@@ -8,6 +9,17 @@ filters:
   - qna
   - quarto
 ---
+
+```{r}
+#| message: false
+#| warning: false
+#| include: false
+
+library(here)
+here()
+
+```
+
 
 ```{r}
 #| message: false
@@ -35,8 +47,8 @@ library(reticulate)
 # point reticulate to the right python installation - ideally the one reticulate installed. 
 #reticulate::use_python("C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe", required = TRUE)
 #use_condaenv("qmEnv", conda = "C:/Users/adam_/anaconda3/Scripts/conda.exe", required = TRUE)
-use_python("C:/Users/adam_/anaconda3/envs/qmEnv/python.exe", required = TRUE)
-py_run_string("import pyproj; print(pyproj.CRS.from_epsg(27700))")
+#use_python("C:/Users/adam_/anaconda3/envs/qmEnv/python.exe", required = TRUE)
+#py_run_string("import pyproj; print(pyproj.CRS.from_epsg(27700))")
 
 #virtualenv_create("r-reticulate", python = "C:/Users/Adam/AppData/Local/R/cache/R/reticulate/uv/cache/archive-v0/EiTNi4omakhlev5ckz2WP/Scripts/python.exe")
 
@@ -79,13 +91,13 @@ Most of what you will be doing in this practical won't actually be modelling - a
 ::: callout-note
 Below you will find code-blocks that will allow you to run your analysis in either R or Python. It's up to you which you decide to use - you might even want to try both to compare (Of course, R will be better)!
 
-The Juypter notebook attached to this practical *might* work, but you might be better off just firing up RStudio or VS code and running editing from scratch on your local machine.
+The Juypter notebook attached to this practical *might* work, but you are probably better off just firing up RStudio or VS code, creating a new notebook and editing from scratch on your local machine.
 :::
 
 ## Tasks
 
 ::: callout-warning
-Make sure you complete each of the tasks below, 1-7. All of these will be covered in the code examples as you work your way down the page, but this is the full [workflow](https://dictionary.cambridge.org/dictionary/english/workflow):
+Make sure you complete each of the tasks below, 1-4. All of these will be covered in the code examples as you work your way down the page, but this is the full [workflow](https://dictionary.cambridge.org/dictionary/english/workflow):
 :::
 
 ### 1. Downloading: Download and read data into your software environment:
@@ -125,16 +137,16 @@ At the end of this you will have **x3 datasets** - one national and two local au
     a.  one attainment related dependent variable from your set
     b.  one possible explanatory variable which you think might help explain levels of attainment in schools
 -   Create a series of graphs and statistical outputs to allow you to understand the structure and composition of your data. You should produce:
-    a.  A histogram for the dependent and independent variables you are analysing for **both your two subsets** and the **national dataset** (x6 histograms in total). Also include:
+    a.  A histogram for the dependent and independent variables you are analysing for **both your two subsets** and the **national dataset** (x6 histograms in total). You might want to augment your histograms to include:
         i.  mean and median lines
         ii. lines for the upper and lower quartiles
         iii. indications of outliners
         iv. a kernel density smoothing
     b.  Alternative plots such as violin plots or box plots to compare with the histogram
     c.  Point Maps of the locations of your schools in your two subsets - points sized by either of your variables
-    d.  A scatter plot of your dependent (attainment) and independent (disadvantage) variables (national and two local subsets)
-        i.  include a regression line of best fit
-        ii. include the R-squared, slope and intercept parameters
+    d.  A scatter plot of your dependent (attainment) and independent (disadvantage) variables (national and two local subsets) - on these plots you might want to include:
+        i.  a regression line of best fit
+        ii. the R-squared, slope and intercept parameters
 
 ### 4. Explanatory Data Analysis - Attainment and Factors Affecting it in Different Parts of England
 
@@ -168,6 +180,19 @@ import numpy as np
 import janitor
 from pathlib import Path
 
+# little function to define the file root on different machines
+def find_qm_root(start_path: Path = Path.cwd(), anchor: str = "QM") -> Path:
+    """
+    Traverse up from the start_path until the anchor folder (e.g., 'QM')      is found. Returns the path to the anchor folder.
+    """
+    for parent in [start_path] + list(start_path.parents):
+        if parent.name == anchor:
+            return parent
+    raise FileNotFoundError(f"Anchor folder '{anchor}' not found in path      hierarchy.")
+  
+qm_root = find_qm_root()
+
+
 # Read CSV file
 edubase_schools = pd.read_csv(
     "https://www.dropbox.com/scl/fi/fhzafgt27v30lmmuo084y/edubasealldata20241003.csv?rlkey=uorw43s44hnw5k9js3z0ksuuq&raw=1",
@@ -183,7 +208,7 @@ edubase_schools = edubase_schools.clean_names()
 ########################################
 # Define base path and common NA values - NOTE YOU WILL NEED TO DOWNLOAD THIS DATA AND PUT INTO YOUR OWN base_path LOCATION ON YOUR MACHINE - not this one as this is my path!!!
 #base_path = Path("E:/QM/sessions/L6_data/Performancetables_130242/2022-2023")
-base_path = Path("C:/GitHubRepos/QM/sessions/L6_data/Performancetables_130242/2022-2023")
+base_path = qm_root / "sessions" / "L6_data" / "Performancetables_130242" / "2022-2023"
 ##################################################
 na_values_common = ["", "NA", "SUPP", "NP", "NE"]
 na_values_extended = na_values_common + ["SP", "SN"]
@@ -1065,7 +1090,7 @@ ggplot(england_filtered, aes(x = PTFSM6CLA1A, y = gor_name, fill = gor_name)) +
 
 ```
 
-## Task 3 - Explanatory Analysis - Running Your Regression Model
+## Task 4 - Explanatory Analysis - Running Your Regression Model
 
 -   Now you have carried out some appropriate exploratory data analysis, you should run a simple bi-variate regression model for your two local authority areas and compare it with a similar analysis run on the national dataset
 

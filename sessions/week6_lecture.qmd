@@ -1,6 +1,6 @@
 ---
-title: "Prof D's Applied Linear Regression Bootcamp"
-subtitle: "'WHY?! Why Us? Did we wrong him in a past life?'"
+title: "Prof D's Regression Sessions - Vol 1"
+subtitle: "Time to go deep!"
 author: 
   - name: "Adam Dennett"
 email: "a.dennett@ucl.ac.uk"
@@ -21,7 +21,7 @@ filters:
  - code-visibility
 lightbox: auto
 title-slide-attributes:
-    data-background-image: "L6_images/title-slide.png"
+    data-background-image: "L6_images/regression.png"
     data-background-size: stretch
     data-background-opacity: "0.08"
     data-background-color: "#4e3c56"
@@ -171,7 +171,7 @@ england_school_2022_23_not_special <- england_school_2022_23 %>%
   
 ```
 
-## This week's Session {transition="convex-in none-out" transition-speed="fast"}
+## This week's Session - Foundations {transition="convex-in none-out" transition-speed="fast"}
 
 ```{r, echo=FALSE}
 # This makes the fonts play nicely within the figures
@@ -186,27 +186,39 @@ knitr::opts_chunk$set(dev = "ragg_png")
 }
 ```
 
-"This much content in one session?!? Are you mad?":
+Motivation:
 
--   Possibly - But I've marked too many dissertations and examined too many PhDs where people still get the basics wrong and this should help fix that!
+-   Over the years I've marked too many dissertations and examined too many PhDs where people still get the basics of regression wrong - this is my attempt to help fix this once and for all!
 -   I've been using this method for 20 years and I **still** get things wrong and I'm *still* learning new things about it!
 -   Once you get the basics, it is perhaps *THE* most useful tool in your statistical toolbox
--   Forget about machine learning - regression is your statistical Swiss Army knife!
+-   Forget about machine learning and pointlessly complicated models - a simple regression model is your statistical Swiss Army Knife!
 
-## This week's Session {transition="convex-in none-out" transition-speed="fast"}
+## This week's Session - Foundations {transition="convex-in none-out" transition-speed="fast"}
 
--   Getting the basics right and how this depends on:
-    -   understanding the features of your data and your model - sample size, the variables and groups within your data, multicolinearity, heteroscedascity, kurtosis, variance, degrees of freedom, confounding, interaction effects (and what all of these words mean!)
-    -   your model is :poop: without a sound theoretical understanding!
+::::: columns
+::: {.column width="60%"}
+-   A Recipe for Success:
+    -   understanding your ingredients (data)
+    -   understanding the basic method (rules) - sample size, heteroscedascity, variance, degrees of freedom
+    -   baking your first cake (model)
+    -   judging your efforts (interpreting the outputs)
+:::
 
-## This week's Session {transition="convex-in none-out" transition-speed="fast"}
+::: {.column width="40%"}
+![](https://gu-witness.s3.amazonaws.com/media/31ab0d58-3f7a-44d0-842e-adfcf80f1d8c-mediumoriginalaspectdouble.jpg)
+:::
+:::::
 
--   a fool-proof recipe for any future modelling exercise you undertake, including:
-    -   the fundamental importance of visualising your data and the relationships you are trying to fit a model to
-    -   how to interpret the outputs from your model and how they relate back to the visual patterns you observe and the rules that govern the model
--   an example of how poor urban policy can be based a misunderstanding of data, models and local context, but how the same models, if used correctly, can also underpin better policy
+## This week's Session - Foundations {transition="convex-in none-out" transition-speed="fast"}
 
-# Our Case Study - What are the Factors Affecting School-Level Educational Attainment in Brighton and Hove? {background-image="https://adamdennett.github.io/BH_Schools_Consultation/attainment_extra_files/figure-html/unnamed-chunk-10-1.png" background="#2e6260" background-opacity="0.1"}
+-   Applied Regression in the real world
+    -   Any model is just a simplified version of reality
+    -   A good model can offer you insights into the real world situation you are studying and can underpin good real world decisions
+    -   a good model interpreted badly can lead to poor policy decisions 
+    -   a bad model, even if interpreted correctly, will probably also lead to poor policy decisions 
+-   So we need to get both the modelling and the interpretation correct!
+
+# Our Real World Case Study - What are the Factors Affecting School-Level Educational Attainment in Brighton and Hove, England? {background-image="https://adamdennett.github.io/BH_Schools_Consultation/attainment_extra_files/figure-html/unnamed-chunk-10-1.png" background="#2e6260" background-opacity="0.1"}
 
 ## Secondary Schools and Attainment - GCSEs {transition="convex-in none-out" transition-speed="fast"}
 
@@ -275,31 +287,9 @@ The Conversation: <https://theconversation.com/poorer-pupils-do-worse-at-school-
 
 # A Reliable Regression Modelling Recipe {background-image="https://adamdennett.github.io/BH_Schools_Consultation/attainment_extra_files/figure-html/unnamed-chunk-10-1.png" background="#2e6260" background-opacity="0.1"}
 
-## Recipe / Framework {transition="convex-in none-out" transition-speed="fast"}
-
-::::: columns
-::: {.column width="60%"}
--   One way to think about regression modelling is as a recipe.
--   The recipe has a number of steps, each of which is important to the final outcome
--   As with baking a cake, failure will follow if you don't:
-    -   get your ingredients right
-    -   follow the method correctly
-    -   use your equipment in the right way
--   You may need to iterate around these a few times during the process
-:::
-
-::: {.column width="40%"}
-![](https://gu-witness.s3.amazonaws.com/media/31ab0d58-3f7a-44d0-842e-adfcf80f1d8c-mediumoriginalaspectdouble.jpg)
-:::
-:::::
-
-::: footer
-:::
-
 ## Step 1 - Ingredients {transition="convex-in none-out" transition-speed="fast"}
 
--   The Exploratory Data Analysis (EDA) phase is the most important part of any modelling exercise (see Weeks 1 & 2 of this course)
--   It is where you get to know your data (ingredients) - the variables, data types, distributions, any spatial or temporal patterns
+-   The **Exploratory Data Analysis** phase is the most important part of any modelling exercise (**see Weeks 1 & 2 of this course**)
 -   Failure to get to know your data properly means you might mis-specify your model by:
     -   using the wrong explanatory variables or omitting some key ones
     -   misunderstanding your data types - e.g. counts vs continuous
@@ -310,8 +300,8 @@ The Conversation: <https://theconversation.com/poorer-pupils-do-worse-at-school-
 
 ::::: columns
 ::: {.column width="60%"}
--   The data is collected by the Department for Education (DfE), published annually and is comprehensive - a full annual census of each school
--   For each school, hundreds of variables are available relating to:
+-   The data is collected by the Department for Education (DfE) - a full annual census of each school's 
+-   Hundreds of variables collected relating to:
     -   attainment and progress
     -   pupil characteristics
     -   school characteristics
@@ -1259,7 +1249,7 @@ ggplot(btn_sub1) +
 -   Degress of Freedom are also used to calculate the ***variance*** of the model
 -   If you ran the same model on different samples of the same population - e.g instead of Brighton, you ran this model on schools in Leeds or Bristol or Liverpool - you would get different values for your coefficients each time
 -   How similar these are to each other and more importantly the the whole population (all schools in England and Wales) is the ***variance*** - you want to minimise the variance in your coefficients if you want to generalise your model to the wider population
--   **We will return to the idea of variance later**
+-   **We will return to the idea of variance in the practical**
 
 ## Linear Regression - Coefficients 1
 
@@ -1290,8 +1280,8 @@ ggplot(btn_sub1) +
 
 ![](L6_images/the_coefs.png)
 
--   The p-value - **p**robability of observing a t-value as extreme as the one calculated if there were ***no relationship*** between the independent and the dependent variable
--   A small p-value (typically $p$ \< 0.05) indicates \<5% chance that $X$ is not really explaining variation in $Y$
+-   The $P$-value - $P$-robability of observing a t-value as extreme as the one calculated if there were ***no relationship*** between the independent and the dependent variable
+-   A small $P$-value (typically $p$ \< 0.05) indicates \<5% chance that $X$ is not really explaining variation in $Y$
 -   The Signif. codes (like \*\*\* and \*\*) are just a quick visual guide to this p-value, showing you at a glance which variables are significant.
 -   Any parameter with 1, 2 or 3\* is "statistically significant" at 5% or better
 
@@ -1299,9 +1289,18 @@ ggplot(btn_sub1) +
 
 ![](L6_images/the_coefs.png)
 
--   The p-values relate to the ***null hypotheses*** that:
-    1.  true value of the intercept is **zero** when the independent variable is **zero**. P \<0.001 = \<0.1% probability that 62.3 occured by random chance - It doesn't tell us that when % Disadvantaged is zero, 62.3 will be a correct Attainment 8 score, just real value is unlikely to be zero
-    2.  true value of the PTFSM6CLA1A slope (relationship between % Disadvantaged and Attainment 8) is zero. P \< 0.01 = \<1% probability that the relationship observed is by chance. Relationship is likely to be real.
+-   The $P$-values relate to the ***null hypotheses*** that:
+    -   The true value of the intercept (baseline attainment) is **zero** when the independent variable (% disadvantage) is **zero**. 
+    -   $P$ \<0.001 = \<0.1% $P$-robability that 62.3 occurred by random chance
+-   **Note** - It doesn't tell us that when % Disadvantaged is zero, 62.3 will be a *correct* Attainment 8 score, just that real value is unlikely to be zero
+    
+## Linear Regression - Coefficients 4
+
+![](L6_images/the_coefs.png)
+
+-   The $P$-values relate to the ***null hypotheses*** that:
+    -   The true value of the PTFSM6CLA1A slope (relationship between % Disadvantaged and Attainment 8) is zero. 
+    $P$- \< 0.01 = \<1% $P$-robability that the relationship observed is by chance. Relationship is likely to be real.    
 
 ## Linear Regression - Summary so far
 
@@ -1395,7 +1394,7 @@ ggplot(btn_edit, aes(x = PTFSM6CLA1A, y = ATT8SCR)) +
 summary(lm_edit)
 ```
 
--   Overall p-value of model now **statistically insignificant** \>0.1
+-   Overall $P$-value of model now **statistically insignificant** \>0.1
 -   \% Disadvantage in Schools now **statistically insignificant**
 
 ## Linear Regression - More Degrees of Freedom
@@ -1576,11 +1575,11 @@ check_model(lm_fit,
 
 ## Linear Regression - Diagnostics
 
--   **Linearity**: Failed
--   **Homoscedasticity**: Failed
--   **Normality of residuals**: Failed
--   **No multicollinearity**: Something for later
--   **Independence of residuals**: Something for later
+-   **Linearity**: :sob:
+-   **Homoscedasticity**: :sob:
+-   **Normality of residuals**: :sob:
+-   **No multicollinearity**: :clock1130:
+-   **Independence of residuals**: :clock1130:
 -   Presently our model violates most of the key assumptions that underpin linear regression models. What this means is that in its current form, the relationship between % Disadvantaged Students and Attainment 8 described by the model is not reliable
 
 ## Linear Regression - Non-Linearity
@@ -1634,7 +1633,7 @@ ggplot(england_filtered) +
 ```
 
 -   The log($Y$) log($X$) model is a standard transformation of these variables that can help to linearise relationships
--   Sometimes referred to as an *elasticity* model, a % (rather than constant) change in $X$ leads to a % (not constant) change in $Y$
+-   Sometimes referred to as an **elasticity** model - a % (rather than constant) change in $X$ leads to a % (not constant) change in $Y$
 
 ## Linear Regression - the log-log transformation
 
@@ -1751,8 +1750,8 @@ check_model(lm_fit,
 
 ## Linear Regression - the log-log transformation
 
--   Interpreting the log-log relationship:
-    -   Where the relationship is negative, a small absolute change in the independent variable at the *lower* end has a *bigger* impact than the same small absolute change at the higher end
+-   Interpreting the log-log (elasticity) relationship:
+    -   Where the relationship is ***negative***, a small absolute change in the independent variable at the ***lower*** end has a ***bigger*** impact than the same small absolute change at the higher end
     -   On our original plot: the effect of levels of disadvantage on attainment is much ***stronger at very low levels of disadvantage*** and ***weakens as the level of disadvantage increases***
 
 ## Linear Regression - Level-log model
@@ -1808,7 +1807,7 @@ ggplot(england_filtered) +
 ```
 
 -   Other options are to use a ***level-log*** model, where the dependent variable is not transformed but the independent variable is log-transformed.
--   Use when the effect of the independent variable has diminishing returns - e.g. a change from log(2.7%) exp(1) to log(7.3%) exp(2) disadvantaged students has same effect as a change from log(20%) exp(3) to log(54.5%) exp(4)
+-   Use when the effect of the independent variable has diminishing returns - e.g. a change from $log(2.7%)$ or $exp(1)$ to $log(7.3%)$ $exp(2)$ disadvantaged students has same effect as a change from $log(20%)$ $exp(3)$ to $log(54.5%)$ $exp(4)$
 
 ## Linear Regression - Level-log model
 
@@ -1853,3 +1852,11 @@ check_model(lm_fit,
 -   Log-log - use when the relationship is believed to be multiplicative and the effects are best understood in terms of percentage changes.
     -   This model is also excellent at addressing issues with heteroscedasticity and skewed variables
 -   Level-log - use when the effect of the independent variable has diminishing returns
+
+## Conclusions
+
+-   Regression Basics - DONE!
+-   Won't summarise here, but please go over the slides again in your own time
+-   Now is your chance to put everything I have just said into practice in your own very similar analysis in the practical
+-   Practical is long - you won't complete in this session, but spend time going through it at home
+-   Make sure you complete the practical and understand all of this before next week's Regression Sessions Vol. 2 as it will build on and extend this session
