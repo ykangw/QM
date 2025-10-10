@@ -306,7 +306,7 @@
         "\n",
         "Easy to print the summary statistics in Python, using `pandas`: "
       ],
-      "id": "1277ae2d"
+      "id": "ce45f33d"
     },
     {
       "cell_type": "code",
@@ -319,7 +319,7 @@
         "height_df = pd.read_csv(\"L2_data/heights.csv\")\n",
         "height_df.describe().round(2)"
       ],
-      "id": "48ffd2cf",
+      "id": "c1063d35",
       "execution_count": null,
       "outputs": []
     },
@@ -331,7 +331,7 @@
         "\n",
         "::: column\n"
       ],
-      "id": "d647621d"
+      "id": "20543588"
     },
     {
       "cell_type": "code",
@@ -344,7 +344,7 @@
         "height_df = pd.read_csv(\"L2_data/heights.csv\")\n",
         "height_df.describe().round(2)"
       ],
-      "id": "07cca9de",
+      "id": "7ea9f7e9",
       "execution_count": null,
       "outputs": []
     },
@@ -358,7 +358,7 @@
         "## Example 2 \n",
         "Sometimes we need more information. "
       ],
-      "id": "6bdaf227"
+      "id": "6ac4c588"
     },
     {
       "cell_type": "code",
@@ -373,7 +373,7 @@
         "# print descriptive statistics\n",
         "df_4datasets.groupby(\"dataset\").describe()"
       ],
-      "id": "cd80102b",
+      "id": "b4402faf",
       "execution_count": null,
       "outputs": []
     },
@@ -1039,7 +1039,7 @@
         "\n",
         "Have questions prepared!"
       ],
-      "id": "d82f25ba"
+      "id": "3f9b22cc"
     }
   ],
   "metadata": {

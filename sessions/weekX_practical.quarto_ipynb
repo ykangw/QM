@@ -43,7 +43,7 @@
         "\n",
         "## To add and run Python code"
       ],
-      "id": "5374f35e"
+      "id": "33f64e25"
     },
     {
       "cell_type": "code",
@@ -61,7 +61,7 @@
         "\n",
         "print(df_pop.head())"
       ],
-      "id": "bc5a515f",
+      "id": "8c7f9a6e",
       "execution_count": null,
       "outputs": []
     },
@@ -95,7 +95,7 @@
         "\n",
         "#### Answer"
       ],
-      "id": "590c6bc5"
+      "id": "43d4b17d"
     },
     {
       "cell_type": "code",
@@ -106,7 +106,7 @@
         "else:\n",
         "    print(\"Moscow is not in the cities list.\")"
       ],
-      "id": "f7ee3967",
+      "id": "05a0beb0",
       "execution_count": null,
       "outputs": []
     },
@@ -122,7 +122,7 @@
         "\n",
         "Don’t worry about understanding every detail of the Python code — what matters most is knowing which functions to use for a specific task, like checking minimum and maximum values or generating boxplots, and knowing how to debug when it goes wrong. Remember, practice makes perfect.\n"
       ],
-      "id": "be8281c1"
+      "id": "b131eae2"
     }
   ],
   "metadata": {
