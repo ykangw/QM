@@ -23,8 +23,15 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libudunits2-dev libproj-dev libgeos-dev libgdal-dev
-          
+          sudo apt-get install -y \
+            libudunits2-dev \
+            libproj-dev \
+            libgeos-dev \
+            libgdal-dev \
+            libglu1-mesa \
+            freeglut3-dev \
+            mesa-common-dev
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
