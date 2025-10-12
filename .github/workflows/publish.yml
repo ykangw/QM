@@ -55,7 +55,7 @@ jobs:
         run: Rscript renv-setup.R
 
       - name: Install missing R packages
-        run: Rscript -e 'install.packages(c("eurostat", "downlit", "xml2", "giscoR"))'
+        run: Rscript -e 'install.packages(c("eurostat", "downlit", "xml2", "giscoR", "ggimage"))'
 
       - name: Set up Python
         uses: actions/setup-python@v5
