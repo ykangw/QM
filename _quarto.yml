@@ -9,7 +9,6 @@ project:
     - "img"
     - "img/web"
     - "img/logo"
-    - "images"
     - "bib/"
     - "sessions/L1_images"
 
