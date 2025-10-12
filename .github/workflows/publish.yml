@@ -40,7 +40,7 @@ jobs:
 
       - name: Install casaviz from ZIP
         run: |
-          unzip data/casaviz.zip -d casaviz
+          unzip setup/casaviz.zip -d casaviz
           R CMD INSTALL casaviz
 
       - name: Cache renv packages
