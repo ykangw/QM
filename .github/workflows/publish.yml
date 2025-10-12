@@ -57,8 +57,8 @@ jobs:
 
       - name: Install missing R packages
         run: |
-          install.packages("magick")  # Ensure magick is installed first
-          install.packages(c("eurostat", "downlit", "xml2", "giscoR", "ggimage"))
+          Rscript -e 'install.packages("magick")'
+          Rscript -e 'install.packages(c("eurostat", "downlit", "xml2", "giscoR", "ggimage"))'
 
       - name: Set up Python
         uses: actions/setup-python@v5
