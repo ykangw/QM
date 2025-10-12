@@ -1,7 +1,6 @@
 ---
 title: "Prof D's Regression Sessions - Vol 1"
 subtitle: "AKA - Applied Linear Regression - Basics"
-title-block-banner: L6_images/regression2.png
 format:
   html: default
   ipynb: default

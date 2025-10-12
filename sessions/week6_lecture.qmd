@@ -189,7 +189,7 @@ knitr::opts_chunk$set(dev = "ragg_png")
 Motivation:
 
 -   Over the years I've marked too many dissertations and examined too many PhDs where people still get the basics of regression wrong - this is my attempt to help fix this once and for all!
--   I've been using this method for 20 years and I **still** get things wrong and I'm *still* learning new things about it!
+-   I've been using this method for 20 years and I ***still*** get things wrong and I'm ***still*** learning new things about it!
 -   Once you get the basics, it is perhaps *THE* most useful tool in your statistical toolbox
 -   Forget about machine learning and pointlessly complicated models - a simple regression model is your statistical Swiss Army Knife!
 
@@ -1860,3 +1860,8 @@ check_model(lm_fit,
 -   Now is your chance to put everything I have just said into practice in your own very similar analysis in the practical
 -   Practical is long - you won't complete in this session, but spend time going through it at home
 -   Make sure you complete the practical and understand all of this before next week's Regression Sessions Vol. 2 as it will build on and extend this session
+
+## Extension Activities
+
+#### Extension 1 - Data Visualisation
+
