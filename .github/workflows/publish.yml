@@ -54,6 +54,9 @@ jobs:
       - name: Restore R environment and install GitHub package
         run: Rscript renv-setup.R
 
+      - name: Install missing R packages
+        run: Rscript -e 'install.packages(c("eurostat", "downlit", "xml2", "giscoR"))'
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
