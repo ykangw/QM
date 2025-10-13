@@ -43,6 +43,7 @@ jobs:
         run: |
           unzip setup/casaviz.zip -d casaviz
           R CMD INSTALL casaviz
+          rm -rf casaviz
 
       - name: Cache renv packages
         uses: actions/cache@v3
