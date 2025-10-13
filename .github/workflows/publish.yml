@@ -31,7 +31,8 @@ jobs:
             libglu1-mesa \
             freeglut3-dev \
             mesa-common-dev \
-            libmagick++-dev
+            libmagick++-dev \
+            gdal-bin  # Added for geopandas/folium support
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -68,26 +69,24 @@ jobs:
           cache: 'pip'
 
       - name: Install Python dependencies
-      run: |
-        pip install --upgrade pip
-        pip install \
-          pyyaml \
-          jupyter \
-          statsmodels \
-          pyjanitor \
-          pathlib \
-          matplotlib \
-          pandas \
-          numpy \
-          scipy \
-          seaborn \
-          geopandas \
-          folium \
-          geopandas \
-          contextily \
-          scikit-learn \
-          branca
-          pip install -r requirements.txt
+        run: |
+          pip install --upgrade pip
+          pip install \
+            pyyaml \
+            jupyter \
+            statsmodels \
+            pyjanitor \
+            matplotlib \
+            pandas \
+            numpy \
+            scipy \
+            seaborn \
+            geopandas \
+			      folium \
+			      geopandas \
+		      	contextily \
+		      	scikit-learn \
+			      branca
 
       - name: Copy custom SCSS theme to Quarto directory
         run: |
