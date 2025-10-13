@@ -82,11 +82,11 @@ jobs:
             scipy \
             seaborn \
             geopandas \
-			      folium \
-			      geopandas \
-		      	contextily \
-		      	scikit-learn \
-			      branca
+			folium \
+			geopandas \
+		    contextily \
+		    scikit-learn \
+			branca
 
       - name: Copy custom SCSS theme to Quarto directory
         run: |
