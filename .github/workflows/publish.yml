@@ -31,7 +31,7 @@ jobs:
             libglu1-mesa \
             freeglut3-dev \
             mesa-common-dev \
-            libmagick++-dev  # Added for magick R package
+            libmagick++-dev
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -72,6 +72,10 @@ jobs:
           pip install --upgrade pip
           pip install jupyter
           pip install -r requirements.txt
+
+      - name: Copy custom SCSS theme to Quarto directory
+        run: |
+          sudo cp css/casa-slides.scss /opt/quarto/share/formats/revealjs/themes/
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
