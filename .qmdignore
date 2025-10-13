@@ -1,0 +1,5 @@
+# Ignore a specific file
+casaviz/html-report/html-report.qmd
+
+# Ignore anything in a drafts folder
+casaviz/*.qmd
