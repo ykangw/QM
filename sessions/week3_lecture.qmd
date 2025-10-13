@@ -57,6 +57,12 @@ Research science is about coming up with hypotheses and evaluating them.
 
 It's iterative - as we find out new information we update our method and processes accordingly. 
 (Gelman et al. 2020. Bayesian Workflow)
+
+We see stories in the news, how do we know what to believe and what not to believe? This is where having an understanding of statistical tests can help us - we can evaluate claims to try and figure out which are/ aren't statistically significant.
+
+Statisitical tests are frequently used in science to figure out if our findings are important or not - essentially a way to formally define a threshold of what is an interesting result vs, what isn't an interesting result. 
+
+A clearly defined, and reporducible way to evaluate findings. 
 :::
 
 ## Learning Objectives
@@ -68,46 +74,6 @@ By the end of this lecture you should be able to:
 3. Evaluate a hypothesis using appropriate statistical tests. 
 :::
 
-<!-- # Motivations
-
-## How do we know what to believe?
-
-NOTE: change this to focus on the idea of using statistics to validate claims - i.e. what we see in the media or on the news. 
-
-- Crime rates across cities 
-- Spatial patterns of school achievement 
-- Inequalities in access to transport 
-
-<!-- <div style="text-align:center;">
-  <img src="L3_images/lime_bike_leg.png"
-       alt="Screenshot from the Telegraph online of an article about a rise in Lime Bike accidents."
-       style="max-width:70%" class="fragment">
-</div>
-
-<div style="text-align:center;">
-  <img src="L3_images/lime_bike_clapham.png"
-       alt="Screenshot from the Guardian of an article about dangerous biking in Clapham."
-       style="max-width:70%; margin-top:-70%;" class="fragment">
-</div>
-
-<div style="text-align:center;">
-  <img src="L3_images/lime_bike_shoreditch.png"
-       alt="Screenshot from the Standard about Lime bike accidents in Shoreditch."
-       style="max-width:70%; margin-top:-70%;" class="fragment">
-</div>
-
-<div class="fragment"
-     style="text-align:center; margin-top:-60%; background:#4e3c56; color:white; padding:1em; border-radius:10px;">
-  <strong>Is cycling in London less safe since the introduction of Lime bikes?</strong>
-</div> -->
-
-::: {.notes}
-We see stories in the news, how do we know what to believe and what not to believe? This is where having an understanding of statistical tests can help us - we can evaluate claims to try and figure out which are/ aren't statistically significant.
-
-Statisitical tests are frequently used in science to figure out if our findings are important or not - essentially a way to formally define a threshold of what is an interesting result vs, what isn't an interesting result. 
-
-A clearly defined, and reporducible way to evaluate findings. 
-::: -->
 
 # How do you come up with a hypothesis? 
 
