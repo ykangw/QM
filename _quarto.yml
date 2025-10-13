@@ -1,7 +1,5 @@
 project:
   type: website
-  exclude:
-    - "casaviz/html-report/*.qmd"
   output-dir: _site
   preview:
     port: 4200
