@@ -7,7 +7,8 @@ project:
     - "*.qmd"
   resources:
     - "img"
-    - "images"
+    - "img/web"
+    - "img/logo"
     - "bib/"
     - "sessions/L1_images"
 
