@@ -60,7 +60,7 @@ jobs:
       - name: Install missing R packages
         run: |
           Rscript -e 'install.packages("magick")'
-          Rscript -e 'install.packages(c("eurostat", "downlit", "xml2", "giscoR", "ggimage", "see"))'
+          Rscript -e 'install.packages(c("eurostat", "downlit", "xml2", "giscoR", "ggimage", "see", "huxtable"))'
 
       - name: Set up Python
         uses: actions/setup-python@v5
