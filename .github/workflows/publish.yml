@@ -68,9 +68,25 @@ jobs:
           cache: 'pip'
 
       - name: Install Python dependencies
-        run: |
-          pip install --upgrade pip
-          pip install jupyter
+      run: |
+        pip install --upgrade pip
+        pip install \
+          pyyaml \
+          jupyter \
+          statsmodels \
+          pyjanitor \
+          pathlib \
+          matplotlib \
+          pandas \
+          numpy \
+          scipy \
+          seaborn \
+          geopandas \
+          folium \
+          geopandas \
+          contextily \
+          scikit-learn \
+          branca
           pip install -r requirements.txt
 
       - name: Copy custom SCSS theme to Quarto directory
