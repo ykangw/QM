@@ -14,8 +14,8 @@ cloud-config.yml
 # *.csv
 *.gz
 *.parquet
-*.xlsx
-*.shp
+# *.xlsx
+# *.shp
 
 .Rproj.user
 .Rprofile
