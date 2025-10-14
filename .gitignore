@@ -16,7 +16,11 @@ renv-setup.R
 *.parquet
 *.xlsx
 *.shp
+
 .Rproj.user
 .Rprofile
+.Rhistory
+*.Rproj
+*.quarto_ipynb
 
 /.luarc.json
