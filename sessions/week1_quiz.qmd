@@ -115,7 +115,7 @@ D.  Median
 :::: {.columns}
 
 ::: {.column width="55%"}
-In a dataset of city populations, which is typically highly skewed, you would generally expect:
+In a dataset of UK city populations, which is typically highly skewed, you would generally expect:
 
 A.  The mean population to be higher than the median population. ✅
 B.  The median population to be higher than the mean population.

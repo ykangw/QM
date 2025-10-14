@@ -17,3 +17,5 @@ cloud-config.yml
 .Rproj.user
 
 /.luarc.json
+
+**/*.quarto_ipynb
