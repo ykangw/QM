@@ -4,3 +4,12 @@ jupyter
 scipy
 matplotlib
 plotly
+pyyaml
+statsmodels
+pyjanitor
+seaborn
+geopandas
+folium
+scikit-learn
+branca
+contextily

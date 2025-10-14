@@ -6,6 +6,8 @@ cloud-config.yml
 /_freeze/
 /docs/
 
+# renv-setup.R
+
 .DS_Store
 .ipynb_checkpoints/
 
@@ -14,7 +16,11 @@ cloud-config.yml
 *.parquet
 *.xlsx
 *.shp
+
 .Rproj.user
 .Rprofile
+.Rhistory
+*.Rproj
+*.quarto_ipynb
 
 /.luarc.json
