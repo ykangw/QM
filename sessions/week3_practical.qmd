@@ -21,9 +21,9 @@ This practical follows on from practical 2, so if you haven't done that yet I su
 
 We are going to look at schools perfomance data in England once again. 
 
-The data is sourced from []() and is downloadable [here]().
+The data is sourced from gov.uk [here](https://www.compare-school-performance.service.gov.uk/download-data) - HOWEVER I have also saved a copy of the relevant dataset to the Github repo (in case the dataset is removed from the website) which you can load directly in the code below. In this notebook we're using the performance table for academic year 2022/23: 'Performancetables_130242/2022-2023'.
 
-We have saved a copy of this dataset to the Github repo, in case that the dataset is removed from the website.
+If you do want to download the data directly from the gov.uk website then you need to choose the academic year '2022 to 2023', then 'All of England', then 'Key stage 4 results (final)'. Then you'll want to download the 'Data in CSV format' and also 'Explanation of terminology used in the data files'.
 
 ```{python}
 import pandas as pd
@@ -33,19 +33,26 @@ import numpy as np
 
 # Read CSV file, handling common missing value entries
 na_vals = ["", "NA", "SUPP", "NP", "NE", "SP", "SN", "SUPPMAT"]
-df_ks4 = pd.read_csv(
-    'L2_data/england_ks4final.csv',
+df_ks4 = pd.read_csv('https://raw.githubusercontent.com/huanfachen/QM/refs/heads/main/sessions/L2_data/england_ks4final.csv',
     na_values = na_vals
 )
+```
 
+Following the same steps as last week we're going to do some initial data pre-processing: 
+
+```{python}
 info_cols = ['RECTYPE', 'LEA', 'SCHNAME', 'TOTPUPS', 'TOWN']
 ebaccs_cols = ['EBACCAPS', 'EBACCAPS_GIRLS', 'EBACCAPS_BOYS']
 
 df = df_ks4[info_cols + ebaccs_cols]
 
-df[['TOTPUPS']+ebaccs_cols] = df[['TOTPUPS']+ebaccs_cols].apply(pd.to_numeric, errors='coerce')
+# make a copy of the dataframe to avoid SettingWithCopyWarning
+df = df.copy()
 
-df = df[df['RECTYPE'].isin([1, 2])].copy()
+df.loc[:, ebaccs_cols] = df.loc[:, ebaccs_cols].apply(pd.to_numeric, errors='coerce')
+df['TOTPUPS'] = pd.to_numeric(df['TOTPUPS'], errors='coerce').fillna(0).astype('int64')
+
+df = df[df['RECTYPE'].isin([1, 2])]
 
 df.head()
 ```
@@ -151,9 +158,9 @@ We already have the evidence - it's our datasets `df_London['EBACCAPS']` and `df
 
 Calculate the p-value. 
 
-We can use a built in function from `scipy.stats` called `ttest_ind` to do step 4 for us. You can read more about this function [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html). 
+The statistical test we're using here is Student's T-test for two samples. We can use a built in function from `scipy.stats` called `ttest_ind` to do the statistical test for us. You can read more about this function [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html). 
 
-First we need to check whether we can assume that the samples are drawn from populations with the same standard deviation or not. (Provided neither standard deviation is double the other, this should be ok). 
+Strictly, Student's T-test for two-samples assumes both samples have equal standard deviations. However, practically the test is robust as long as the standard deviations are similar - a heuristic being that as long as neither standard deviation is double the other, we're ok to use the test.  
 
 ```{python}
 London_std = df_London['EBACCAPS'].mean()
@@ -211,7 +218,7 @@ elif p_value >= alpha:
 ```
 :::
 
-Hence we can conclude that the evidence supports there is a statistically significant differnece between the mean student attainment on the EBacc in London, versus outside of London. 
+Hence we can conclude that the evidence supports there is a statistically significant difference between the mean student attainment on the EBacc in London, versus outside of London. 
 
 ## A more complicated research question
 
@@ -241,7 +248,7 @@ df[['EBACCAPS_GIRLS', 'EBACCAPS_BOYS']].describe()
 
 ### Plotting the data 
 
-Let's also visually inspect the data. 
+Let's also visually inspect the data by plotting a histogram. 
 
 ```{python}
 plt.hist(df['EBACCAPS_GIRLS'], bins=20, color='#abc766', alpha=0.5, label='Girls')
@@ -313,9 +320,9 @@ We already have the evidence - it's our datasets `df['EBACCAPS_GIRLS']` and `df[
 
 ### Step 4 
 
-Calculate the p-value
+Calculate the p-value.
 
-We can use a built in function from `scipy.stats` called `ks_2samp` to do step 4 for us. You can read more about this function [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html). 
+The statistical test we're going to use here is the Kolmogorov Smirnov test. We can use a built in function from `scipy.stats` called `ks_2samp` to do step 4 for us. You can read more about this function [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html). 
 
 There are two outputs from the function `scipy.stats.ks_2samp`: the **test statistic** and the **p value**. 
 

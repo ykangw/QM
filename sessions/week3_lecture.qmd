@@ -49,14 +49,15 @@ This week we look at how to properly ask the research question, and how to answe
 </div>
 
 ::: {.notes}
-This lecture thinking about posing and answering research questions. 
-
 Last week we looked at exploratory data analysis - now the formal process of coming up with and evaluating questions - very much part of the scientific method.
 
-Research science is about coming up with hypotheses and evaluating them.
+This lecture thinking about posing and answering research questions. Research science is all about coming up with hypotheses and evaluating them!
 
-It's iterative - as we find out new information we update our method and processes accordingly. 
-(Gelman et al. 2020. Bayesian Workflow)
+We see stories in the news, how do we know what to believe and what not to believe? This is where having an understanding of statistical tests can help us - we can evaluate claims to try and figure out which are/ aren't statistically significant.
+
+Statisitical tests are frequently used in science to figure out if our findings are important or not - essentially a way to formally define a threshold of what is an interesting result vs, what isn't an interesting result. 
+
+A clearly defined, and reproducible way to evaluate findings. 
 :::
 
 ## Learning Objectives
@@ -67,47 +68,6 @@ By the end of this lecture you should be able to:
 2. Define the Type I and Type II errors. 
 3. Evaluate a hypothesis using appropriate statistical tests. 
 :::
-
-<!-- # Motivations
-
-## How do we know what to believe?
-
-NOTE: change this to focus on the idea of using statistics to validate claims - i.e. what we see in the media or on the news. 
-
-- Crime rates across cities 
-- Spatial patterns of school achievement 
-- Inequalities in access to transport 
-
-<!-- <div style="text-align:center;">
-  <img src="L3_images/lime_bike_leg.png"
-       alt="Screenshot from the Telegraph online of an article about a rise in Lime Bike accidents."
-       style="max-width:70%" class="fragment">
-</div>
-
-<div style="text-align:center;">
-  <img src="L3_images/lime_bike_clapham.png"
-       alt="Screenshot from the Guardian of an article about dangerous biking in Clapham."
-       style="max-width:70%; margin-top:-70%;" class="fragment">
-</div>
-
-<div style="text-align:center;">
-  <img src="L3_images/lime_bike_shoreditch.png"
-       alt="Screenshot from the Standard about Lime bike accidents in Shoreditch."
-       style="max-width:70%; margin-top:-70%;" class="fragment">
-</div>
-
-<div class="fragment"
-     style="text-align:center; margin-top:-60%; background:#4e3c56; color:white; padding:1em; border-radius:10px;">
-  <strong>Is cycling in London less safe since the introduction of Lime bikes?</strong>
-</div> -->
-
-::: {.notes}
-We see stories in the news, how do we know what to believe and what not to believe? This is where having an understanding of statistical tests can help us - we can evaluate claims to try and figure out which are/ aren't statistically significant.
-
-Statisitical tests are frequently used in science to figure out if our findings are important or not - essentially a way to formally define a threshold of what is an interesting result vs, what isn't an interesting result. 
-
-A clearly defined, and reporducible way to evaluate findings. 
-::: -->
 
 # How do you come up with a hypothesis? 
 
@@ -257,7 +217,7 @@ In [five]{style="color:#49a0c4"} simple steps.
 - it directly contradicts the null hypothesis
 
 ::: {.notes}
-Be careful in how the two are defined. H_1 needs to contradict H_0. 
+Be careful in how the two are defined. Logically H_1 needs to directly contradict H_0. 
 
 For example if my H_0 was everyone likes chocolate. H_1 couldn't be some people prefer biscuits - since in this situation both H_0 and H_1 can be true at the same time. H_1 would have to be that not everyone likes chocolate. 
 :::
@@ -304,32 +264,26 @@ Decide what "too unlikely" means **before you do the test**
 ::: {.notes}
 It's important to decide on your significance level prior, as otherwise you might find an event which is significant at the 10% threshold and not at 5% - which could lead to bad scientific practise.
 
-There's a balance - often don't know what will be interesting - so you do some exploratory data analysis. But you shouldn't be fishing around for stuff - needs to be grounded in theory and literature. 
+There's a balance - often we don't know what will be interesting - so you do some exploratory data analysis. But you shouldn't be fishing around for stuff - needs to be grounded in theory and literature. 
 :::
 
 ## Step 3
 **Identify the evidence**
 
-<!-- ```{=tex}
-\begin{align}
-f(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
-\end{align}
-``` -->
-
 ::: {.incremental}
 - This could mean collecting the data
-- Or identifying a suitable exisiting dataset
+- Or identifying a suitable existing dataset
+  - Crucial that it's *suitable* - think about biased/ unrepresentative data 
 :::
 
 ::: {.notes}
 In quant methods this normally means finding an open public dataset to use. 
 
-The evidence needs to be suitable to answer the question - think about biased/representtaive dtaa from last week. Soemthign they will be assessed on in the assessment. 
+The evidence needs to be suitable to answer the question - think about biased/representative data from last week. Something they will be assessed on in the assessment. 
 :::
 
 ## Step 4
 **Calculate the p-value**
-
 [*The p-value is the probability of seeing the evidence, or something even more extreme, if the null hypothesis is true.*]{style="color:#49a0c4"}
 
 ::: {.incremental}
@@ -425,6 +379,10 @@ From [NHS digital](https://digital.nhs.uk/data-and-information/publications/stat
 - Of these, $77.1%$ were found to not have breast cancer at follow up assessment. 
 - Leading to a **false positive rate of $3.1%$.**
 
+## Example: Evaluating the evidence
+
+From [NHS digital](https://digital.nhs.uk/data-and-information/publications/statistical/breast-screening-programme/england---2020-21/qualitystatement3).
+
 [False negative]{style="color:#abc766"} 
 
 - Those who had a negative screening but did in fact have breast cancer.
@@ -487,8 +445,11 @@ It's important to not make unethical assumptions in choosing the hypothesis.
 
 . . .
 
+<br>
+
 Causation implies correlation. 
-**BUT** correlation **does not** imply causation!!!
+
+**BUT** correlation **does not** imply causation!
 
 ::: {.notes}
 Lots of things can be correlated **BUT** it doesn't mean one event caused another. 
@@ -660,7 +621,8 @@ Aha!
 
 . . .
 
-We need to know what statistical test to use! 
+
+How do we do this? We need to know what statistical test to use! 
 
 # Statistical tests 
 
@@ -668,24 +630,24 @@ We need to know what statistical test to use!
 
 **Parametric tests**
 
-- Evaluate hypothesis for specific parameters 
-- Assumptions about the distribution 
-  - assumed normal distribution 
-  - independent and unbiased samples 
-  - equal/comparable variances 
-- Continuous data 
+- Assumptions about the distribution:
+  - Normal distribution 
+  - Independent and unbiased samples 
+  - Equal/comparable variances 
+  - Continuous data 
 
 . . .
 
 **Non-parametric tests**
 
-- Evaluate hypothesis for entire population distribution 
 - Typcially less assumptions on the distribution 
 - Continuous or discrete data 
 
 ## Deciding on a test 
 
-NOTE: want a table here that guides you on how to choose an appropriate statistical test 
+Sometimes it can be hard to figure out which statistical test to use. 
+
+We're going to cover common tests useful in data analysis. But you might find this [flowchart](https://www.brookes.ac.uk/getmedia/bede726d-771d-461f-900b-a3526fc7e199/stats-flow-chart.pdf) or this [table](https://stats.oarc.ucla.edu/other/mult-pkg/whatstat/) helpful for understanding how different tests can be applied.
 
 # Parametric tests 
 
@@ -706,7 +668,7 @@ NOTE: want a table here that guides you on how to choose an appropriate statisti
 ::: {.column width="50%"}
 
 <div style="text-align:center;">
-  <img src="L3_images/William_Sealy_Gosset.jpg" alt="A photograph of William Sealy Gosset" style="max-width:80%;">
+  <img src="L3_images/William_Sealy_Gosset.jpg" alt="A photograph of William Sealy Gosset" style="max-width:70%;">
   <div style="font-size:0.8em; color: #555; margin-top:4px;">
     This is William Sealy Gosset - he was **not** a student.
     Image credit: https://en.wikipedia.org/wiki/William_Sealy_Gosset#/media/File:William_Sealy_Gosset.jpg
@@ -721,6 +683,30 @@ NOTE: want a table here that guides you on how to choose an appropriate statisti
 ::: {.notes}
 William Gosset was working for Guinness brewing company when he came up with the t-test - but his company wanted his to publish under a pseudonym - hence 'student'. He was comparing the chemical properties of different samples of barley. 
 :::
+
+## Student's T-test: steps 
+
+Calculate: 
+:::{incremental}
+- test statistic (called the t value)
+  - [*The test statistic is a number that summarises the data so as to determine whether to reject the null hypothesis.*]{style="color:#49a0c4"} 
+- degrees of freedom 
+  - [*The number of degrees of freedom is the number of values in the final calculation that are free to vary.*]{style="color:#49a0c4"}
+:::
+
+. . . 
+
+Which we use to identify the p value - typically using a 'look up table'. 
+
+## Student's T-test: types 
+
+<div style="text-align:center;">
+  <img src="L3_images/t_tets_types.webp" alt="Types of T-tests" style="max-width:80%;">
+  <div style="font-size:0.8em; color: #555; margin-top:4px;">
+    Image credit: https://www.geeksforgeeks.org/data-science/t-test/
+    
+  </div>
+</div>
 
 ## Student's T-test: one sample
 [*Tests whether the population mean is equal to a specific value or not*]{style="color:#49a0c4"} 
@@ -741,6 +727,26 @@ where
 - $\mu_{0}$ is the hypothesised population mean
 - $s$ is the sample standard deviation
 - $n$ is the sample size
+
+## Student's T-test: one sample, degrees of freedom
+[*The number of degrees of freedom is the number of values in the final calculation that are free to vary.*]{style="color:#49a0c4"}
+
+```{=tex}
+\begin{align}
+df = n-1
+\end{align}
+```
+
+<!-- ## Student's T-test: degrees of freedom 
+
+
+In Student's T-Test with one sample the degrees of freedom are: 
+
+```{=tex}
+\begin{align}
+df = n -1
+\end{align}
+``` -->
 
 ## Student's T-test: two sample 
 [*Tests if the population means for two different groups are equal or not.*]{style="color:#49a0c4"}
@@ -769,6 +775,17 @@ s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}
 
 with $s_1, s_2$ the sample standard deviations.
 
+## Student's T-test: two sample, degrees of freedom 
+[*The number of degrees of freedom is the number of values in the final calculation that are free to vary.*]{style="color:#49a0c4"}
+
+In the two-sample Student's T-test the degrees of freedom are:
+
+```{=tex}
+\begin{align}
+df = n_1 + n_2 - 2
+\end{align}
+```
+
 ## Student's T-test: paired 
 [*Tests if the difference between paired measurements for a population is zero or not - normally used with longitudinal data.*]{style="color:#49a0c4"} 
 
@@ -786,6 +803,7 @@ where
 - $\bar{d}$ is the mean of the paired differences
 - $s_d$ is the standard deviation of the paired differences
 - $n$ is the number of pairs
+- the number of degress of freedom is $n-1$
 
 ::: {.notes}
 For example used when I have data from different years, and want to figure out if there's a difference across the years. 
@@ -793,18 +811,17 @@ For example used when I have data from different years, and want to figure out i
 You need to be able to pair the data - i.e. the same things being observed at time point 1 and time point 2. 
 :::
 
-
 ## How many tails? 
 
 Tests can be one-tailed or two-tailed - which you want is determined when you define the hypothesis.
-
-*One tailed:* if you only care is the mean is significant in one direction
-*Two tailed:* if you care about the mean being different regardless of direction 
 
 <div style="text-align:center;">
   <img src="L3_images/one_vs_two_tailed.png" alt="Normal distribution with one vs two tails." style="max-width:100%">
 </div>
 
+*One tailed:* if you only care is the mean is significant in one direction
+
+*Two tailed:* if you care about the mean being different regardless of direction 
 
 <!-- ## Regression T-tests
 
@@ -821,13 +838,28 @@ This will be covered further in lecture X on linear regression.  -->
 
 ## Kolmogorov-Smirnov
 
-NOTE: want a diagram showing this.
+:::: {.columns}
+
+::: {.column width="60%"}
+
+<div style="text-align:center;">
+  <img src="L3_images/overlayed_histograms.png" alt="Histograms of two different datasets." style="max-width:100%">
+</div>
+
+
+:::
+
+::: {.column width="40%"}
 
 ::: {.incremental}
 - Compares two probability distributions 
 - Can be used to test whether an observed sample came from a given distribution 
 - Or to test whether two samples both came from the same distribution
 :::
+
+:::
+
+::::
 
 ::: {.notes}
 Named after two Russian soviet mathematicians working in the mid 20th century
@@ -887,17 +919,24 @@ where
 
 The hypotheses would be: 
 
-$H_0$: the distributions are the same
-$H_1$: the distributions differ
+- $H_0$: the distributions are the same
+- $H_1$: the distributions differ
+
+. . .
 
 Larger values of the test statistic $D$ is stronger evidence against $H_0$. 
 
 ## Kernel density estimate (KDE)
+
 ::: {.incremental}
-- Used to generate a smooth PDF for a random variable dataset. 
-- Useful for understanding the underlying distribution of a sample .
-- Think of it as getting a smooth function to describe a histogram of data. 
-- There are no assumptions about the prior distribution.
+- Used to generate a smooth probability density function for a random variable dataset
+- Useful for understanding the underlying distribution of a sample 
+- Think of it as getting a smooth function to describe a histogram of data
+- There are no assumptions about the prior distribution
+:::
+
+:::{.notes}
+Remember from last week - the probability density function (PDF) describes the likelihood of different outcomes for a continuous random variable
 :::
 
 ## KDE of simulated heights  
@@ -929,12 +968,10 @@ y_vals = kde(x_vals)
 
 ## KDE use case
 
-NOTE: want a diagram to show this. 
-
 ::: {.incremental}
-- fit the KDE to two samples
+- fit the KDE to two sample datasets
 - compare visually 
-- carry out non-paremetric test - such as Kolmogorov-Smirnov
+- carry out non-parametric test - such as Kolmogorov-Smirnov
 :::
 
 # Example: students height
@@ -966,12 +1003,12 @@ $\bar{x}_2 = 180$, $s_2 = 6$, $n_2$ = 103
 **Calculate the p-value**
 
 - Use Student's T-test: two sample
-- don't care if students are taller or shorter - so use two-tailed test 
+  - don't care if students are taller or shorter - so use two-tailed test 
+- Calculate the t value 
+- Calculate the degress of freedom 
+- Get the p value 
 
-
-## Example - step 4 - calculation
-
-NOTE: want to add how to calculate this in Python 
+## Example - step 4 - calculate the t value
 
 Substituting values:
 
@@ -981,7 +1018,7 @@ s_p &= \sqrt{\frac{(95-1)\cdot 5^2 + (103-1)\cdot 6^2}{95+103-2}} \approx 5.55
 \end{align}
 ```
 
-Now compute $t$:
+Now compute $t-value$:
 
 ```{=tex}
 \begin{align}
@@ -989,14 +1026,14 @@ t &= \frac{170 - 180}{5.55 \cdot \sqrt{\tfrac{1}{95} + \tfrac{1}{103}}} \approx 
 \end{align}
 ```
 
-## Example - step 5
-**Compare p-value with hypothesis level**
+:::{.notes}
+Don't need to know the formulas because in practise we'll be using Python functions to do the calculations for us. 
 
-Now we need to compare the test statistic to the critical t-value.  
+Using the right python function is something we'll cover in todays tutorial. 
+:::
 
-## Example - step 5 - calculation
 
-NOTE: need to add a description of degrees of freedom
+## Example - step 4 - calculate the degrees of freedom 
 
 For Student's T-Test we need degrees of freedom:  
 ```{=tex}
@@ -1004,40 +1041,43 @@ For Student's T-Test we need degrees of freedom:
 df = n_1 + n_2 - 2 = 95 + 103 - 2 = 196
 \end{align}
 ```
-Then use Python to calculate the two-tailed critical t-value at $\alpha = 0.05$.
+
+## Example - step 4 - calculate the p value 
+
+Traditionally this uses look up tables - we're going to use Python. 
 
 ```{python}
 #| echo: true
 #| output: true 
-from scipy.stats import t
+from scipy import stats
 
-alpha = 0.05
-df = 196
+t_val = -12.7
+df = 18
 
-# two-tailed: split alpha
-t_crit = t.ppf(1 - alpha/2, df)
-print("Critical t-value:", t_crit.round(2))
+# Two-tailed p-value
+p_value_two_tailed = 2 * (1 - stats.t.cdf(abs(t_val), df))
+
+print("Two-tailed p-value:", p_value_two_tailed.round(2))
 ```
 
-## Example - conclusion 
+## Example - step 4 - *simplified* 
 
-Test statistic: $t \approx -12.7$.
+We can do all the previous calulations in one step using the `scipy' library - we'll practise this in the tutorial.
 
-Critical t-value at $\alpha=0.05$: $t_{crit} = 1.97$
+## Example - step 5
+**Compare p-value with hypothesis level**
 
-. . . 
+Now we need to compare the p-value to our siginificance level. 
 
-<br>
+p-value = $2.8x10^{-10} < 0.05$ = alpha
 
-Since
+. . .
 
-```{=tex}
-\begin{align}
-t= |-12.7| \gg 1.97= t_crit
-\end{align}
-```
+...we reject $H_0$!
 
-we reject $H_0$. Male and female students have significantly different heights.
+. . .
+
+And conclude that male and female students have significantly different heights.
 
 # Overview 
 We've covered: 

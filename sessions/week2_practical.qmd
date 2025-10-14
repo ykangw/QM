@@ -19,15 +19,17 @@ This week is focussed on using some common functions in Python to plot data and 
 
 # Starting the Practical
 
-As per last week: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. If you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.
+As per last week: download the notebook to your `QM` folder, switch over to `JupyterLab` (which will be running in Podman/Docker) and get to work. 
+
+*Optionally* if you want to save the completed notebook to your Github repo, you can `add`, `commit`, and `push` the notebook in Git after you download it. When you're done for the day, save your changes to the file (This is very important!), then `add`, `commit`, and `push` your work to save the completed notebook.
 
 # Loading the data 
 
 We are going to look at schools performance data in England. 
 
-The data is sourced from gov.uk and is downloadable [here](https://www.compare-school-performance.service.gov.uk/download-data). In this notebook we're using the performance table for academic year 2022/23: 'Performancetables_130242/2022-2023'.
+The data is sourced from gov.uk [here](https://www.compare-school-performance.service.gov.uk/download-data) - HOWEVER I have also saved a copy of the relevant dataset to the Github repo (in case the dataset is removed from the website) which you can load directly in the code below. In this notebook we're using the performance table for academic year 2022/23: 'Performancetables_130242/2022-2023'.
 
-We have saved a copy of this dataset to the Github repo, in case the dataset is removed from the website.
+If you do want to download the data directly from the gov.uk website then you need to choose the academic year '2022 to 2023', then 'All of England', then 'Key stage 4 results (final)'. Then you'll want to download the 'Data in CSV format' and also 'Explanation of terminology used in the data files'.
 
 ```{python}
 import pandas as pd
@@ -36,8 +38,7 @@ import numpy as np
 
 # Read CSV file, handling common missing value entries
 na_vals = ["", "NA", "SUPP", "NP", "NE", "SP", "SN", "SUPPMAT"]
-df_ks4 = pd.read_csv(
-    'L2_data/england_ks4final.csv',
+df_ks4 = pd.read_csv('https://raw.githubusercontent.com/huanfachen/QM/refs/heads/main/sessions/L2_data/england_ks4final.csv',
     na_values = na_vals
 )
 
@@ -45,6 +46,9 @@ info_cols = ['RECTYPE', 'LEA', 'SCHNAME', 'TOTPUPS']
 ebaccs_cols = ['EBACCAPS', 'EBACCAPS_LO', 'EBACCAPS_MID', 'EBACCAPS_HI']
 
 df = df_ks4[info_cols + ebaccs_cols]
+
+# work on a copy of the dataframe to avoid SettingWithCopyWarning
+df = df.copy()
 
 df.head()
 ```
@@ -111,7 +115,8 @@ df.dtypes
 OK, so we can see that not all the data types are quite as expected. Let's reformat them to make it easier later. 
 
 ```{python}
-df[['TOTPUPS']+ebaccs_cols] = df[['TOTPUPS']+ebaccs_cols].apply(pd.to_numeric, errors='coerce')
+df.loc[:, ebaccs_cols] = df.loc[:, ebaccs_cols].apply(pd.to_numeric, errors='coerce')
+df['TOTPUPS'] = pd.to_numeric(df['TOTPUPS'], errors='coerce').fillna(0).astype('int64')
 ```
 
 And we can check again: 
@@ -249,9 +254,9 @@ xmin = 0
 xmax = 9
 x = np.linspace(xmin, xmax, 100)
 p = sps.norm.pdf(x, mu, std)
-plt.plot(x, p, 'k', linewidth=2, color="#e16fca")
+plt.plot(x, p, linewidth=2, color="#e16fca")
 
-plt.title(f"Fit results: $\mu$ = {mu:.2f},  $\sigma$ = {std:.2f}")
+plt.title(f"Fit results: $\\mu$ = {mu:.2f},  $\\sigma$ = {std:.2f}")
 plt.xlim(0, 9)
 plt.xlabel("EBacc score")
 plt.ylabel("Density")
@@ -261,11 +266,11 @@ plt.show()
 
 Note that this time we plot the histogram with `density=True` - this scales the histogram data. 
 
-Another way to think about whether soemthing is normally distirbuted is to look at the Q-Q plot. 
+Another way to think about whether something is normally distirbuted is to look at the Q-Q plot. 
 
 ### Q-Q plot 
 
-A Q-Q plot is used to see if a dataset follows a ceratin distirbution, by comparing the quartiles of the two. You can read a bit more about Q-Q plots [here](https://www.datacamp.com/tutorial/qq-plot).
+A Q-Q plot is used to see if a dataset follows a certain distribution, by comparing the quartiles of the two. You can read a bit more about Q-Q plots [here](https://www.datacamp.com/tutorial/qq-plot).
 
 Q-Q plots are a good way to check if a dataset follows a normal distribution. 
 
@@ -287,12 +292,15 @@ The results of the Q-Q plot can help us to understand the dataset:
 - Light tails (fewer extreme values than normal): *points bend inward at the ends*
 - Skewed data: *points systematically deviate above or below the line*
 
-We can plot the Q-Q plot in Python: 
+We can plot the Q-Q plot in Python. Note that before we Q-Q plot the sample data we will need to normalise it - this accounts for the fact that our data is not centred around 0. 
 
 ```{python}
 # Drop missing values
 data = df['EBACCAPS'].dropna().values
 n = len(data)
+
+# normalise the data
+data = (data - np.mean(data)) / np.std(data)
 
 # Sort the sample data
 sample_quantiles = np.sort(data)
@@ -313,11 +321,11 @@ plt.ylabel("Sample quantiles")
 plt.show()
 ```
 
-Ok, so in case it wasn't clear from the previous plot we can see that the data definitely isn't normal. 
+Ok, so in case it wasn't clear from the previous plot we can see that the data definitely isn't perfectly normal. 
 
 ## What's causing the skew? 
 
-If you remember above this dataset includes schools of two different types, we have mainstream schools and special schools. 'special schools' refers to schools which cater to students with special educational needs. let's see whta happens when we split our historgram according to the type of school. 
+If you remember above this dataset includes schools of two different types, we have mainstream schools and special schools. 'special schools' refers to schools which cater to students with special educational needs. Let's see what happens when we split our histogram according to the type of school. 
 
 ```{python}
 # histogram of # plot histogram of EBACCAPS by RECTYPE
@@ -376,6 +384,9 @@ df2 = df[df['RECTYPE'] == 2]
 data = df1['EBACCAPS'].dropna().values
 n = len(data)
 
+# normalise the data
+data = (data - np.mean(data)) / np.std(data)
+
 # Sort the sample data
 sample_quantiles = ??
 
@@ -401,6 +412,9 @@ plt.show()
 # Drop missing values
 data = df1['EBACCAPS'].dropna().values
 n = len(data)
+
+# normalise the data
+data = (data - np.mean(data)) / np.std(data)
 
 # Sort the sample data
 sample_quantiles = np.sort(data)
@@ -432,6 +446,9 @@ plt.show()
 data = df2['EBACCAPS'].dropna().values
 n = len(data)
 
+# normalise the data
+data = (data - np.mean(data)) / np.std(data)
+
 # Sort the sample data
 sample_quantiles = ??
 
@@ -457,6 +474,9 @@ plt.show()
 # Drop missing values
 data = df2['EBACCAPS'].dropna().values
 n = len(data)
+
+# normalise the data
+data = (data - np.mean(data)) / np.std(data)
 
 # Sort the sample data
 sample_quantiles = np.sort(data)
@@ -522,7 +542,8 @@ plt.show()
 :::
 
 ### EBacc by school size 
-Try plotting the EBacc scores against the total number of pupils ('TOTPUPS') - what can you say about this distribution? 
+
+If you've finished everything else, then you might like to look at some of the other variables in the dataset. Try plotting the EBacc scores against the total number of pupils ('TOTPUPS') - for example using a scatter plot - what can you say about this distribution? 
 
 ## You're Done!
 

@@ -11,7 +11,7 @@ if (length(to_install) > 0) {
 }
 
 # Install GitHub package
-remotes::install_github(
-  "cararthompson/casaviz",
-  auth_token = "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"
-)
+# remotes::install_github(
+#   "cararthompson/casaviz",
+#   auth_token = "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"
+# )
