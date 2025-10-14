@@ -74,7 +74,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install --upgrade pip
-          pip install pyyaml jupyter statsmodels pyjanitor matplotlib pandas numpy scipy seaborn geopandas folium scikit-learn plotly branca contextily
+          pip install -r requirements.txt
 
       - name: Copy custom SCSS theme to Quarto directory
         run: |
