@@ -1051,7 +1051,7 @@ Traditionally this uses look up tables - we're going to use Python.
 #| output: true 
 from scipy import stats
 
-t = -12.7
+t_val = -12.7
 df = 18
 
 # Two-tailed p-value
@@ -1069,7 +1069,7 @@ We can do all the previous calulations in one step using the `scipy' library - w
 
 Now we need to compare the p-value to our siginificance level. 
 
-p-value = 2.8x10^{-10} < 0.05 = alpha
+p-value = $2.8x10^{-10} < 0.05$ = alpha
 
 . . .
 
