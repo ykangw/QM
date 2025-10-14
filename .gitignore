@@ -6,7 +6,7 @@ cloud-config.yml
 /_freeze/
 /docs/
 
-renv-setup.R
+# renv-setup.R
 
 .DS_Store
 .ipynb_checkpoints/
